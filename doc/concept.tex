@@ -115,4 +115,18 @@ Teil der Kosten aufkommen.
 
 \includegraphics[width=\linewidth]{grobarchitektur}
 
+Die Lichtsteuerung soll aus mehreren miteinander interagierenden Komponenten bestehen, welche in den weiteren Unterkapiteln genauer beschrieben werden.
+
+\subsection{Hue LED Licht}
+
+Die Lampen, welche gesteuert werden sollen, werden in eine herkömmliche Fassung geschraubt. Darüber wird die Lampe mit Strom versorgt. Die Hue LEDs besitzen außerdem einen ZigBee-Chip, mit dem sie Teil eines ZigBee-Netzwerks werden können. In diesem Netzwerk arbeiten sie als \emph{End Device}. Über das ZigBee Light Link Protokoll können die Lampen angesprochen werden und Eigenschaften wie die Farbstärke eingestellt werden.
+
+\subsection{ZigBee Controller}
+
+Der ZigBee Controller ist die eigentliche Funkeinheit. Sie stellt eine rohe Programmierschnittstelle bereit, um auf das ZigBee-Netzwerk zugreifen zu können.
+
+\subsection{Lichtsteuerung}
+
+Die Lichtsteuerung stellt eine Schnittstelle bereit, lalala.
+
 \end{document}
