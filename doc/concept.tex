@@ -140,10 +140,17 @@ Treiber, der auf dem \emph{Raspberry Pi} betrieben wird, verwendet.
 
 \subsection{Lichtsteuerung}
 
-Die Lichtsteuerung ist ebenfalls eine Software, die auf dem \emph{Raspberry Pi}
-betrieben wird. Sie verwendet die Programmierschnittstelle des ZigBee Controllers
-und stellt eine REST-basierte Webschnittstelle, um die Eigenschaften der Lampen
-zu kontrollieren.
+Die Lichtsteuerung dient als hardwarenahes-Backend. Diese Software, welche auf
+dem \emph{Raspberry Pi} betrieben wird, kommuniziert über die serielle
+Schnittstelle mit dem ZigBee Controller. Um auf die Nodes des Netzwerks
+zugreifen zu können bietet das Backend eine Programmierschnittstelle an.
+
+\subsection{API}
+
+Die API ist eine weitere Software auf dem \emph{Raspberry Pi}. Sie verwendet
+die eher rohe Schnittstelle des Backends und bietet eine REST-basierte
+Webschnittstelle an. Diese Schnittstelle bietet einen vereinfachten Zugriff
+auf das Funknetz, mit Fokus auf die Lichtsteuerung.
 
 \subsection{Webserver}
 
