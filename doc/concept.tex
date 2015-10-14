@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt]{article}
 
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[english,ngerman]{babel}
 \selectlanguage{ngerman}
 
@@ -113,23 +113,43 @@ Teil der Kosten aufkommen.
 
 \includegraphics[width=\linewidth]{grobarchitektur}
 
-Die Lichtsteuerung soll aus mehreren miteinander interagierenden Komponenten bestehen, welche in den weiteren Unterkapiteln genauer beschrieben werden.
+\noindent
+Die Lichtsteuerung soll aus mehreren miteinander interagierenden Komponenten
+bestehen, welche im Weiteren genauer beschrieben werden.
 
 \subsection{Hue LED Licht}
 
-Die Lampen, welche gesteuert werden sollen, werden in eine herkömmliche Fassung geschraubt. Darüber wird die Lampe mit Strom versorgt. Die Hue LEDs besitzen außerdem einen ZigBee-Chip, mit dem sie Teil eines ZigBee-Netzwerks werden können. In diesem Netzwerk arbeiten sie als \emph{End Device}. Über das ZigBee Light Link Protokoll können die Lampen angesprochen werden und Eigenschaften wie die Farbstärke eingestellt werden.
+Die Lampen, welche gesteuert werden sollen, werden in eine herkömmliche Fassung
+geschraubt worüber sie wie normale Lampen mit Strom versorgt werden. Die Hue LEDs
+besitzen außerdem einen ZigBee-Chip, mit dem sie Teil eines ZigBee-Netzwerks werden
+können. In diesem Netzwerk arbeiten sie als \emph{End Device}. Über das ZigBee Light
+Link Protokoll können die Lampen angesprochen werden und Eigenschaften wie die
+Farbstärke eingestellt werden.
 
 \subsection{ZigBee Controller}
 
-Der ZigBee Controller ist die eigentliche Funkeinheit. Sie stellt eine rohe Programmierschnittstelle bereit, um auf das ZigBee-Netzwerk zugreifen zu können. Der Controller besteht aus zwei Komponenten. Zum einen dem \emph{RaspBee}, eine aufsteckbare Erweiterungsplatine mit Funkmodul für \emph{Raspberry Pi}, und zum anderen dem \emph{Raspberry Pi} selber. Der \emph{Raspberry Pi}, ein Entwicklungsboard, besitzt eine Reihe an GPIO Pins am Rand des Boards. Das \emph{RaspBee} ist an diese GPIO Pins angepasst und wird dadurch mit Strom gespeist. Weiterhin werden die \emph{UART}-Pins zur seriellen Kommunikation mit einem Treiber, der auf dem \emph{Raspberry Pi} betrieben wird, verwendet.
+Der ZigBee Controller ist die eigentliche Funkeinheit. Sie stellt eine rohe
+Programmierschnittstelle bereit, um auf das ZigBee-Netzwerk zugreifen zu können.
+Der Controller besteht aus zwei Komponenten. Zum einen dem \emph{RaspBee}, eine
+aufsteckbare Erweiterungsplatine mit Funkmodul für \emph{Raspberry Pi}, und zum
+anderen dem \emph{Raspberry Pi} selber. Der \emph{Raspberry Pi}, ein
+Entwicklungsboard, besitzt eine Reihe an GPIO Pins am Rand des Boards. Das
+\emph{RaspBee} ist an diese GPIO Pins angepasst und wird dadurch mit Strom gespeist.
+Weiterhin werden die \emph{UART}-Pins zur seriellen Kommunikation mit einem
+Treiber, der auf dem \emph{Raspberry Pi} betrieben wird, verwendet.
 
 \subsection{Lichtsteuerung}
 
-Die Lichtsteuerung ist ebenfalls eine Software, die auf dem \emph{Raspberry Pi} betrieben wird. Sie verwendet die Programmierschnittstelle des ZigBee Controllers und stellt eine REST-basierte Webschnittstelle, um die Eigenschaften der Lampen zu kontrollieren.
+Die Lichtsteuerung ist ebenfalls eine Software, die auf dem \emph{Raspberry Pi}
+betrieben wird. Sie verwendet die Programmierschnittstelle des ZigBee Controllers
+und stellt eine REST-basierte Webschnittstelle, um die Eigenschaften der Lampen
+zu kontrollieren.
 
 \subsection{Webserver}
 
-Der Webserver dient primär zur Verteilung des Javascript Codes der \emph{GUI}-Komponente. Weiterhin leitet es Anfragen an die REST-API an die Lichtsteuerung weiter.
+Der Webserver dient primär zur Verteilung des Javascript Codes der
+\emph{GUI}-Komponente. Weiterhin leitet es Anfragen an die REST-API an die
+Lichtsteuerung weiter.
 
 \subsection{GUI}
 
