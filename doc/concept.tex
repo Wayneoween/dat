@@ -28,42 +28,40 @@
 \newpage
 
 \noindent
-Hier soll kurz die Grundidee des Schwerpunktprojekts, sowie welche Hardware 
-benötigt wird, beschrieben werden.
+Hier wird kurz die Grundidee des Schwerpunktprojekts, sowie welche Hardware 
+benötigt wird, beschrieben.
 
 \section{Einführung}
 
 Im Zuge der Internet-of-Things-Kampagne\footnote{\url{http://www.nextgenerationmedia.de}}
-werden immer weitere ``dumme'' Geräte miteinander intelligent vernetzt. Dazu
-gehören auch Lichter und Glühbirnen. Zur Vernetzung und Steuerung der Lichter
-existieren bereits mehrere aktuelle Technologien. Mit Hilfe einer der
-standardisierten Technologie möchten wir einen Controller implementieren,
-welcher diese Lichter kontrollieren kann.
+werden immer mehr ``dumme'' bzw. einfache Geräte miteinander vernetzt und die
+resultierenden Daten intelligent miteinander verknüpft. Dazu gehören auch Lichter und
+Glühbirnen. Zur Vernetzung und Steuerung der Lichter existieren bereits mehrere
+aktuelle Technologien. Mit Hilfe einer der standardisierten Technologie möchten wir
+einen Controller implementieren, welcher diese Lichter kontrollieren kann.
 
 \section{Lichtsteuerungs-Technologien}
 
-Üblicherweise möchten Hersteller ein eigenes Produkt-Ökosystem erstellen, aus dem die
-Anwender kaum mehr ausbrechen können. In Folge dessen werden eigene Protokolle
-implementiert. Beispielsweise bietet \textit{LimitlessLED}
+Üblicherweise möchten Hersteller ein eigenes Produkt-Ökosystem erstellen, aus dem ein
+Anwender nicht oder nur schwer entkommen kann. Hierfür werden von den Herstellern
+eigene, unfreie Protokolle implementiert. Beispielsweise bietet \textit{LimitlessLED}
 \footnote{\url{http://www.limitlessled.com}} Glühbirnen, welche sich
-über 2,4 GHz WLAN in das lokale Netzwerk verbinden können. Für die eigentliche
-Steuerung wurde eine eigene API entwickelt. Eine weitere bekannte Technologie ist
-\textit{Bluetooth}. Hier ist es derzeit möglich mit Hilfe des \textit{Generic
-Attribute Profile}, kurz
+über 2,4 GHz WLAN in das lokale Netzwerk verbinden. Für die eigentliche
+Steuerung wurde dazu eine eigene API entwickelt. Eine weitere bekannte Technologie
+zur Steuerung von Geräten ist \textit{Bluetooth}. Hier ist es derzeit möglich
+mit Hilfe des \textit{Generic Attribute Profile}, kurz
 \textit{GATT}\footnote{\url{https://de.wikipedia.org/wiki/Bluetooth-Profile}},
 ein eigenes Protokoll zu sprechen. Dies wird bei mehreren smarten Glühbirnen
 verwendet um ein proprietäres Lichtsteuerungsprotokoll zu implementieren.
-
-\newpage
 
 Die \textit{Bluetooth} Konkurrenten
 \textit{Z-Wave}\footnote{\url{http://www.z-wavealliance.org}}, welches sich auf das
 so genannte \textit{Home Control}-Szenario konzentriert, sowie
 \textit{ZigBee}\footnote{\url{http://www.zigbee.org}},
-implementieren jeweils eigene Lichtprotokolle. Diese Protokolle sind jedoch für jeden
-Client des Funkstandards nutzbar, sodass die Lichterhersteller kein eigenes Protokoll
-implementieren müssen. Der Funkstandard \textit{ZigBee} wird von den namhaften
-Herstellern \textit{Philips} und \textit{Osram} verwendet.
+implementieren wieder jeweils eigene Lichtprotokolle. Diese Protokolle sind jedoch
+für jeden Client des Funkstandards nutzbar, sodass die Hersteller kein
+eigenes Protokoll implementieren mussten. Der Funkstandard \textit{ZigBee} wird
+von den namhaften Herstellern \textit{Philips} und \textit{Osram} verwendet.
 
 Für das Schwerpunktprojekt würden wir uns auf \textit{ZigBee} kompatible Geräte
 konzentrieren. Vor allem die Produkte der \textit{Philips hue} Reihe.
