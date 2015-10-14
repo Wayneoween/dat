@@ -180,7 +180,30 @@ gestellt.
 
 Die GUI, im HTML5 Standard, ist die Schnittstelle zum Benutzer und wird im Browser dargestellt.
 Über diese kann der Benutzer die Nodes steuern, wie z.B. Helligkeit und Farbe einstellen.
+Zum bequemen Verwenden der API aus dem Browser wird JavaScript auf dem Client verwendet. 
 
 \subsection{CLI}
+
+Um die Lampensteuerung automatisieren zu können, etwa um aus dem Urlaub oder
+zeitgesteuert in seinem Haus das Licht aus- oder anzuschalten, ist ein
+Kommandozeileninterface wünschenswert. Für viele Sprachen gibt es bereits
+Module mit denen REST-APIs angesprochen werden können, daher ist die
+Programmiersprache in der das CLI-Programm umgesetzt werden soll zweitrangig.
+
+\newpage
+
+\section{Umsetzung}
+
+Umgesetzt und von uns implementiert werden soll die API sowie die CLI. Eine
+rudimentäre Umsetzung der Web-GUI ist auch denkbar um die prinzipielle
+Möglichkeit zu verdeutlichen.
+
+Die Treibersoftware um das \emph{RaspBee}-Modul anzusteuern ist leider nicht
+Open Source. Diese Software bietet eine Programmierschnittstelle, um welche
+wir unsere API herum entwickeln können. Der \emph{RaspBee}-Hersteller hat auf
+Nachfrage bestätigt, dass weder die UART-Spezifikation, noch der Quellcode
+des Treibers öffentlich sei. Da ein Reverse-Engineering des Treibers den Rahmen
+des Projekts sprengen würde haben wir uns darauf geeinigt, die Software des
+Herstellers zu verwenden.
 
 \end{document}
