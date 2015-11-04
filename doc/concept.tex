@@ -32,6 +32,7 @@ Hier wird kurz die Grundidee des Schwerpunktprojekts, sowie welche Hardware
 benötigt wird, beschrieben.
 
 \section{Einführung}
+\label{einfuehrung}
 
 Im Zuge der Internet-of-Things-Kampagne\footnote{\url{http://www.nextgenerationmedia.de}}
 werden immer mehr ``dumme'' bzw. einfache Geräte miteinander vernetzt und die
@@ -41,6 +42,7 @@ aktuelle Technologien. Mit Hilfe einer der standardisierten Technologie möchten
 einen Controller implementieren, welcher diese Lichter kontrollieren kann.
 
 \section{Lichtsteuerungs-Technologien}
+\label{technology}
 
 Üblicherweise möchten Hersteller ein eigenes Produkt-Ökosystem erstellen, aus dem ein
 Anwender nicht oder nur schwer entkommen kann. Hierfür werden von den Herstellern
@@ -67,6 +69,7 @@ Für das Schwerpunktprojekt würden wir uns auf \textit{ZigBee} kompatible Gerä
 konzentrieren. Vor allem die Produkte der \textit{Philips hue} Reihe.
 
 \section{Komponenten}
+\label{components}
 
 Die eigentliche Logik zur Steuerung der Lichter kann auf einem \textit{RaspberryPi}
 implementiert werden. Um den Funkstandard \textit{ZigBee} sprechen zu können wird ein
@@ -76,6 +79,7 @@ Basic-Variante nur mit 5 Knoten sprechen darf, ist dies bei der Premium-Variante
 unbegrenzt. Die Lichter würden aus einem \textit{Philips Hue} Starterkit bestehen.
 
 \section{Hardware}
+\label{hardware}
 
 \subsection{RaspBee Premium, Raspberry-Pi Einzeln}
 
@@ -109,9 +113,20 @@ Unter Umständen sind Bestandteile der Liste schon im Vorrat der Hochschule oder
 der Projektteilnehmer. Je nach Beteiligung der Fachhochschule würden wir für einen
 Teil der Kosten aufkommen.
 
-\section{Grobarchitektur}
+\newpage
 
-\includegraphics[width=\linewidth]{img/grobarchitektur}
+\section{Grobarchitektur}
+\label{architecture}
+
+In Abbildung \ref{fig:architecture} wird der grobe Ablauf der Kommunikation unter
+allen involvierten Komponenten beschrieben.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{img/grobarchitektur}
+	\caption{Kommunikationsablauf der Komponenten}
+	\label{fig:architecture}
+\end{figure}
 
 \noindent
 Die Lichtsteuerung soll aus mehreren miteinander interagierenden Komponenten
@@ -193,6 +208,7 @@ Programmiersprache in der das CLI-Programm umgesetzt werden soll zweitrangig.
 \newpage
 
 \section{Umsetzung}
+\label{doing}
 
 Umgesetzt und von uns implementiert werden soll die API sowie die CLI. Eine
 rudimentäre Umsetzung der Web-GUI ist auch denkbar um die prinzipielle
@@ -205,5 +221,16 @@ Nachfrage bestätigt, dass weder die UART-Spezifikation, noch der Quellcode
 des Treibers öffentlich sei. Da ein Reverse-Engineering des Treibers den Rahmen
 des Projekts sprengen würde haben wir uns darauf geeinigt, die Software des
 Herstellers zu verwenden.
+
+\subsection{Einschränkungen}
+
+Nach anfänglicher Exploration der mit der \emph{RaspBee}-Modul zugehörigen Software
+von \emph{Dresden Elektronik} wurde festgestellt, dass viel der von uns zu
+implementierenden Funktionalität bereits vorhanden war. Die Anfrage an den
+Support von \emph{Dresden Elektronik} nach Zugang zur Dokumentation der
+\emph{UART}-Schnittstelle und dem Funkmodul wurde verweigert.
+
+Weiter war das Vorhaben aus Punkt \ref{architecture} inhaltlich zu groß gefasst
+als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden könnte.
 
 \end{document}
