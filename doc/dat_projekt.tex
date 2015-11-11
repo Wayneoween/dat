@@ -10,6 +10,7 @@
 \usepackage{graphviz}
 
 \usepackage{amsfonts}
+\usepackage{listings}
 
 \usepackage{url}
 \usepackage[colorlinks=false,pdfborder={0 0 0},breaklinks=true]{hyperref}
@@ -226,11 +227,46 @@ Herstellers zu verwenden.
 
 Nach anfänglicher Exploration der mit der \emph{RaspBee}-Modul zugehörigen Software
 von \emph{Dresden Elektronik} wurde festgestellt, dass viel der von uns zu
-implementierenden Funktionalität bereits vorhanden war. Die Anfrage an den
-Support von \emph{Dresden Elektronik} nach Zugang zur Dokumentation der
-\emph{UART}-Schnittstelle und dem Funkmodul wurde verweigert.
+implementierenden Funktionalität bereits in der bereitgestellten \emph{deCONZ}-
+Software vorhanden war. Die Anfrage an den Support von \emph{Dresden Elektronik}
+nach Zugang zur Dokumentation der \emph{UART}-Schnittstelle und dem Funkmodul
+wurde verweigert.
 
 Weiter war das Vorhaben aus Punkt \ref{architecture} inhaltlich zu groß gefasst
 als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden könnte.
+
+\section{Installation}
+
+\subsection{Betriebssystem}
+
+Das im raspberry Pi Bundle vorinstallierte System ist NOOBS. Dieses System dient
+als Platform um das eigentliche System zu installieren. Es stellt eine grafische
+Oberfläche auf der HDMI-Schnittstelle bereit auf der das zu installierende
+Betriebssystem ausgewählt werden kann.
+
+Da die deCONZ-Software nur in Binärform vorliegt muss ein daran angepasstes
+Betriebssystem installiert werden. Das Raspbian\footnote{\url{https://www.raspbian.org/}},
+eine für das Raspberry Pi angepasste Debian Version, ist in der Version Wheezy
+zur deCONZ-Software kompatibel. Weiterhin ist Raspbian eines der verbreitetsten
+Systeme für den raspberry Pi.
+
+Alternativ kann Raspbian manuell installiert werden. Dafür muss ein
+Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
+Version Wheezy heruntergeladen werden. Das Image ist als Zip komprimiert und
+muss nach dem Entpacken auf die SD-Karte gespielt werden. Das kann mit folgenden
+Beispielkommandos ausgeführt werden.
+
+\begin{lstlisting}[caption=Raspbian manuell installieren]{RaspbianInstall}
+unzip 2015-05-05-raspbian-wheezy.zip
+dd if=2015-05-05-raspbian-wheezy.img of=/dev/disk
+\end{lstlisting}
+
+Der raspberry Pi bekommt automatisch von einem im Netzwerk verbundenen DHCP-
+Server eine IP-Adresse. Diese kann nun entweder über die grafische Oberfläche
+abgefragt oder aus dem DHCP-Server ausgelesen werden. Mit Hilfe dieser
+Information ist es nun möglich sich auf den automatisch gestarteten SSH-Server
+einzuwählen.
+
+\subsection{deCONZ}
 
 \end{document}
