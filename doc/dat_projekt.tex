@@ -289,6 +289,14 @@ gesteuert werden. Gruppen und Szenen können darüber definiert und angewählt
 werden. Zusätzlich wird eine REST-API bereitgestellt. Diese API werden
 wir mit dem hier zu schreibenden Kommandozeilenprogramm verwenden.
 
+Um deCONZ zu starten muss ein X-Server aktiv sein. deCONZ lauscht mit dem
+Web-GUI auf Port 80. Optional kann ein anderer Port angegeben werden.
+
+\begin{lstlisting}[caption=deCONZ starten]{deCONZStart}
+startx &
+deCONZ --auto-connect=1 --dbg-info=1 &
+\end{lstlisting}
+
 \subsection{Web-GUI}
 \subsection{API}
 
