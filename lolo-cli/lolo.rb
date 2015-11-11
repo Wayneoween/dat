@@ -9,6 +9,7 @@ require Dir.pwd + "/models/light"
 $uri = "http://localhost:7777/api"
 $config_file = "config.yml"
 $key = nil
+$light = nil
 
 def set_api_key
   if $key = get_cfg("api_key")
@@ -64,17 +65,36 @@ def get_light_by_id(id)
   puts ret
 end
 
-def set_light_on(id)
-  light = Light.find(id)
-  light.turn_on
-end
-
-def set_light_off(id)
-  light = Light.find(id)
-  light.turn_off
-end
-
 set_api_key
+
+class SubcommandLightGroup
+
+  # This function is called from Clamp. Clamp tries to find
+  # a subcommand by comparing the subcommand to the string passed
+  # on the console. This hijacks the comparison and looks for
+  # Lights or Groups that match the specified name.
+  def ==(other_object)
+    # TODO: use local json instead
+    #Group.all.each do |light|
+    #  if light.name == other_object
+    #    $light = light
+    #    return true
+    #  end
+    #end
+    Light.all.each do |light|
+      if light.name == other_object
+        $light = light
+        return true
+      end
+    end
+    return false
+  end
+
+  # Used to beautify the Clamp usage.
+  def to_s
+    return "<light|group>"
+  end
+end
 
 Clamp do
 
@@ -84,18 +104,20 @@ Clamp do
     end
   end
 
-  subcommand "on", "Switch a light on." do
-  option ["-l", "--light"], "LIGHT_ID", "The Light.", :attribute_name => :light_id
-    def execute
-      set_light_on(light_id)
-    end
-  end
+  subcommand SubcommandLightGroup.new, "Switch a light or group on/off." do
 
-  subcommand "off", "Switch a light off." do
-  option ["-l", "--light"], "LIGHT_ID", "The Light.", :attribute_name => :light_id
-    def execute
-      set_light_off(light_id)
+    subcommand "on", "Switch on." do
+      def execute
+        $light.turn_on
+      end
     end
+
+    subcommand "off", "Switch off." do
+      def execute
+        $light.turn_off
+      end
+    end
+
   end
 
 end
