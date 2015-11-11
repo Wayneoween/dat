@@ -47,10 +47,13 @@ def get_cfg(key)
   end
 end
 
+def check_key
+  return "Please unlock your Gateway" if $key.nil?
+end
+
 def get_lights
-  if $key.nil?
-    return "Please unlock your Gateway"
-  end
+  check_key
+
   ret = {}
   Light.all.each do |light|
     ret[light.id] =  {:name =>light.name}
@@ -59,26 +62,23 @@ def get_lights
 end
 
 def get_light_by_id(id)
-  if $key.nil?
-    return "Please unlock your Gateway"
-  end
+  check_key
+
   light = Light.find(id)
   ret = {:id => light.id, :on => light.on, :name => light.name}.to_json
   return ret
 end
 
 def set_light_on(id)
-  if $key.nil?
-    return "Please unlock your Gateway"
-  end
+  check_key
+
   light = Light.find(id)
   light.turn_on
 end
 
 def set_light_off(id)
-  if $key.nil?
-    return "Please unlock your Gateway"
-  end
+  check_key
+
   light = Light.find(id)
   light.turn_off
 end
