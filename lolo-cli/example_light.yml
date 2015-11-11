@@ -1,0 +1,23 @@
+---
+  etag: "48df6aad407959fb76933bf598407de9"
+  hascolor: true
+  manufacturer: "Philips"
+  modelid: "LCT001"
+  name: "Light 1"
+  pointsymbol: {}
+  state: 
+    alert: "none"
+    bri: 89
+    colormode: "hs"
+    ct: 500
+    effect: "none"
+    hue: 2352
+    on: true
+    reachable: true
+    sat: 226
+    xy: 
+      - 0.623646
+      - 0.345088
+  swversion: "5.23.1.13187"
+  type: "Extended color light"
+  uniqueid: "00:17:88:01:00:F6:59:E1-0B"

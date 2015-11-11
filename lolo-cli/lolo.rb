@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'rest-client'
+require 'clamp'
 require 'yaml'
 require 'json'
 require Dir.pwd + "/models/light"
@@ -20,7 +21,8 @@ def set_api_key
       :content_type => :json,
       :accept => :json
   rescue
-    return nil
+    puts "Unable to retrieve API-Key.\nPlease unlock your Gateway first!"
+    exit 1
   end
   response = JSON.parse(response)
   if response && response.first["success"]
@@ -47,38 +49,53 @@ def get_cfg(key)
   end
 end
 
-def check_key
-  return "Please unlock your Gateway" if $key.nil?
-end
-
 def get_lights
-  check_key
-
+  puts "Getting all lights..."
   ret = {}
   Light.all.each do |light|
     ret[light.id] =  {:name =>light.name}
   end
-  return ret.to_json
+  puts ret.to_json
 end
 
 def get_light_by_id(id)
-  check_key
-
   light = Light.find(id)
   ret = {:id => light.id, :on => light.on, :name => light.name}.to_json
-  return ret
+  puts ret
 end
 
 def set_light_on(id)
-  check_key
-
   light = Light.find(id)
   light.turn_on
 end
 
 def set_light_off(id)
-  check_key
-
   light = Light.find(id)
   light.turn_off
+end
+
+set_api_key
+
+Clamp do
+
+  subcommand "list", "List all lights." do
+    def execute
+      get_lights
+    end
+  end
+
+  subcommand "on", "Switch a light on." do
+  option ["-l", "--light"], "LIGHT_ID", "The Light.", :attribute_name => :light_id
+    def execute
+      set_light_on(light_id)
+    end
+  end
+
+  subcommand "off", "Switch a light off." do
+  option ["-l", "--light"], "LIGHT_ID", "The Light.", :attribute_name => :light_id
+    def execute
+      set_light_off(light_id)
+    end
+  end
+
 end
