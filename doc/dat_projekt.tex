@@ -277,4 +277,36 @@ kann die Software mit dpkg installieren. Danach ist die Software betriebsbereit.
 dpkg -i deconz-2.02.05.deb
 \end{lstlisting}
 
+\section{deCONZ}
+
+deCONZ stellt zwei Oberflächen bereit.
+
+\subsection{GUI}
+\subsection{API}
+
+\section{lolo}
+
+\subsection{Beispielaufrufe}
+
+\begin{lstlisting}[caption=lolo Beispielaufrufe]{loloBeispiel}
+lolo list
+
+lolo wohnzimmer on|off
+lolo wohnzimmer red
+lolo wohnzimmer #0412312
+lolo wohnzimmer cold
+lolo wohnzimmer warm
+
+# gruppe erdgeschoss wird erstellt
+lolo add group erdgeschoss
+# licht superduper wird angelegt und zur gruppe erdgeschoss
+# hinzugefuegt
+lolo add light superduper <UUID> erdgeschoss
+# neue scene aus aktueller einstellung von erdgeschoss, wohnzimmer
+# und kueche
+lolo add scene frauenbesuch from erdgeschoss wohnzimmer kueche
+# frauenbesuch aktivieren
+lolo frauenbesuch
+\end{lstlisting}
+
 \end{document}
