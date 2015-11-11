@@ -6,7 +6,7 @@ require 'yaml'
 require 'json'
 require Dir.pwd + "/models/light"
 
-$uri = "http://localhost:8080/api"
+$uri = "http://localhost:7777/api"
 $config_file = "config.yml"
 $key = nil
 
@@ -21,7 +21,7 @@ helpers do
         { 'devicetype' => "myappbar" }.to_json,
         :content_type => :json,
         :accept => :json
-    rescue => e
+    rescue
       return nil
     end
     response = JSON.parse(response)
@@ -40,6 +40,9 @@ helpers do
   end
 
   def get_cfg(key)
+    unless File.exist?($config_file)
+      File.open($config_file, 'w'){}
+    end
     cfg = YAML.load(File.read($config_file))
     if cfg && cfg[key]
       return cfg[key]
@@ -62,7 +65,7 @@ get '/lights' do
   return ret.to_json
 end
 
-get '/lights/:id' do
+get '/light/:id' do
   if $key.nil?
     return "Please unlock your Gateway"
   end
@@ -71,7 +74,7 @@ get '/lights/:id' do
   return ret
 end
 
-get '/lights/:id/on' do
+get '/light/:id/on' do
   if $key.nil?
     return "Please unlock your Gateway"
   end
@@ -79,7 +82,7 @@ get '/lights/:id/on' do
   light.turn_on
 end
 
-get '/lights/:id/off' do
+get '/light/:id/off' do
   if $key.nil?
     return "Please unlock your Gateway"
   end
