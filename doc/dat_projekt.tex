@@ -291,17 +291,18 @@ deCONZ stellt zwei Oberflächen bereit.
 \begin{lstlisting}[caption=lolo Beispielaufrufe]{loloBeispiel}
 lolo list
 
-lolo lampe1 on|off
-lolo lampe1 red
-lolo lampe1 #0412312
-lolo lampe1 cold
-lolo lampe1 warm
-
-# gruppe erdgeschoss wird erstellt
+# gruppe gruppe1 wird erstellt
 lolo add group gruppe1
-# licht superduper wird angelegt und zur gruppe erdgeschoss
+# licht lampe2 wird angelegt und zur gruppe gruppe1
 # hinzugefuegt
 lolo add light lampe2 <UUID> gruppe1
+
+lolo lampe1 on|off
+lolo lampe1 red
+lolo gruppe1 #0412312
+lolo lampe1 cold
+lolo gruppe1 warm
+
 # neue scene aus aktueller einstellung von gruppe1, lampe3
 # und lampe4, die nicht in gruppe1 sind (geht das?)
 lolo add scene szene1 from gruppe1 lampe1 lampe2
