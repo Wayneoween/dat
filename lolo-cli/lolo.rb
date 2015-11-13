@@ -11,6 +11,9 @@ $config_file = "config.yml"
 $key = nil
 $light = nil
 
+# Das umrechnen RGB zu HUE HSV ist kompliziert:
+# https://de.wikipedia.org/wiki/HSV-Farbraum
+# Viellicht gibt es ein Gem?
 HUE_MAP = {
   :green => (65535/(360/106.to_f)).to_i,
   :red => (65535/(360/360.to_f)).to_i,
