@@ -1,7 +1,35 @@
-\newglossaryentry{rpi}
+\newglossaryentry{gls-rpi}
 {
-	name={RaspBerry Pi},
-	description={Kleiner Einplatinencomputer im Kreditkartenformat, entwickelt von
-	der \emph{Raspberry Pi Foundation}.	Basiert auf einem ein Ein-Chip-System von Broadcom
-	mit einem ARM-Mikroprozessor und kostet zwischen 25 und 35\$.},
+  name={RaspBerry Pi},
+  description={Kleiner Einplatinencomputer im Kreditkartenformat, entwickelt von
+    der \emph{Raspberry Pi Foundation}.	Basiert auf einem ein Ein-Chip-System von Broadcom
+    mit einem ARM-Mikroprozessor und kostet zwischen 25 und 35\$.},
 }
+\newglossaryentry{gls-zb}
+{
+  name={ZigBee},
+  description={Spezifikation für drahtlose Netzwerke mit geringem Datenaufkommen,
+    wie z. B. Hausautomation, Sensornetzwerke, Lichttechnik. Der Schwerpunkt von
+    ZigBee liegt in kurzreichweitigen Netzwerken (10 bis 100 Meter).
+    \newline \url{http://www.zigbee.org}}
+}
+\newglossaryentry{gls-gatt}
+{
+  name={Generic Attribute Profile},
+  description={\gls{gls-bt-profil} zur ernergieeffizienten Übertragung von Sensordaten und kleiner
+    Datenmengen.},
+}
+\newglossaryentry{gls-bt-profil}
+{
+  name={Bluetooth-Profil},
+  description={Schnittstellenspezifikation der Bluetooth Special Interest Group für die drahtlose
+  Kommunikation in einer Bluetooth-Umgebung.},
+}
+
+\newacronym{rpi}{RPi}{\gls{gls-rpi}}
+\newacronym{gatt}{GATT}{\gls{gls-gatt}}
+\newacronym{gpio}{GPIO}{General Purpose Input/Output}
+\newacronym{uart}{UART}{Universal Asynchronous Receiver Transmitter}
+\newacronym{deconz}{deCONZ}{dresden elektronik CONtrol Zigbee
+  \newline \url{https://www.dresden-elektronik.de/funktechnik/products/software/pc/deconz/}}
+\newacronym{noobs}{NOOBS}{New Out Of the Box Software}
