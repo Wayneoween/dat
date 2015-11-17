@@ -15,6 +15,9 @@
 \usepackage{url}
 \usepackage[colorlinks=false,pdfborder={0 0 0},breaklinks=true]{hyperref}
 
+\usepackage[toc,nopostdot]{glossaries}
+\input{glossary.tex}
+\makeglossaries
 
 \begin{document}
 
@@ -27,10 +30,6 @@
 \tableofcontents
 
 \newpage
-
-\noindent
-Hier wird kurz die Grundidee des Schwerpunktprojekts, sowie welche Hardware 
-benötigt wird, beschrieben.
 
 \section{Einführung}
 \label{einfuehrung}
@@ -72,7 +71,7 @@ konzentrieren. Vor allem die Produkte der \textit{Philips hue} Reihe.
 \section{Komponenten}
 \label{components}
 
-Die eigentliche Logik zur Steuerung der Lichter kann auf einem \textit{RaspberryPi}
+Die eigentliche Logik zur Steuerung der Lichter kann auf einem \textit{\gls{rpi}}
 implementiert werden. Um den Funkstandard \textit{ZigBee} sprechen zu können wird ein
 kompatibles Funkmodul benötigt. Hierfür kann das \textit{RaspBee}-Modul verwendet werden.
 Dieses gibt es in zwei Varianten, \textit{Basic} und \textit{Premium}. Während man mit der
@@ -119,8 +118,8 @@ Teil der Kosten aufkommen.
 \section{Grobarchitektur}
 \label{architecture}
 
-In Abbildung \ref{fig:architecture} wird der grobe Ablauf der Kommunikation unter
-allen involvierten Komponenten beschrieben.
+In Abbildung \ref{fig:architecture} wird der grobe, vorraussichtliche Ablauf der
+Kommunikation aller involvierter Komponenten beschrieben.
 
 \begin{figure}[h!]
 	\centering
@@ -131,22 +130,22 @@ allen involvierten Komponenten beschrieben.
 
 \noindent
 Die Lichtsteuerung soll aus mehreren miteinander interagierenden Komponenten
-bestehen, welche im Weiteren genauer beschrieben werden.
+bestehen, die im Folgenden genauer beschrieben werden.
 
 \subsection{Hue LED Licht}
 
-Die Lampen, welche gesteuert werden sollen, werden in eine herkömmliche Fassung
-geschraubt worüber sie wie normale Leuchtmittel mit Strom versorgt werden. Die Hue LEDs
-besitzen außerdem einen ZigBee-Chip, mit dem sie Teil eines ZigBee-Netzwerks werden
-können. In diesem Netzwerk arbeiten sie als \emph{End Device}. Über das ZigBee
-\emph{Light Link}-Protokoll können die Lampen angesprochen werden und bestimmte
-Einstellungen wie Helligkeit und Farbe eingestellt werden.
+Die zu steuernden Lampen werden in eine herkömmliche Fassung geschraubt worüber sie
+wie normale Leuchtmittel mit Strom versorgt werden. Die Hue LEDs besitzen dazu aber einen
+ZigBee-Chip, mit dem sie Teil eines ZigBee-Netzwerks werden können. In diesem Netzwerk
+fungieren sie als \emph{End Device}. Über das ZigBee \emph{Light Link}-Protokoll können
+die Lampen angesprochen werden und bestimmte Einstellungen wie Helligkeit und Farbe
+eingestellt werden.
 
 \newpage
 
 \subsection{ZigBee Controller}
 
-Der ZigBee Controller ist die eigentliche Funkeinheit. Sie stellt eine rohe
+Der ZigBee Controller \emph{RaspBee} ist die eigentliche Funkeinheit. Sie stellt eine rohe
 Programmierschnittstelle bereit, um auf das ZigBee-Netzwerk zugreifen zu können.
 
 \begin{figure}[h!]
@@ -155,9 +154,10 @@ Programmierschnittstelle bereit, um auf das ZigBee-Netzwerk zugreifen zu können
 	\caption{RaspBee-Funkmodul}
 \end{figure}
 
+\noindent
 Der Controller besteht aus zwei Komponenten. Zum einen dem \emph{RaspBee}, eine
-aufsteckbare Erweiterungsplatine mit Funkmodul für \emph{Raspberry Pi}, und zum
-anderen dem \emph{Raspberry Pi} selber. Der \emph{Raspberry Pi}, ein
+aufsteckbare Erweiterungsplatine mit Funkmodul für \emph{\gls{rpi}}, und zum
+anderen dem \emph{\gls{rpi}} selber. Der \emph{\gls{rpi}}, ein
 Entwicklungsboard, besitzt eine Reihe an GPIO Pins am Rand des Boards.
 
 \begin{figure}[h!]
@@ -166,20 +166,21 @@ Entwicklungsboard, besitzt eine Reihe an GPIO Pins am Rand des Boards.
 	\caption{Raspberry 2}
 \end{figure}
 
-Das \emph{RaspBee} ist an diese GPIO Pins angepasst und wird dadurch mit Strom gespeist.
-Weiterhin werden die \emph{UART}-Pins zur seriellen Kommunikation mit einem
-Treiber, der auf dem \emph{Raspberry Pi} betrieben wird, verwendet.
+\noindent
+Das \emph{RaspBee} ist an diese GPIO Pins angepasst und wird dadurch mit Strom versorgt.
+Außerdem werden die \emph{UART}-Pins zur seriellen Kommunikation mit einem Treiber, der
+auf dem \emph{\gls{rpi}} betrieben wird, verwendet.
 
 \subsection{Lichtsteuerung}
 
-Die Lichtsteuerung dient als hardwarenahes Backend. Diese Software, welche auf
-dem \emph{Raspberry Pi} betrieben wird, kommuniziert über die serielle
+Die Lichtsteuerung soll als hardwarenahes Backend dienen. Diese Software, die auf
+dem \emph{\gls{rpi}} betrieben wird, kommuniziert über die serielle
 Schnittstelle mit dem ZigBee Controller. Um auf die Nodes des Netzwerks
 zugreifen zu können bietet das Backend eine Programmierschnittstelle an.
 
 \subsection{API}
 
-Die API ist eine weitere Software auf dem \emph{Raspberry Pi}. Sie verwendet
+Die API ist eine weitere Software auf dem \emph{\gls{rpi}}. Sie verwendet
 die Schnittstelle der Lichtsteuerung und bietet eine REST-basierte
 Webschnittstelle an. Diese Schnittstelle bietet einen vereinfachten Zugriff
 auf das Funknetz, mit Fokus auf Steuerung und Verwaltung der Lampen. Durch die
@@ -212,16 +213,12 @@ Programmiersprache in der das CLI-Programm umgesetzt werden soll zweitrangig.
 \label{doing}
 
 Umgesetzt und von uns implementiert werden soll die API sowie die CLI. Eine
-rudimentäre Umsetzung der Web-GUI ist auch denkbar um die prinzipielle
-Möglichkeit zu verdeutlichen.
+rudimentäre Umsetzung der Web-GUI ist denkbar, um die prinzipielle Möglichkeit zu
+verdeutlichen.
 
 Die Treibersoftware um das \emph{RaspBee}-Modul anzusteuern ist leider nicht
-Open Source. Diese Software bietet eine Programmierschnittstelle, um welche
-wir unsere API herum entwickeln können. Der \emph{RaspBee}-Hersteller hat auf
-Nachfrage bestätigt, dass weder die UART-Spezifikation, noch der Quellcode
-des Treibers öffentlich sei. Da ein Reverse-Engineering des Treibers den Rahmen
-des Projekts sprengen würde haben wir uns darauf geeinigt, die Software des
-Herstellers zu verwenden.
+Open Source. Diese Software bietet eine Programmierschnittstelle, um die eine API
+herum entwickelt werden kann.
 
 \subsection{Einschränkungen}
 
@@ -233,22 +230,22 @@ nach Zugang zur Dokumentation der \emph{UART}-Schnittstelle und dem Funkmodul
 wurde verweigert.
 
 Weiter war das Vorhaben aus Punkt \ref{architecture} inhaltlich zu groß gefasst
-als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden könnte.
+als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden hätte können.
 
 \section{Installation}
 
 \subsection{Betriebssystem}
 
-Das im raspberry Pi Bundle vorinstallierte System ist NOOBS. Dieses System dient
+Das im \emph{\gls{rpi}} Bundle vorinstallierte System ist NOOBS. Dieses System dient
 als Platform um das eigentliche System zu installieren. Es stellt eine grafische
-Oberfläche auf der HDMI-Schnittstelle bereit auf der das zu installierende
-Betriebssystem ausgewählt werden kann.
+Oberfläche auf der HDMI-Schnittstelle bereit auf der das über das Internet zu
+installierende Betriebssystem ausgewählt werden kann.
 
 Da die deCONZ-Software nur in Binärform vorliegt muss ein daran angepasstes
-Betriebssystem installiert werden. Das Raspbian\footnote{\url{https://www.raspbian.org/}},
-eine für das Raspberry Pi angepasste Debian Version, ist in der Version Wheezy
+Betriebssystem installiert werden. Raspbian\footnote{\url{https://www.raspbian.org/}},
+eine für das \emph{\gls{rpi}} angepasste Debian Version, ist in der Version Wheezy
 zur deCONZ-Software kompatibel. Weiterhin ist Raspbian eines der verbreitetsten
-Systeme für den raspberry Pi.
+Systeme für den \emph{\gls{rpi}}.
 
 Alternativ kann Raspbian manuell installiert werden. Dafür muss ein
 Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
@@ -261,7 +258,7 @@ unzip 2015-05-05-raspbian-wheezy.zip
 dd if=2015-05-05-raspbian-wheezy.img of=/dev/disk
 \end{lstlisting}
 
-Der raspberry Pi bekommt automatisch von einem im Netzwerk verbundenen DHCP-
+Der \emph{\gls{rpi}} bekommt automatisch von einem im Netzwerk verbundenen DHCP-
 Server eine IP-Adresse. Diese kann nun entweder über die grafische Oberfläche
 abgefragt oder aus dem DHCP-Server ausgelesen werden. Mit Hilfe dieser
 Information ist es nun möglich sich auf den automatisch gestarteten SSH-Server
@@ -279,8 +276,8 @@ dpkg -i deconz-2.02.05.deb
 
 \section{deCONZ}
 
-deCONZ stellt zwei Bedien-Oberflächen bereit. Eine Oberfläche wird als Desktop-
-Applikation angezeigt. Dort kann sich auf einer hardwarenahen Ebene verfügbare
+deCONZ stellt zwei Bedienoberflächen bereit. Eine Oberfläche wird als
+Desktop-Applikation angezeigt. Dort kann sich auf einer hardwarenahen Ebene verfügbare
 ZigBee-Nodes lassen. Diese Oberfläche kann hauptsächlich zur Fehlersuche
 verwendet werden und wird für unseren Zweck nicht benötigt.
 
@@ -325,5 +322,10 @@ lolo add scene szene1 from gruppe1 lampe1 lampe2
 # frauenbesuch aktivieren
 lolo szene1
 \end{lstlisting}
+
+\newpage
+
+\glossarystyle{altlist}
+\printglossary
 
 \end{document}
