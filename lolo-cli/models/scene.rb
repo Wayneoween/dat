@@ -16,8 +16,8 @@ class Scene
         s.group = group
         scenes << s
       end
-      return scenes
     end
+    return scenes
   end
 
   def self.add(name)
