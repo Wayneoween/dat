@@ -91,4 +91,16 @@ Clamp do
       end
     end
   end
+
+  subcommand "add", "add a group with name" do
+
+    subcommand "group", "Add a Group." do
+
+      parameter "NAME", "name of group"
+
+      def execute
+        Group.add(name)
+      end
+    end
+  end
 end

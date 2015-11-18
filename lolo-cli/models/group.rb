@@ -15,4 +15,8 @@ class Group
     return groups
   end
 
+  def self.add(name)
+    RestClient.post $uri + "/#{$key}/groups", {:name => name}.to_json
+  end
+
 end
