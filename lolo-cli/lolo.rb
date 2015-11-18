@@ -4,7 +4,8 @@ require 'rest-client'
 require 'clamp'
 require 'yaml'
 require 'json'
-require_relative "functions/api"
+require_relative "helper/api"
+require_relative "helper/clamp"
 require_relative "models/light"
 
 $uri = "http://localhost:7777/api"
@@ -28,35 +29,6 @@ TEMP_MAP = {
 }
 
 set_api_key
-
-class SubcommandLightGroup
-
-  # This function is called from Clamp. Clamp tries to find
-  # a subcommand by comparing the subcommand to the string passed
-  # on the console. This hijacks the comparison and looks for
-  # Lights or Groups that match the specified name.
-  def ==(other_object)
-    # TODO: use local json instead
-    #Group.all.each do |light|
-    #  if light.name == other_object
-    #    $light = light
-    #    return true
-    #  end
-    #end
-    if $light = Light.find_by_name(other_object)
-      return true
-    end
-    if $light = Light.find_by_id(other_object)
-      return true
-    end
-    return false
-  end
-
-  # Used to beautify the Clamp usage.
-  def to_s
-    return "<light|group> <on|off>"
-  end
-end
 
 Clamp do
 
@@ -117,5 +89,4 @@ Clamp do
       end
     end
   end
-
 end
