@@ -14,6 +14,7 @@ require_relative "helper/api"
 require_relative "helper/clamp"
 require_relative "models/light"
 require_relative "models/group"
+require_relative "models/scene"
 
 $uri = "http://localhost:80/api"
 $config_file = "config.yml"
@@ -43,6 +44,13 @@ Clamp do
     def execute
       get_lights
       get_groups
+      get_scenes
+    end
+  end
+
+  subcommand SubcommandScene.new, "Switch to a specific scene." do
+    def execute
+      $light.turn_on
     end
   end
 
@@ -120,6 +128,24 @@ Clamp do
         group = Group.find_by_name(groupname)
         return if group.nil?
         group.add_light(light)
+      end
+    end
+
+    subcommand "scene", "Add a scene from a group." do
+
+      parameter "SCENENAME", "name of scene"
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+
+        scene = Scene.find_by_name(scene)
+        if not scene.nil?
+          scene.update()
+        else
+          Scene.create(group, scenename)
+       end
       end
     end
   end

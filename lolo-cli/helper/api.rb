@@ -53,6 +53,14 @@ def get_groups
   puts
 end
 
+def get_scenes
+  puts "Scenes:"
+  Scene.all.each do |scene|
+    puts "\t#{scene.name} \t#{scene.group.name}"
+  end
+  puts
+end
+
 def get_light_by_id(id)
   light = Light.find(id)
   ret = {:id => light.id, :on => light.on, :name => light.name}.to_json
