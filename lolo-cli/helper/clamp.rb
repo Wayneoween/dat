@@ -5,13 +5,9 @@ class SubcommandLightGroup
   # on the console. This hijacks the comparison and looks for
   # Lights or Groups that match the specified name.
   def ==(other_object)
-    # TODO: use local json instead
-    #Group.all.each do |light|
-    #  if light.name == other_object
-    #    $light = light
-    #    return true
-    #  end
-    #end
+    if $light = Group.find_by_name(other_object)
+      return true
+    end
     if $light = Light.find_by_name(other_object)
       return true
     end

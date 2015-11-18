@@ -47,4 +47,11 @@ class Group
     RestClient.delete $uri + "/#{$key}/groups/#{id}"
   end
 
+  def turn_on
+    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:on => true}.to_json
+  end
+
+  def turn_off
+    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:on => false}.to_json
+  end
 end
