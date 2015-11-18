@@ -305,7 +305,23 @@ kann die Software mit dpkg installieren. Danach ist die Software betriebsbereit.
 # dpkg -i deconz-2.02.05.deb
 \end{lstlisting}
 
-\newpage
+\subsection{Vorbereitung für die Nutzung der CLI auf \gls{rpi}}
+
+Um möglichst wenige externe Abhängigkeiten zu haben, wird auf die über \gls{apt}
+verfügbare, alte \gls{gls-rb}-Version 1.9.3 zurückgegriffen. Diese ist in \gls{apt}
+fehlerhafterweise mit der Versionsnummer 1.9.1 gekennzeichnet. Letztlich sollten
+aber beide Versionen gleich gut funktionieren.
+Um wichtige Funktionalität nicht selbst neu entwickeln zu müssen wird für die
+REST-Anfragen das Ruby-Modul
+\emph{rest-client}\footnote{\url{https://rubygems.org/gems/rest-client}}, in der
+Ruby-Welt als \emph{Gem} bezeichnet, dafür verwendet. Für einfaches Handling der
+Kommandozeilenparameter nutzen wir
+\emph{clamp}\footnote{\url{https://rubygems.org/gems/clamp}}.
+
+\begin{lstlisting}[caption=Ruby und Ruby-Modulmanager installieren]{RaspbianInstall}
+# aptitude install ruby ruby-dev rubygems
+# gem install rest-client clamp --no-ri --no-rdoc
+\end{lstlisting}
 
 \section{deCONZ Bedienung}
 \label{deconz}
