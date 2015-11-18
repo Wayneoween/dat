@@ -1,14 +1,20 @@
 #!/usr/bin/env ruby
 
-require 'rest-client'
-require 'clamp'
-require 'yaml'
-require 'json'
+begin
+  require 'rest-client'
+  require 'clamp'
+  require 'yaml'
+  require 'json'
+rescue LoadError => err
+  puts "Necessary gem missing:\n  #{err}"
+  exit 1
+end
+
 require_relative "helper/api"
 require_relative "helper/clamp"
 require_relative "models/light"
 
-$uri = "http://localhost:7777/api"
+$uri = "http://localhost:80/api"
 $config_file = "config.yml"
 $key = nil
 $light = nil
