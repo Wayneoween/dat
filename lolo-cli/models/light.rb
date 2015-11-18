@@ -32,16 +32,8 @@ class Light
   end
 
   def self.find_by_name(name)
-    response = RestClient.get $uri + "/#{$key}/lights"
-    response = JSON.parse(response)
-    response.each do |nr, light|
-      next unless light["name"] == name
-      l = Light.new
-      l.id = nr
-      l.manufacturer = light["manufacturer"]
-      l.name = light["name"]
-      l.on = light["state"]["on"]
-      return l
+    Light.all.each do |light|
+      return light if light.name == name
     end
     return nil
   end

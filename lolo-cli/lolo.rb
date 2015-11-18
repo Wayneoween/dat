@@ -13,6 +13,7 @@ end
 require_relative "helper/api"
 require_relative "helper/clamp"
 require_relative "models/light"
+require_relative "models/group"
 
 $uri = "http://localhost:80/api"
 $config_file = "config.yml"
@@ -38,9 +39,10 @@ set_api_key
 
 Clamp do
 
-  subcommand "list", "List all lights." do
+  subcommand "list", "List all lights and groups." do
     def execute
       get_lights
+      get_groups
     end
   end
 
@@ -94,5 +96,43 @@ Clamp do
         $light.set_temp(TEMP_MAP[:cold])
       end
     end
+  end
+
+  subcommand "add", "add a group with name or a light to a group" do
+
+    subcommand "group", "Add a Group." do
+
+      parameter "NAME", "name of group"
+
+      def execute
+        Group.add(name)
+      end
+    end
+
+    subcommand "light", "Add a light to a group." do
+
+      parameter "LIGHTNAME", "name of light"
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        light = Light.find_by_name(lightname)
+        return if light.nil?
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+        group.add_light(light)
+      end
+    end
+  end
+
+  subcommand "delete", "delete a group by name" do
+
+    parameter "GROUPNAME", "name of group"
+
+    def execute
+      group = Group.find_by_name(groupname)
+      return if group.nil?
+      group.delete
+    end
+
   end
 end

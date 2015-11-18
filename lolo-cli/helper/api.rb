@@ -38,12 +38,19 @@ def get_cfg(key)
 end
 
 def get_lights
-  puts "Getting all lights..."
-  ret = {}
+  puts "Lights:"
   Light.all.each do |light|
-    ret[light.id] =  {:name =>light.name}
+    puts  "\t#{light.id} \t #{light.name}"
   end
-  puts ret.to_json
+  puts
+end
+
+def get_groups
+  puts "Groups:"
+  Group.all.each do |group|
+    puts "\t#{group.id} \t #{group.name} \tLights: #{group.lights.map(&:name)}"
+  end
+  puts
 end
 
 def get_light_by_id(id)
