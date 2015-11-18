@@ -22,27 +22,27 @@
 
 \usepackage{listings}
 \usepackage{color}
- 
+
 \definecolor{codegreen}{rgb}{0,0.2,0}
 \definecolor{codegray}{rgb}{0.95,0.95,0.95}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
+
 \lstdefinestyle{mystyle}{
-  backgroundcolor=\color{codegray},   
+  backgroundcolor=\color{codegray},
   commentstyle=\color{codegreen},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{black},
   stringstyle=\color{codepurple},
-  breakatwhitespace=false,         
-  breaklines=true,                 
-  captionpos=b,                    
-  keepspaces=true,                 
-  numbers=left,                    
-  numbersep=5pt,                  
-  showspaces=false,                
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
   showstringspaces=false,
-  showtabs=false,                  
+  showtabs=false,
   tabsize=2
 }
 \lstset{style=mystyle,basicstyle=\ttfamily,escapeinside=||}
@@ -229,7 +229,7 @@ gestellt.
 
 Die GUI, im HTML5 Standard, ist die Schnittstelle zum Benutzer und wird im Browser dargestellt.
 Über diese kann der Benutzer die Nodes steuern, wie z.B. Helligkeit und Farbe einstellen.
-Zum bequemen Verwenden der API aus dem Browser wird JavaScript auf dem Client verwendet. 
+Zum bequemen Verwenden der API aus dem Browser wird JavaScript auf dem Client verwendet.
 
 \subsection{CLI}
 
@@ -276,7 +276,7 @@ Internet zu installierende Betriebssystem ausgewählt werden kann.
 Da die \acrshort{deconz}-Software nur in Binärform vorliegt muss ein daran angepasstes
 Betriebssystem installiert werden. \emph{Raspbian}\footnote{\url{https://www.raspbian.org/}},
 eine für das \gls{rpi} angepasste \emph{Debian}\footnote{\url{https://www.debian.org/}} Version,
-ist in der Version Wheezy zur \acrshort{deconz}-Software kompatibel. Weiterhin ist Raspbian eines der 
+ist in der Version Wheezy zur \acrshort{deconz}-Software kompatibel. Weiterhin ist Raspbian eines der
 verbreitetsten Betriebssysteme für den \gls{rpi}.
 Wahlweise kann Raspbian auch manuell installiert werden. Dafür muss ein
 Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
@@ -326,24 +326,24 @@ Kommandozeilenparameter nutzen wir
 \section{deCONZ Bedienung}
 \label{deconz}
 
-Nachdem man \acrshort{deconz} gestartet hat, werden zwei Bedienoberflächen bereitgestellt.
+Bei der Verwendung von \acrshort{deconz} werden zwei Bedienoberflächen bereitgestellt.
 Eine davon wird als Desktop-Applikation angezeigt. Dort kann sich auf einer hardwarenahen
-Ebene verfügbare \gls{gls-zb}-Nodes lassen. Diese Oberfläche kann hauptsächlich zur
-Fehlersuche verwendet werden und wird für unseren Zweck nicht direkt benötigt.
-
-Zusätzlich wird auch eine Weboberfläche angeboten, über die die eigentliche Lampen-Steuerung
-gemacht werden kann. Es können Gruppen --- Verbünde mehrere Lampen --- und Szenen
---- eigene, gespeicherte Konfigurationen für Lichter und Gruppen --- darüber definiert und
-angewählt werden. Im Hintergrund wird eine REST-API bereitgestellt, über die auch dieses
-Webinterface die Lichter steuert.
-
-\noindent
-Diese API werden wir mit dem hier zu schreibenden Kommandozeilenprogramm verwenden.
+Ebene verfügbare \gls{gls-zb}-Nodes lassen.
+Weiter wird eine Weboberfläche angeboten, über die die eigentliche Lampen-Steuerung
+erfolgt. Hiermit können Gruppen --- Verbünde aus mehreren Lampen --- und Szenen
+--- eigene, gespeicherte Konfigurationen für Lichter und Gruppen --- definiert und
+angewählt werden. Im Hintergrund wird eine bereitgestellte REST-API verwendet, über die
+auch unser zu programmierendes CLI auf die Hardware und Daten zugreifen soll.
 
 \subsection{\acrshort{deconz} starten}
 
-Um deCONZ zu starten muss ein X-Server aktiv sein. \acrshort{deconz} lauscht mit dem
-Web-GUI auf Port 80. Optional kann ein anderer Port angegeben werden.
+Um deCONZ zu starten muss zwangsweise ein X-Server aktiv sein. Allerdings wird diese
+Oberfläche hauptsächlich zur Fehlersuche verwendet und wird von uns nicht direkt benötigt.
+Aus diesem Grund starten wir den X-Server nur im Hintergrund und starten die GUI-Applikation
+dort.
+\acrshort{deconz} lauscht mit der, zusammen mit der GUI gestarteten, Weboberfläche auf Port 80.
+Optional kann ein anderer Port
+angegeben werden.
 
 \begin{lstlisting}[caption=deCONZ starten]{deCONZStart}
 $ startx &
