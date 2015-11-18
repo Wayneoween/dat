@@ -7,6 +7,7 @@ require 'json'
 require_relative "helper/api"
 require_relative "helper/clamp"
 require_relative "models/light"
+require_relative "models/group"
 
 $uri = "http://localhost:7777/api"
 $config_file = "config.yml"
@@ -32,9 +33,10 @@ set_api_key
 
 Clamp do
 
-  subcommand "list", "List all lights." do
+  subcommand "list", "List all lights and groups." do
     def execute
       get_lights
+      get_groups
     end
   end
 
