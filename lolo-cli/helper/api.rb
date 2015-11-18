@@ -12,7 +12,9 @@ def set_api_key
     puts "Unable to retrieve API-Key.\nPlease unlock your Gateway first!"
     exit 1
   end
+
   response = JSON.parse(response)
+
   if response && response.first["success"]
     key = response.first["success"]["username"]
     set_cfg("api_key", key)
@@ -29,9 +31,12 @@ end
 
 def get_cfg(key)
   unless File.exist?($config_file)
+    # If config file does not exist, touch it
     File.open($config_file, 'w'){}
   end
+
   cfg = YAML.load(File.read($config_file))
+
   if cfg && cfg[key]
     return cfg[key]
   end
@@ -42,6 +47,7 @@ def get_lights
   Light.all.each do |light|
     puts  "\t#{light.id} \t #{light.name}"
   end
+
   puts
 end
 
@@ -50,6 +56,7 @@ def get_groups
   Group.all.each do |group|
     puts "\t#{group.id} \t #{group.name} \tLights: #{group.lights.map(&:name)}"
   end
+
   puts
 end
 
@@ -58,6 +65,7 @@ def get_scenes
   Scene.all.each do |scene|
     puts "\t#{scene.name} \t#{scene.group.name}"
   end
+
   puts
 end
 

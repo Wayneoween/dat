@@ -1,5 +1,7 @@
 class Group
-
+  # TODO: get inspired by
+  # https://github.com/soffes/hue/blob/master/lib/hue/group.rb
+  # :)
   attr_accessor :id, :name, :on, :lights
 
   def initialize
@@ -12,6 +14,7 @@ class Group
     response["lights"].each do |light_id|
       @lights << Light.find_by_id(light_id)
     end
+
     @lights
   end
 
@@ -25,6 +28,7 @@ class Group
       g.name = group["name"]
       groups << g
     end
+
     return groups
   end
 
@@ -36,6 +40,7 @@ class Group
     Group.all.each do |group|
       return group if group.name == name
     end
+
     return nil
   end
 

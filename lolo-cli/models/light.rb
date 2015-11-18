@@ -1,5 +1,7 @@
 class Light
-
+  # TODO: get inspired by
+  # https://github.com/soffes/hue/blob/master/lib/hue/light.rb
+  # :)
   attr_accessor :id, :manufacturer, :name, :on
   def self.all
     lights = []
@@ -13,6 +15,7 @@ class Light
       l.on = light["state"]["on"]
       lights << l
     end
+
     return lights
   end
 
@@ -22,12 +25,14 @@ class Light
     rescue
       return nil
     end
+
     response = JSON.parse(response)
     l = Light.new
     l.id = id
     l.manufacturer = response["manufacturer"]
     l.name = response["name"]
     l.on = response["state"]["on"]
+
     return l
   end
 
@@ -35,6 +40,7 @@ class Light
     Light.all.each do |light|
       return light if light.name == name
     end
+
     return nil
   end
 

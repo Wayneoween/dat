@@ -1,5 +1,7 @@
 class Scene
-
+  # TODO: get inspired by
+  # https://github.com/soffes/hue/blob/master/lib/hue/scene.rb
+  # :)
   attr_accessor :id, :name, :group
 
   def self.all
@@ -17,6 +19,7 @@ class Scene
         scenes << s
       end
     end
+
     return scenes
   end
 
@@ -28,6 +31,7 @@ class Scene
     Scene.all.each do |scene|
       return scene if scene.name == name
     end
+
     return nil
   end
 

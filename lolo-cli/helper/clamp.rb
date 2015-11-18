@@ -1,5 +1,4 @@
 class SubcommandLightGroup
-
   # This function is called from Clamp. Clamp tries to find
   # a subcommand by comparing the subcommand to the string passed
   # on the console. This hijacks the comparison and looks for
@@ -24,7 +23,6 @@ class SubcommandLightGroup
 end
 
 class SubcommandScene
-
   # This function is called from Clamp. Clamp tries to find
   # a subcommand by comparing the subcommand to the string passed
   # on the console. This hijacks the comparison and looks for
