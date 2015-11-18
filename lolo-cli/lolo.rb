@@ -92,7 +92,7 @@ Clamp do
     end
   end
 
-  subcommand "add", "add a group with name" do
+  subcommand "add", "add a group with name or a light to a group" do
 
     subcommand "group", "Add a Group." do
 
@@ -100,6 +100,20 @@ Clamp do
 
       def execute
         Group.add(name)
+      end
+    end
+
+    subcommand "light", "Add a light to a group." do
+
+      parameter "LIGHTNAME", "name of light"
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        light = Light.find_by_name(lightname)
+        return if light.nil?
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+        group.add_light(light)
       end
     end
   end

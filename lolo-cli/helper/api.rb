@@ -48,7 +48,7 @@ end
 def get_groups
   puts "Groups:"
   Group.all.each do |group|
-    puts "\t#{group.id} \t #{group.name}"
+    puts "\t#{group.id} \t #{group.name} \tLights: #{group.lights.map(&:name)}"
   end
   puts
 end
