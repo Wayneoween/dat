@@ -12,8 +12,9 @@ end
 
 require_relative "helper/api"
 require_relative "helper/clamp"
-require_relative "models/light"
+require_relative "helper/color"
 require_relative "models/group"
+require_relative "models/light"
 require_relative "models/scene"
 
 $uri = "http://localhost:80/api"
