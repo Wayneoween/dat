@@ -43,4 +43,8 @@ class Group
     RestClient.put $uri + "/#{$key}/groups/#{id}", {:lights => [light.id]}.to_json
   end
 
+  def delete
+    RestClient.delete $uri + "/#{$key}/groups/#{id}"
+  end
+
 end

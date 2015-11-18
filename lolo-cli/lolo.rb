@@ -117,4 +117,16 @@ Clamp do
       end
     end
   end
+
+  subcommand "delete", "delete a group by name" do
+
+    parameter "GROUPNAME", "name of group"
+
+    def execute
+      group = Group.find_by_name(groupname)
+      return if group.nil?
+      group.delete
+    end
+
+  end
 end
