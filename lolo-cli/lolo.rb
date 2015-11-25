@@ -5,6 +5,7 @@ begin
   require 'clamp'
   require 'yaml'
   require 'json'
+  require "highline/import"
 rescue LoadError => err
   puts "Necessary gem missing:\n  #{err}"
   exit 1
@@ -17,11 +18,13 @@ require_relative "models/group"
 require_relative "models/light"
 require_relative "models/scene"
 
+$host = "localhost:80"
 $uri = "http://localhost:80/api"
 $config_file = "config.yml"
 $key = nil
 $light = nil
 
+set_uri
 set_api_key
 
 Clamp do

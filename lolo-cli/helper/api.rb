@@ -23,6 +23,24 @@ def set_api_key
   end
 end
 
+def set_uri
+  host = get_cfg("api_host")
+  if host
+    $host = host
+    $uri = "http://" + host + "/api"
+    return $uri
+  end
+
+  host = ask "Input hostname and port of gateway (default: localhost:80): "
+  unless host.empty?
+    $host = host
+  end
+
+  set_cfg("api_host", $host)
+  $uri = "http://" + $host + "/api"
+  return $uri
+end
+
 def set_cfg(key, value)
   cfg = YAML.load(File.read($config_file))
   if cfg
