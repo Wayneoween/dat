@@ -44,6 +44,14 @@ class Group
     return nil
   end
 
+  def set_color(hue)
+    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:hue => hue}.to_json
+  end
+
+  def set_temp(temp)
+    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:ct => temp}.to_json
+  end
+
   def add_light(light)
     RestClient.put $uri + "/#{$key}/groups/#{id}", {:lights => [light.id]}.to_json
   end
