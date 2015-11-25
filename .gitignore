@@ -1,4 +1,6 @@
 *.texpadtmp
 .DS_Store
 config.yml
-.texpadtmp
+**7
+**/.texpadtmp
+praesentation/_minted-demo/*
