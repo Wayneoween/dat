@@ -24,8 +24,15 @@ def set_api_key
 end
 
 def set_cfg(key, value)
+  cfg = YAML.load(File.read($config_file))
+  if cfg
+    cfg[key] = value
+  else
+    cfg = {key => value}
+  end
+
   File.open($config_file, "w") do |file|
-    file.write({key => value}.to_yaml)
+    file.write(cfg.to_yaml)
   end
 end
 
