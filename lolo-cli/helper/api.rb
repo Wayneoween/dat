@@ -3,23 +3,33 @@ def set_api_key
     return $key
   end
 
-  begin
-    response = RestClient.post $uri,
-      { 'devicetype' => "myappbar" }.to_json,
-      :content_type => :json,
-      :accept => :json
-  rescue
-    puts "Unable to retrieve API-Key.\nPlease unlock your Gateway first!"
-    exit 1
+  def try_login
+    # Try default password first
+    yield "delight:delight@"
+    yield ""
   end
 
-  response = JSON.parse(response)
+  try_login do |login|
+    begin
+      if host = get_cfg("api_host")
+        response = RestClient.post "http://" + login + host + "/api",
+          { 'devicetype' => "myappbar" }.to_json,
+          :content_type => :json,
+          :accept => :json
+      end
+    rescue
+      puts "Unable to retrieve API-Key.\nPlease unlock your Gateway first!"
+      exit 1
+    end
 
-  if response && response.first["success"]
-    key = response.first["success"]["username"]
-    set_cfg("api_key", key)
-    $key = key
-    return key
+    response = JSON.parse(response)
+
+    if response && response.first["success"]
+      key = response.first["success"]["username"]
+      set_cfg("api_key", key)
+      $key = key
+      return key
+    end
   end
 end
 
