@@ -136,15 +136,30 @@ Clamp do
     end
   end
 
-  subcommand "delete", "delete a group by name" do
+  subcommand "delete", "delete a group or scene" do
 
-    parameter "GROUPNAME", "name of group"
+    subcommand "group", "Delete a group." do
 
-    def execute
-      group = Group.find_by_name(groupname)
-      return if group.nil?
-      group.delete
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+        group.delete
+      end
+
     end
 
+    subcommand "scene", "Delete a scene." do
+
+      parameter "SCENENAME", "name of scene"
+
+      def execute
+        scene = Scene.find_by_name(scenename)
+        return if scene.nil?
+        scene.delete
+      end
+
+    end
   end
 end

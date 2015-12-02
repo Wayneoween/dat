@@ -46,4 +46,8 @@ class Scene
   def self.create(group, name)
     RestClient.post $uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name}.to_json
   end
+
+  def delete
+    RestClient.delete $uri + "/#{$key}/groups/#{group.id}/scenes/#{id}"
+  end
 end
