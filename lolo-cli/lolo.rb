@@ -43,6 +43,10 @@ Clamp do
     end
   end
 
+  # XXX: Its *probably* better to use a switch for telling lolo which one we want
+  #      because now we read the light cache, and then the group cache to determine
+  #      if the given name is in any of those. What if a light has the same name as
+  #      a group?
   subcommand SubcommandLightGroup.new, "Switch a light (by name or id) or group on/off." do
 
     subcommand "on", "Switch on." do

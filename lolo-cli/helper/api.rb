@@ -89,6 +89,7 @@ end
 def get_groups
   puts "Groups:"
   Group.all.each do |group|
+    # XXX: api.rb:92:in `block in get_groups': undefined method `map' for nil:NilClass (NoMethodError)
     puts "\t#{group.id} \t #{group.name} \tLights: #{group.lights.map(&:name)}"
   end
 

@@ -4,7 +4,7 @@ class Scene
   # :)
   attr_accessor :id, :name, :group
 
-  def self.all
+  def self.all_from_rest
     scenes = []
     Group.all.each do |group|
       response = RestClient.get $uri + "/#{$key}/groups/" + group.id + "/scenes"
@@ -18,6 +18,31 @@ class Scene
         s.group = group
         scenes << s
       end
+    end
+
+    # Update the cache
+    serialize(scenes)
+
+    return scenes
+  end
+
+  def self.serialize(scenes)
+    serialized = YAML::dump(scenes)
+    File.open("scene_cache.yml", "w") do |file|
+      file.write(serialized)
+    end
+  end
+
+  def self.all
+    scenes = []
+
+    # If the cache exists, we assume its up-to-date
+    if File.exist?("scene_cache.yml")
+      puts "Loading scene cache..."
+      scenes = YAML.load(File.read("scene_cache.yml"))
+    else
+      puts "Getting scenes from server..."
+      scenes = all_from_rest
     end
 
     return scenes

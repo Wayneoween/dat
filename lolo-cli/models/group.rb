@@ -4,21 +4,7 @@ class Group
   # :)
   attr_accessor :id, :name, :on, :lights
 
-  def initialize
-    @lights = []
-  end
-
-  def lights
-    response = RestClient.get $uri + "/#{$key}/groups/#{id}"
-    response = JSON.parse(response)
-    response["lights"].each do |light_id|
-      @lights << Light.find_by_id(light_id)
-    end
-
-    @lights
-  end
-
-  def self.all
+  def self.all_from_rest
     groups = []
     response = RestClient.get $uri + "/#{$key}/groups"
     response = JSON.parse(response)
@@ -29,6 +15,31 @@ class Group
       groups << g
     end
 
+    # Update the cache
+    serialize(groups)
+
+    return groups
+  end
+
+  def self.serialize(groups)
+    serialized = YAML::dump(groups)
+    File.open("group_cache.yml", "w") do |file|
+      file.write(serialized)
+    end
+  end
+
+  def self.all
+    groups = []
+
+    # If the cache exists, we assume its up-to-date
+    if File.exist?("group_cache.yml")
+      puts "Loading group cache..."
+      groups = YAML.load(File.read("group_cache.yml"))
+    else
+      puts "Getting groups from server..."
+      groups = all_from_rest
+    end
+
     return groups
   end
 
@@ -37,6 +48,7 @@ class Group
   end
 
   def self.find_by_name(name)
+    # XXX: Maybe make group an instance variable so we don't load the cache again here
     Group.all.each do |group|
       return group if group.name == name
     end

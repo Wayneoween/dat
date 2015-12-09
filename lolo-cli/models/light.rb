@@ -16,6 +16,7 @@ class Light
       lights << l
     end
 
+    # Update the cache
     serialize(lights)
 
     return lights
@@ -30,6 +31,8 @@ class Light
 
   def self.all
     lights = []
+
+    # If the cache exists, we assume its up-to-date
     if File.exist?("light_cache.yml")
       puts "Loading light cache..."
       lights = YAML.load(File.read("light_cache.yml"))
