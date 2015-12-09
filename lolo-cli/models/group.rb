@@ -20,6 +20,12 @@ class Group
 
   def self.all
     groups = []
+
+    if File.exist?($obj_file)
+      cfg = YAML.load(File.read($obj_file))
+      return cfg if cfg
+    end
+
     response = RestClient.get $uri + "/#{$key}/groups"
     response = JSON.parse(response)
     response.each do |nr, group|
@@ -28,9 +34,17 @@ class Group
       g.name = group["name"]
       groups << g
     end
-
+    serialize(groups)
     return groups
   end
+
+  def self.serialize(groups)
+    serialized = YAML::dump(groups)
+    File.open($obj_file, "w") do |file|
+      file.write(serialized)
+    end
+  end
+
 
   def self.add(name)
     RestClient.post $uri + "/#{$key}/groups", {:name => name}.to_json
