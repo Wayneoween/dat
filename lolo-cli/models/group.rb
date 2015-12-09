@@ -4,6 +4,20 @@ class Group
   # :)
   attr_accessor :id, :name, :on, :lights
 
+  def initialize
+    @lights = []
+  end
+
+  def lights
+    response = RestClient.get $uri + "/#{$key}/groups/#{id}"
+    response = JSON.parse(response)
+    response["lights"].each do |light_id|
+      @lights << Light.find_by_id(light_id)
+    end
+
+    @lights
+  end
+
   def self.all_from_rest
     groups = []
     response = RestClient.get $uri + "/#{$key}/groups"
