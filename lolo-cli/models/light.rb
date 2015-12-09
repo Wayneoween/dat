@@ -3,7 +3,7 @@ class Light
   # https://github.com/soffes/hue/blob/master/lib/hue/light.rb
   # :)
   attr_accessor :id, :manufacturer, :name, :on
-  def self.all
+  def self.all_from_rest
     lights = []
     response = RestClient.get $uri + "/#{$key}/lights"
     response = JSON.parse(response)
@@ -17,6 +17,22 @@ class Light
     end
 
     return lights
+  end
+
+  def self.all_from_cache
+    lights = []
+    if File.exist?("lights.cache")
+      YAML.load(File.read("lights.cache"))
+    end
+
+    return lights
+  end
+
+  def self.all
+    if all_from_cache
+    else
+      all_from_rest
+    end
   end
 
   def self.find_by_id(id)
