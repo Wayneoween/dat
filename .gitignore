@@ -1,6 +1,7 @@
 *.texpadtmp
 .DS_Store
 config.yml
+*_cache.yml
 **7
 **/.texpadtmp
 praesentation/_minted-demo/*

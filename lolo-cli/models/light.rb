@@ -16,23 +16,29 @@ class Light
       lights << l
     end
 
+    serialize(lights)
+
     return lights
   end
 
-  def self.all_from_cache
-    lights = []
-    if File.exist?("lights.cache")
-      YAML.load(File.read("lights.cache"))
+  def self.serialize(lights)
+    serialized = YAML::dump(lights)
+    File.open("light_cache.yml", "w") do |file|
+      file.write(serialized)
     end
-
-    return lights
   end
 
   def self.all
-    if all_from_cache
+    lights = []
+    if File.exist?("light_cache.yml")
+      puts "Loading light cache..."
+      lights = YAML.load(File.read("light_cache.yml"))
     else
-      all_from_rest
+      puts "Getting lights from server..."
+      lights = all_from_rest
     end
+
+    return lights
   end
 
   def self.find_by_id(id)
