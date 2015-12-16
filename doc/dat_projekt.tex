@@ -23,14 +23,15 @@
 \usepackage{listings}
 \usepackage{color}
 
-\definecolor{codegreen}{rgb}{0,0.2,0}
+\definecolor{comment}{rgb}{0.6,0.4,0}
 \definecolor{codegray}{rgb}{0.95,0.95,0.95}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 \lstdefinestyle{mystyle}{
   backgroundcolor=\color{codegray},
-  commentstyle=\color{codegreen},
+  language=Bash,
+  commentstyle=\color{comment},
   keywordstyle=\color{magenta},
   numberstyle=\tiny\color{black},
   stringstyle=\color{codepurple},
@@ -360,31 +361,89 @@ $ DISPLAY=:0 deCONZ --auto-connect=1 &
 
 \subsection{Beispielaufrufe}
 
-\begin{lstlisting}[caption=lolo Beispielaufrufe]{loloBeispiel}
+In den folgenden Beispielen wird mit folgendem Datenbestand gearbeitet:
+
+\noindent
+Lichter \texttt{L1} und \texttt{L2}
+
+\noindent
+Gruppen \texttt{G1} und \texttt{G2}
+
+\noindent
+Szene \texttt{S1}
+
+\subsubsection{Ausgabe der Hilfe}
+
+\begin{lstlisting}[caption=Hilfe von \texttt{lolo},
+                   basicstyle=\footnotesize\ttfamily,
+                   language=C]{lolo_allgemein}
+$ lolo
+Usage:
+  lolo.rb [OPTIONS] SUBCOMMAND [ARG] ...
+
+Parameters:
+  SUBCOMMAND               subcommand
+  [ARG] ...                subcommand arguments
+
+Subcommands:
+  update                   Update the cache.
+  list                     List all lights and groups.
+  <scene>                  Switch to a specific scene.
+  <light/group> <on/off>   Switch a light or group on/off.
+  add                      Add a group or a light to a group.
+  delete                   Delete a group or scene.
+Options:
+    -h, --help             print help
+\end{lstlisting}
+
+\subsubsection{Auflisten des Datenbestands}
+
+\begin{lstlisting}[caption={Abfrage aller Lichter, Gruppen und Szenen},
+                   basicstyle=\footnotesize\ttfamily]{loloallgemein}
 $ lolo list
+Lights:
+	1 	 L1
+Groups:
+	1 	 G1 	Lights: []
+Scenes:
+	S1 	G1
+\end{lstlisting}
 
-// Gruppe gruppe1 wird erstellt
-$ lolo add group gruppe1
+\subsubsection{Lichtsteuerung}
 
-// Licht lampe2 wird angelegt und zur gruppe
-// 'gruppe1' hinzugef|ü|gt
-$ lolo add light lampe2 <UUID> gruppe1
+\begin{lstlisting}[caption=lolo Beispielaufrufe,
+                   basicstyle=\footnotesize\ttfamily,language=Bash]{lololist}
+# moo
+$ lolo L1 on
+$ lolo L1 red
+$ lolo L1 cold
+$ lolo L1 on
 
-$ lolo lampe1 [on/off]
-$ lolo lampe1 red
-$ lolo gruppe1 |\#|0412312
-$ lolo lampe1 cold
-$ lolo gruppe1 warm
+\end{lstlisting}
 
-$ lolo delete group gruppe1
-$ lolo delete scene scene1
+\subsubsection{Gruppen und Szenen}
 
-// Neue Szene aus aktueller Einstellung von gruppe1,
-// lampe3 und lampe4, die nicht in gruppe1 sind
-$ lolo add scene szene1 from gruppe1 lampe1 lampe2
+\begin{lstlisting}[caption=Bedienung von Gruppen und Szenen,
+                   basicstyle=\footnotesize\ttfamily]{lologruppenszenen}
+# Erstellen einer neuen Gruppe
+$ lolo add group G1
 
-// Frauenbesuch aktivieren
-$ lolo szene1
+# Licht L2 wird angelegt und zur Gruppe G1
+# hinzugefuegt
+$ lolo add light L2 <UUID> G1
+
+$ lolo G1 |\#|0412312
+$ lolo G2 warm
+
+$ lolo delete group G1
+$ lolo delete scene S1
+
+# Neue Szene aus aktueller Einstellung von G1,
+# L3 und L4, die nicht in G1 sind
+$ lolo add scene S1 from G1 L1 L2
+
+|\#| Frauenbesuch aktivieren
+$ lolo S1
 \end{lstlisting}
 
 \newpage
