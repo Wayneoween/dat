@@ -24,7 +24,7 @@ class Light
   end
 
   def self.serialize(lights)
-    $logger.debug "Serializing #{lights.size} lights"
+    $logger.debug "Serializing #{lights.size} light(s)"
     serialized = YAML::dump(lights)
     File.open("light_cache.yml", "w") do |file|
       file.write(serialized)
@@ -40,10 +40,10 @@ class Light
 
     # If the cache exists, we assume its up-to-date
     if File.exist?("light_cache.yml")
-      $logger.debug "Loading light cache..."
+      $logger.debug "Loading light cache"
       lights = YAML.load(File.read("light_cache.yml"))
     else
-      $logger.debug "Getting lights from server..."
+      $logger.debug "Getting lights from server"
       lights = all_from_rest
     end
 
@@ -87,12 +87,12 @@ class Light
   end
 
   def turn_on
-    $logger.debug "Setting light #{id} on"
+    $logger.debug "Turning light #{id} on"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => true}.to_json
   end
 
   def turn_off
-    $logger.debug "Setting light #{id} off"
+    $logger.debug "Turning light #{id} off"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => false}.to_json
   end
 end
