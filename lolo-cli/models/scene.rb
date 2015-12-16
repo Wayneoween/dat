@@ -64,6 +64,14 @@ class Scene
     return nil
   end
 
+  def self.find_by_id(id)
+    Scene.all.each do |scene|
+      return scene if scene.id == id
+    end
+
+    return nil
+  end
+
   def turn_on
     $logger.debug "Turning scene #{id} on"
     RestClient.put $uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", ""

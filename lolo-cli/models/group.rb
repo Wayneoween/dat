@@ -79,6 +79,15 @@ class Group
     return nil
   end
 
+  def self.find_by_id(id)
+    $logger.debug "Getting group #{id}"
+    Group.all.each do |group|
+      return group if group.id == id
+    end
+
+    return nil
+  end
+
   def set_color(hue)
     $logger.debug "Setting color of group #{id}"
     RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:hue => hue}.to_json

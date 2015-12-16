@@ -13,6 +13,9 @@ class SubcommandLightGroup
     if $light = Light.find_by_id(other_object)
       return true
     end
+    if $light = Group.find_by_id(other_object)
+      return true
+    end
     return false
   end
 
@@ -29,6 +32,9 @@ class SubcommandScene
   # Scenes that match the specified name.
   def ==(other_object)
     if $light = Scene.find_by_name(other_object)
+      return true
+    end
+    if $light = Scene.find_by_id(other_object)
       return true
     end
     return false
