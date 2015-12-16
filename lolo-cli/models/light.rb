@@ -51,7 +51,7 @@ class Light
   end
 
   def self.find_by_id(id)
-    $logger.debug "Getting light #{id} via #{uri}/#{$key}/lights/#{id}"
+    $logger.debug "Getting light #{id} via #{$uri}/#{$key}/lights/#{id}"
     begin
       response = RestClient.get $uri + "/#{$key}/lights/#{id}"
     rescue
