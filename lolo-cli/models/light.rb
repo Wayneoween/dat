@@ -87,12 +87,12 @@ class Light
   end
 
   def turn_on
-    $logger.debug "Setting light #{id} on"
+    $logger.debug "Turning light #{id} on"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => true}.to_json
   end
 
   def turn_off
-    $logger.debug "Setting light #{id} off"
+    $logger.debug "Turning light #{id} off"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => false}.to_json
   end
 end
