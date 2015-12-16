@@ -24,6 +24,7 @@ $uri = "http://localhost:80/api"
 $config_file = "config.yml"
 $key = nil
 $light = nil
+$commands = ["update", "list", "delete", "add"]
 
 $logger = Logger.new(STDOUT)
 $logger.level = Logger::WARN
