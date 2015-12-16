@@ -29,6 +29,14 @@ set_api_key
 
 Clamp do
 
+  subcommand "update", "Update cache of lights, groups and scenes." do
+    def execute
+      Light.update_cache
+      Group.update_cache
+      Scene.update_cache
+    end
+  end
+
   subcommand "list", "List all lights and groups." do
     def execute
       get_lights

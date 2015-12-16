@@ -33,6 +33,10 @@ class Scene
     end
   end
 
+  def self.update_cache
+    self.all_from_rest
+  end
+
   def self.all
     scenes = []
 
