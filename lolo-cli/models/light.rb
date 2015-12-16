@@ -3,7 +3,7 @@ class Light
   # https://github.com/soffes/hue/blob/master/lib/hue/light.rb
   # :)
   attr_accessor :id, :manufacturer, :name, :on
-  def self.all
+  def self.all_from_rest
     lights = []
     response = RestClient.get $uri + "/#{$key}/lights"
     response = JSON.parse(response)
@@ -14,6 +14,31 @@ class Light
       l.name = light["name"]
       l.on = light["state"]["on"]
       lights << l
+    end
+
+    # Update the cache
+    serialize(lights)
+
+    return lights
+  end
+
+  def self.serialize(lights)
+    serialized = YAML::dump(lights)
+    File.open("light_cache.yml", "w") do |file|
+      file.write(serialized)
+    end
+  end
+
+  def self.all
+    lights = []
+
+    # If the cache exists, we assume its up-to-date
+    if File.exist?("light_cache.yml")
+      puts "Loading light cache..."
+      lights = YAML.load(File.read("light_cache.yml"))
+    else
+      puts "Getting lights from server..."
+      lights = all_from_rest
     end
 
     return lights
