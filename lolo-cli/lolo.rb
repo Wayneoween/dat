@@ -33,29 +33,29 @@ Clamp do
 
   subcommand "update", "Update cache of lights, groups and scenes." do
     def execute
-      logger.debug "Updating light cache"
+      $logger.debug "Updating light cache"
       Light.update_cache
-      logger.debug "Updating group cache"
+      $logger.debug "Updating group cache"
       Group.update_cache
-      logger.debug "Updating scene cache"
+      $logger.debug "Updating scene cache"
       Scene.update_cache
     end
   end
 
   subcommand "list", "List all lights and groups." do
     def execute
-      logger.debug "Getting lights"
+      $logger.debug "Getting lights"
       get_lights
-      logger.debug "Getting groups"
+      $logger.debug "Getting groups"
       get_groups
-      logger.debug "Getting scenes"
+      $logger.debug "Getting scenes"
       get_scenes
     end
   end
 
   subcommand SubcommandScene.new, "Switch to a specific scene." do
     def execute
-      logger.debug "Turning on scene #{$light}"
+      $logger.debug "Turning on scene #{$light}"
       $light.turn_on
     end
   end
@@ -68,56 +68,56 @@ Clamp do
 
     subcommand "on", "Switch on." do
       def execute
-        logger.debug "Turning on light #{$light}"
+        $logger.debug "Turning on light #{$light}"
         $light.turn_on
       end
     end
 
     subcommand "off", "Switch off." do
       def execute
-        logger.debug "Turning off light #{$light}"
+        $logger.debug "Turning off light #{$light}"
         $light.turn_off
       end
     end
 
     subcommand "red", "Set light color to red." do
       def execute
-        logger.debug "Turning light #{$light} to red"
+        $logger.debug "Turning light #{$light} to red"
         $light.set_color(HUE_MAP[:red])
       end
     end
 
     subcommand "blue", "Set light color to blue." do
       def execute
-        logger.debug "Turning light #{$light} to blue"
+        $logger.debug "Turning light #{$light} to blue"
         $light.set_color(HUE_MAP[:blue])
       end
     end
 
     subcommand "green", "Set light color to green." do
       def execute
-        logger.debug "Turning light #{$light} to green"
+        $logger.debug "Turning light #{$light} to green"
         $light.set_color(HUE_MAP[:green])
       end
     end
 
     subcommand "white", "Set light color to white." do
       def execute
-        logger.debug "Turning light #{$light} to white"
+        $logger.debug "Turning light #{$light} to white"
         $light.set_color(HUE_MAP[:white])
       end
     end
 
     subcommand "warm", "Set light temperature to warm." do
       def execute
-        logger.debug "Turning light #{$light} to white warm"
+        $logger.debug "Turning light #{$light} to white warm"
         $light.set_temp(TEMP_MAP[:warm])
       end
     end
 
     subcommand "cold", "Set light temperature to cold." do
       def execute
-        logger.debug "Turning light #{$light} to white cold"
+        $logger.debug "Turning light #{$light} to white cold"
         $light.set_temp(TEMP_MAP[:cold])
       end
     end
@@ -130,7 +130,7 @@ Clamp do
       parameter "NAME", "name of group"
 
       def execute
-        logger.debug "Adding group #{name}"
+        $logger.debug "Adding group #{name}"
         Group.add(name)
       end
     end
@@ -141,15 +141,15 @@ Clamp do
       parameter "GROUPNAME", "name of group"
 
       def execute
-        logger.debug "Looking for light #{lightname}"
+        $logger.debug "Looking for light #{lightname}"
         light = Light.find_by_name(lightname)
         return if light.nil?
 
-        logger.debug "Looking for group #{groupname}"
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
 
-        logger.debug "Adding light #{lightname} to group #{groupname}"
+        $logger.debug "Adding light #{lightname} to group #{groupname}"
         group.add_light(light)
       end
     end
@@ -160,11 +160,11 @@ Clamp do
       parameter "GROUPNAME", "name of group"
 
       def execute
-        logger.debug "Looking for group #{groupname}"
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
 
-        logger.debug "Looking for scene #{scene}"
+        $logger.debug "Looking for scene #{scene}"
         scene = Scene.find_by_name(scene)
         if not scene.nil?
           scene.update()
