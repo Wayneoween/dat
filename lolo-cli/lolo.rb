@@ -66,7 +66,7 @@ Clamp do
   #      because now we read the light cache, and then the group cache to determine
   #      if the given name is in any of those. What if a light has the same name as
   #      a group?
-  subcommand SubcommandLightGroup.new, "Switch a light (by name or id) or group on/off." do
+  subcommand SubcommandLightGroup.new, "Switch a light or group on/off." do
 
     subcommand "on", "Switch on." do
       def execute
@@ -125,7 +125,7 @@ Clamp do
     end
   end
 
-  subcommand "add", "add a group with name or a light to a group" do
+  subcommand "add", "Add a group or a light to a group." do
 
     subcommand "group", "Add a Group." do
 
@@ -177,7 +177,7 @@ Clamp do
     end
   end
 
-  subcommand "delete", "delete a group or scene" do
+  subcommand "delete", "Delete a group or scene." do
 
     subcommand "group", "Delete a group." do
 
