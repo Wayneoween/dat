@@ -166,8 +166,8 @@ Clamp do
         group = Group.find_by_name(groupname)
         return if group.nil?
 
-        $logger.debug "Looking for scene #{scene}"
-        scene = Scene.find_by_name(scene)
+        $logger.debug "Looking for scene #{scenename}"
+        scene = Scene.find_by_name(scenename)
         if not scene.nil?
           scene.update()
         else
@@ -184,8 +184,11 @@ Clamp do
       parameter "GROUPNAME", "name of group"
 
       def execute
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
+
+        $logger.debug "Deleting group #{groupname}"
         group.delete
       end
 
@@ -196,8 +199,11 @@ Clamp do
       parameter "SCENENAME", "name of scene"
 
       def execute
+        $logger.debug "Looking for scene #{scenename}"
         scene = Scene.find_by_name(scenename)
         return if scene.nil?
+
+        $logger.debug "Deleting scene #{scenename}"
         scene.delete
       end
 
