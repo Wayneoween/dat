@@ -21,7 +21,6 @@ require_relative "models/scene"
 $host = "localhost:80"
 $uri = "http://localhost:80/api"
 $config_file = "config.yml"
-$obj_file = "objects.yml"
 $key = nil
 $light = nil
 
