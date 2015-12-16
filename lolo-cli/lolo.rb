@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 
 begin
-  require 'rest-client'
   require 'clamp'
-  require 'yaml'
+  require 'highline/import'
   require 'json'
-  require "highline/import"
+  require 'logger'
+  require 'rest-client'
+  require 'yaml'
 rescue LoadError => err
   puts "Necessary gem missing:\n  #{err}"
   exit 1
@@ -24,6 +25,9 @@ $config_file = "config.yml"
 $key = nil
 $light = nil
 
+$logger = Logger.new(STDOUT)
+$logger.level = Logger::DEBUG
+
 set_uri
 set_api_key
 
@@ -31,22 +35,29 @@ Clamp do
 
   subcommand "update", "Update cache of lights, groups and scenes." do
     def execute
+      $logger.debug "Updating light cache"
       Light.update_cache
+      $logger.debug "Updating group cache"
       Group.update_cache
+      $logger.debug "Updating scene cache"
       Scene.update_cache
     end
   end
 
   subcommand "list", "List all lights and groups." do
     def execute
+      $logger.debug "Getting lights"
       get_lights
+      $logger.debug "Getting groups"
       get_groups
+      $logger.debug "Getting scenes"
       get_scenes
     end
   end
 
   subcommand SubcommandScene.new, "Switch to a specific scene." do
     def execute
+      $logger.debug "Turning on scene #{$light}"
       $light.turn_on
     end
   end
@@ -59,49 +70,56 @@ Clamp do
 
     subcommand "on", "Switch on." do
       def execute
+        $logger.debug "Turning on light #{$light}"
         $light.turn_on
       end
     end
 
     subcommand "off", "Switch off." do
       def execute
+        $logger.debug "Turning off light #{$light}"
         $light.turn_off
       end
     end
 
     subcommand "red", "Set light color to red." do
       def execute
+        $logger.debug "Turning light #{$light} to red"
         $light.set_color(HUE_MAP[:red])
       end
     end
 
     subcommand "blue", "Set light color to blue." do
       def execute
+        $logger.debug "Turning light #{$light} to blue"
         $light.set_color(HUE_MAP[:blue])
       end
     end
 
     subcommand "green", "Set light color to green." do
       def execute
+        $logger.debug "Turning light #{$light} to green"
         $light.set_color(HUE_MAP[:green])
       end
     end
 
     subcommand "white", "Set light color to white." do
       def execute
+        $logger.debug "Turning light #{$light} to white"
         $light.set_color(HUE_MAP[:white])
       end
     end
 
-
     subcommand "warm", "Set light temperature to warm." do
       def execute
+        $logger.debug "Turning light #{$light} to white warm"
         $light.set_temp(TEMP_MAP[:warm])
       end
     end
 
     subcommand "cold", "Set light temperature to cold." do
       def execute
+        $logger.debug "Turning light #{$light} to white cold"
         $light.set_temp(TEMP_MAP[:cold])
       end
     end
@@ -114,6 +132,7 @@ Clamp do
       parameter "NAME", "name of group"
 
       def execute
+        $logger.debug "Adding group #{name}"
         Group.add(name)
       end
     end
@@ -124,24 +143,31 @@ Clamp do
       parameter "GROUPNAME", "name of group"
 
       def execute
+        $logger.debug "Looking for light #{lightname}"
         light = Light.find_by_name(lightname)
         return if light.nil?
+
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
+
+        $logger.debug "Adding light #{lightname} to group #{groupname}"
         group.add_light(light)
       end
     end
 
-    subcommand "scene", "Add a scene from a group." do
+    subcommand "scene", "Add a new scene to a group." do
 
       parameter "SCENENAME", "name of scene"
       parameter "GROUPNAME", "name of group"
 
       def execute
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
 
-        scene = Scene.find_by_name(scene)
+        $logger.debug "Looking for scene #{scenename}"
+        scene = Scene.find_by_name(scenename)
         if not scene.nil?
           scene.update()
         else
@@ -158,8 +184,11 @@ Clamp do
       parameter "GROUPNAME", "name of group"
 
       def execute
+        $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
         return if group.nil?
+
+        $logger.debug "Deleting group #{groupname}"
         group.delete
       end
 
@@ -170,8 +199,11 @@ Clamp do
       parameter "SCENENAME", "name of scene"
 
       def execute
+        $logger.debug "Looking for scene #{scenename}"
         scene = Scene.find_by_name(scenename)
         return if scene.nil?
+
+        $logger.debug "Deleting scene #{scenename}"
         scene.delete
       end
 

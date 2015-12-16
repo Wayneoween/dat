@@ -5,6 +5,7 @@ class Light
   attr_accessor :id, :manufacturer, :name, :on
   def self.all_from_rest
     lights = []
+    $logger.debug "Getting lights via #{$uri}/#{$key}/lights"
     response = RestClient.get $uri + "/#{$key}/lights"
     response = JSON.parse(response)
     response.each do |nr, light|
@@ -23,6 +24,7 @@ class Light
   end
 
   def self.serialize(lights)
+    $logger.debug "Serializing #{lights.size} light(s)"
     serialized = YAML::dump(lights)
     File.open("light_cache.yml", "w") do |file|
       file.write(serialized)
@@ -38,10 +40,10 @@ class Light
 
     # If the cache exists, we assume its up-to-date
     if File.exist?("light_cache.yml")
-      puts "Loading light cache..."
+      $logger.debug "Loading light cache"
       lights = YAML.load(File.read("light_cache.yml"))
     else
-      puts "Getting lights from server..."
+      $logger.debug "Getting lights from server"
       lights = all_from_rest
     end
 
@@ -49,6 +51,7 @@ class Light
   end
 
   def self.find_by_id(id)
+    $logger.debug "Getting light #{id} via #{uri}/#{$key}/lights/#{id}"
     begin
       response = RestClient.get $uri + "/#{$key}/lights/#{id}"
     rescue
@@ -74,18 +77,22 @@ class Light
   end
 
   def set_color(hue)
+    $logger.debug "Setting color of light #{id}"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:hue => hue}.to_json
   end
 
   def set_temp(temp)
+    $logger.debug "Setting temperature of light #{id}"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:ct => temp}.to_json
   end
 
   def turn_on
+    $logger.debug "Turning light #{id} on"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => true}.to_json
   end
 
   def turn_off
+    $logger.debug "Turning light #{id} off"
     RestClient.put $uri + "/#{$key}/lights/#{id}/state", {:on => false}.to_json
   end
 end
