@@ -26,12 +26,16 @@ $key = nil
 $light = nil
 
 $logger = Logger.new(STDOUT)
-$logger.level = Logger::DEBUG
+$logger.level = Logger::WARN
 
 set_uri
 set_api_key
 
 Clamp do
+
+  option "-d", :flag, "be chatty", :attribute_name => "debug" do |s|
+    $logger.level = Logger::DEBUG
+  end
 
   subcommand "update", "Update cache of lights, groups and scenes." do
     def execute
