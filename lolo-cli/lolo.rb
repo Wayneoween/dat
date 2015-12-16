@@ -33,7 +33,7 @@ set_api_key
 
 Clamp do
 
-  option "-d", :flag, "be chatty", :attribute_name => "debug" do |s|
+  option "-d", :flag, "Enable debug output", :attribute_name => "debug" do |s|
     $logger.level = Logger::DEBUG
   end
 
