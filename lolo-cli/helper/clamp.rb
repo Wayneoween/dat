@@ -4,6 +4,8 @@ class SubcommandLightGroup
   # on the console. This hijacks the comparison and looks for
   # Lights or Groups that match the specified name.
   def ==(other_object)
+    return false if $commands.any?{|cmd| cmd.include?(other_object) }
+
     if $light = Group.find_by_name(other_object)
       return true
     end
@@ -27,7 +29,10 @@ class SubcommandScene
   # a subcommand by comparing the subcommand to the string passed
   # on the console. This hijacks the comparison and looks for
   # Scenes that match the specified name.
+
   def ==(other_object)
+    return false if $commands.any?{|cmd| cmd.include?(other_object) }
+
     if $light = Scene.find_by_name(other_object)
       return true
     end
