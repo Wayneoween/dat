@@ -10,7 +10,7 @@ class Group
 
   def lights
     $logger.debug "Getting lights from group #{id} via #{$uri}/#{$key}/groups/#{id}"
-    response = RestClient.get $uri + "/#{$key}/groups/#{id}"
+    response = make_get_request($uri + "/#{$key}/groups/#{id}")
     response = JSON.parse(response)
     response["lights"].each do |light_id|
       @lights << Light.find_by_id(light_id)
@@ -22,7 +22,7 @@ class Group
   def self.all_from_rest
     groups = []
     $logger.debug "Getting groups via #{$uri}/#{$key}/groups"
-    response = RestClient.get $uri + "/#{$key}/groups"
+    response = make_get_request($uri + "/#{$key}/groups")
     response = JSON.parse(response)
     response.each do |nr, group|
       g = Group.new
@@ -66,7 +66,7 @@ class Group
 
   def self.add(name)
     $logger.debug "Add group #{name} via #{$uri}/#{$key}/groups"
-    RestClient.post $uri + "/#{$key}/groups", {:name => name}.to_json
+    make_post_request($uri + "/#{$key}/groups", {:name => name})
   end
 
   def self.find_by_name(name)
@@ -90,31 +90,31 @@ class Group
 
   def set_color(hue)
     $logger.debug "Setting color of group #{id}"
-    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:hue => hue}.to_json
+    make_put_request($uri + "/#{$key}/groups/#{id}/action", {:hue => hue})
   end
 
   def set_temp(temp)
     $logger.debug "Setting temperature of group #{id}"
-    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:ct => temp}.to_json
+    make_put_request($uri + "/#{$key}/groups/#{id}/action", {:ct => temp})
   end
 
   def add_light(light)
     $logger.debug "Add light #{light.name} to group #{id}"
-    RestClient.put $uri + "/#{$key}/groups/#{id}", {:lights => [light.id]}.to_json
+    make_put_request($uri + "/#{$key}/groups/#{id}", {:lights => [light.id]})
   end
 
   def delete
     $logger.debug "Delete group #{id}"
-    RestClient.delete $uri + "/#{$key}/groups/#{id}"
+    make_delete_request($uri + "/#{$key}/groups/#{id}")
   end
 
   def turn_on
     $logger.debug "Turning group #{id} on"
-    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:on => true}.to_json
+    make_put_request($uri + "/#{$key}/groups/#{id}/action", {:on => true})
   end
 
   def turn_off
     $logger.debug "Turning group #{id} off"
-    RestClient.put $uri + "/#{$key}/groups/#{id}/action", {:on => false}.to_json
+    make_put_request($uri + "/#{$key}/groups/#{id}/action", {:on => false})
   end
 end
