@@ -6,7 +6,7 @@ class Light
   def self.all_from_rest
     lights = []
     $logger.debug "Getting lights via #{$uri}/#{$key}/lights"
-    response = make_get_request($uri + "/#{$key}/lights")
+    response = get_request($uri + "/#{$key}/lights")
     response = JSON.parse(response)
     response.each do |nr, light|
       l = Light.new
@@ -52,7 +52,7 @@ class Light
 
   def self.find_by_id(id)
     $logger.debug "Getting light #{id} via #{$uri}/#{$key}/lights/#{id}"
-    response = make_get_request($uri + "/#{$key}/lights/#{id}")
+    response = get_request($uri + "/#{$key}/lights/#{id}")
     return nil unless response
 
     response = JSON.parse(response)
@@ -75,21 +75,21 @@ class Light
 
   def set_color(hue)
     $logger.debug "Setting color of light #{id}"
-    make_put_request($uri + "/#{$key}/lights/#{id}/state", {:hue => hue})
+    put_request($uri + "/#{$key}/lights/#{id}/state", {:hue => hue})
   end
 
   def set_temp(temp)
     $logger.debug "Setting temperature of light #{id}"
-    make_put_request($uri + "/#{$key}/lights/#{id}/state", {:ct => temp})
+    put_request($uri + "/#{$key}/lights/#{id}/state", {:ct => temp})
   end
 
   def turn_on
     $logger.debug "Turning light #{id} on"
-    make_put_request($uri + "/#{$key}/lights/#{id}/state", {:on => true})
+    put_request($uri + "/#{$key}/lights/#{id}/state", {:on => true})
   end
 
   def turn_off
     $logger.debug "Turning light #{id} off"
-    make_put_request($uri + "/#{$key}/lights/#{id}/state", {:on => false})
+    put_request($uri + "/#{$key}/lights/#{id}/state", {:on => false})
   end
 end

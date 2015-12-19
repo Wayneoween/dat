@@ -8,7 +8,7 @@ class Scene
     scenes = []
     Group.all.each do |group|
       $logger.debug "Getting scenes in groups via #{$uri}/#{$key}/groups/#{group.id}/scenes"
-      response = make_get_request($uri + "/#{$key}/groups/" + group.id + "/scenes")
+      response = get_request($uri + "/#{$key}/groups/" + group.id + "/scenes")
       next if response.empty?
 
       response = JSON.parse(response)
@@ -74,20 +74,20 @@ class Scene
 
   def turn_on
     $logger.debug "Turning scene #{id} on"
-    make_put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", "")
+    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", "")
   end
 
   def update
     $logger.debug "Saving changes in scene #{id} in #{group.name}"
-    make_put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:lights => [light.id]})
+    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:lights => [light.id]})
   end
 
   def self.create(group, name)
     $logger.debug "Adding scene #{name} to group #{group.name}"
-    make_post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
+    post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
   end
 
   def delete
-    make_delete_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}")
+    delete_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}")
   end
 end

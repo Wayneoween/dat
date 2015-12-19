@@ -110,23 +110,23 @@ def get_light_by_id(id)
   puts ret
 end
 
-def make_get_request(uri)
-  make_request(:get, uri)
+def get_request(uri)
+  request(:get, uri)
 end
 
-def make_put_request(uri, options)
-  make_request(:put, uri, options)
+def put_request(uri, options)
+  request(:put, uri, options)
 end
 
-def make_post_request(uri, options)
-  make_request(:post, uri, options)
+def post_request(uri, options)
+  request(:post, uri, options)
 end
 
-def make_delete_request(uri)
-  make_request(:delete, uri)
+def delete_request(uri)
+  request(:delete, uri)
 end
 
-def make_request(method, uri, options={})
+def request(method, uri, options={})
   first_try = true
   response = nil
   begin
