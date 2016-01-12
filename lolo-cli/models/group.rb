@@ -90,7 +90,7 @@ class Group
 
   def set_color(hue)
     $logger.debug "Setting color of group #{id}"
-    put_request($uri + "/#{$key}/groups/#{id}/action", {:hue => hue})
+    put_request($uri + "/#{$key}/groups/#{id}/action", hue)
   end
 
   def set_temp(temp)

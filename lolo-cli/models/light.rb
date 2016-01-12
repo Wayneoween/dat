@@ -75,7 +75,7 @@ class Light
 
   def set_color(hue)
     $logger.debug "Setting color of light #{id}"
-    put_request($uri + "/#{$key}/lights/#{id}/state", {:hue => hue})
+    put_request($uri + "/#{$key}/lights/#{id}/state", hue)
   end
 
   def set_temp(temp)
