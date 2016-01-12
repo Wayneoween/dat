@@ -38,7 +38,7 @@ class Scene
     end
   end
 
-  # Alias for +all_from_rest*
+  # Alias for +all_from_rest+
   def self.update_cache
     self.all_from_rest
   end
