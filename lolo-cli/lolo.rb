@@ -12,6 +12,7 @@ rescue LoadError => err
   exit 1
 end
 
+# Include all our helpers and models
 require_relative "helper/api"
 require_relative "helper/clamp"
 require_relative "helper/color"
@@ -19,17 +20,25 @@ require_relative "models/group"
 require_relative "models/light"
 require_relative "models/scene"
 
+# The default host where deCONZ is running
 $host = "localhost:80"
-$uri = "http://localhost:80/api"
+# The default URI to the API Endpoint
+$uri = "http://#{$host}/api"
+# User defined settings go here
 $config_file = "config.yml"
+# The API Key for authentication
 $key = nil
+# The light or group or scene at hand
 $light = nil
+# List of allowed commands
 $commands = ["update", "list", "delete", "add"]
 
 $logger = Logger.new(STDOUT)
 $logger.level = Logger::WARN
 
+# Load user defined settings from config file if available
 set_uri
+# Use those settings for trying to retrieve the api key with default credentials
 set_api_key
 
 module Lolo
