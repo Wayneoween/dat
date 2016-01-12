@@ -77,6 +77,11 @@ class Scene
     put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", "")
   end
 
+  def turn_off
+    $logger.debug "Turning scene #{id} off"
+    Group.find_by_id(group.id).turn_off
+  end
+
   def update
     $logger.debug "Saving changes in scene #{id} in #{group.name}"
     put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:name => name})

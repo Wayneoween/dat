@@ -4,6 +4,7 @@ def set_api_key
   end
 
   def try_login
+    $logger.debug "Logging into deCONZ web interface with default credentials."
     # Try default password first
     yield "delight:delight@"
     yield ""
@@ -18,7 +19,7 @@ def set_api_key
           :accept => :json
       end
     rescue
-      puts "Unable to retrieve API-Key.\nPlease unlock your Gateway first!"
+      $logger.info "Logging into deCONZ web interface with default credentials."
       exit 1
     end
 
@@ -52,6 +53,7 @@ def set_uri
 end
 
 def set_cfg(key, value)
+  $logger.debug "Saving config file"
   cfg = YAML.load(File.read($config_file))
   if cfg
     cfg[key] = value
@@ -65,6 +67,7 @@ def set_cfg(key, value)
 end
 
 def get_cfg(key)
+  $logger.debug "Loading config file"
   unless File.exist?($config_file)
     # If config file does not exist, touch it
     File.open($config_file, 'w'){}
