@@ -79,7 +79,7 @@ class Scene
 
   def update
     $logger.debug "Saving changes in scene #{id} in #{group.name}"
-    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:lights => [light.id]})
+    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:name => name})
   end
 
   def self.create(group, name)
