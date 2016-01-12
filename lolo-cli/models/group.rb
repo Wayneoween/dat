@@ -101,11 +101,13 @@ class Group
   def add_light(light)
     $logger.debug "Add light #{light.name} to group #{id}"
     put_request($uri + "/#{$key}/groups/#{id}", {:lights => [light.id]})
+    Group.update_cache
   end
 
   def delete
     $logger.debug "Delete group #{id}"
     delete_request($uri + "/#{$key}/groups/#{id}")
+    Group.update_cache
   end
 
   def turn_on

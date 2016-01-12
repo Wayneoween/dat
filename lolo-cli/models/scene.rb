@@ -85,9 +85,11 @@ class Scene
   def self.create(group, name)
     $logger.debug "Adding scene #{name} to group #{group.name}"
     post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
+    Scene.update_cache
   end
 
   def delete
     delete_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}")
+    Scene.update_cache
   end
 end
