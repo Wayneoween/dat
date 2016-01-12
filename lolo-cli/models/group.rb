@@ -88,14 +88,21 @@ class Group
     return nil
   end
 
-  def set_color(hue)
+  def set_color(hue, transition)
+    options = hue.clone
+    options["on"] = true
+    options["transitiontime"] = transition
     $logger.debug "Setting color of group #{id}"
-    put_request($uri + "/#{$key}/groups/#{id}/action", hue)
+    put_request($uri + "/#{$key}/groups/#{id}/action", options)
   end
 
-  def set_temp(temp)
+  def set_temp(temp, transition)
+    options = {}
+    options["ct"] = temp
+    options["on"] = true
+    options["transitiontime"] = transition
     $logger.debug "Setting temperature of group #{id}"
-    put_request($uri + "/#{$key}/groups/#{id}/action", {:ct => temp})
+    put_request($uri + "/#{$key}/groups/#{id}/action", options)
   end
 
   def add_light(light)
