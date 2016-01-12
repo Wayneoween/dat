@@ -90,7 +90,7 @@ module Lolo
         if not scene.nil?
           scene.update()
         else
-          Scene.create(group, scenename)
+          Scene.add(group, scenename)
         end
       end
     end
@@ -213,6 +213,7 @@ module Lolo
           $light.turn_off
         end
       end
+
     end
   end
 

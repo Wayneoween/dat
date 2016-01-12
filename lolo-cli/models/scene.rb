@@ -101,7 +101,7 @@ class Scene
   end
 
   # Creates a new scene and updates the cache.
-  def self.create(group, name)
+  def self.add(group, name)
     $logger.debug "Adding scene #{name} to group #{group.name}"
     post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
     Scene.update_cache
