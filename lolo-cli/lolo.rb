@@ -32,57 +32,94 @@ $logger.level = Logger::WARN
 set_uri
 set_api_key
 
-Clamp do
+module Lolo
 
-  option "-d", :flag, "Enable debug output", :attribute_name => "debug" do |s|
-    $logger.level = Logger::DEBUG
-  end
+  class AddCommand < Clamp::Command
+    subcommand "group", "Add a Group." do
 
-  subcommand "update", "Update cache of lights, groups and scenes." do
-    def execute
-      $logger.debug "Updating light cache"
-      Light.update_cache
-      $logger.debug "Updating group cache"
-      Group.update_cache
-      $logger.debug "Updating scene cache"
-      Scene.update_cache
-    end
-  end
+      parameter "NAME", "name of group"
 
-  subcommand "list", "List all lights and groups." do
-    def execute
-      $logger.debug "Getting lights"
-      get_lights
-      $logger.debug "Getting groups"
-      get_groups
-      $logger.debug "Getting scenes"
-      get_scenes
-    end
-  end
-
-  subcommand SubcommandScene.new, "Switch to a specific scene." do
-
-    subcommand "on", "Switch scene on" do
       def execute
-        $logger.debug "Turning on scene #{$light}"
-        $light.turn_on
+        $logger.debug "Adding group #{name}"
+        Group.add(name)
       end
     end
 
-    subcommand "off", "Switch scene off" do
+    subcommand "light", "Add a light to a group." do
+
+      parameter "LIGHTNAME", "name or id of light"
+      parameter "GROUPNAME", "name of id of group"
+
       def execute
-        $logger.debug "Turning off scene #{$light}"
-        $light.turn_off
+        $logger.debug "Looking for light #{lightname}"
+        light = Light.find_by_name(lightname)
+        light = Light.find_by_id(lightname) if light.nil?
+        return if light.nil?
+
+        $logger.debug "Looking for group #{groupname}"
+        group = Group.find_by_name(groupname)
+        group = Group.find_by_id(groupname) if group.nil?
+        return if group.nil?
+
+        $logger.debug "Adding light #{lightname} to group #{groupname}"
+        group.add_light(light)
+      end
+    end
+
+    subcommand "scene", "Add a new scene to a group." do
+
+      parameter "SCENENAME", "name of scene"
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        $logger.debug "Looking for group #{groupname}"
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+
+        $logger.debug "Looking for scene #{scenename}"
+        scene = Scene.find_by_name(scenename)
+        if not scene.nil?
+          scene.update()
+        else
+          Scene.create(group, scenename)
+        end
       end
     end
   end
 
-  # XXX: Its *probably* better to use a switch for telling lolo which one we want
-  #      because now we read the light cache, and then the group cache to determine
-  #      if the given name is in any of those. What if a light has the same name as
-  #      a group?
-  subcommand SubcommandLightGroup.new, "Switch a light or group on/off." do
+  class DeleteCommand < Clamp::Command
+    subcommand "group", "Delete a group." do
 
+      parameter "GROUPNAME", "name of group"
+
+      def execute
+        $logger.debug "Looking for group #{groupname}"
+        group = Group.find_by_name(groupname)
+        return if group.nil?
+
+        $logger.debug "Deleting group #{groupname}"
+        group.delete
+      end
+
+    end
+
+    subcommand "scene", "Delete a scene." do
+
+      parameter "SCENENAME", "name of scene"
+
+      def execute
+        $logger.debug "Looking for scene #{scenename}"
+        scene = Scene.find_by_name(scenename)
+        return if scene.nil?
+
+        $logger.debug "Deleting scene #{scenename}"
+        scene.delete
+      end
+
+    end
+  end
+
+  class LightGroupCommand < Clamp::Command
     option "-t", "N", "Set transition time", :attribute_name => "transition", :default => 9
 
     subcommand "on", "Switch on." do
@@ -142,90 +179,73 @@ Clamp do
     end
   end
 
-  subcommand "add", "Add a group or a light to a group." do
+  class LightCommand < Clamp::Command
+    subcommand SubcommandLight.new, "Switch a light on/off.", LightGroupCommand
+  end
 
-    subcommand "group", "Add a Group." do
+  class GroupCommand < Clamp::Command
+    subcommand SubcommandGroup.new, "Switch a group on/off.", LightGroupCommand
+  end
 
-      parameter "NAME", "name of group"
+  class SceneCommand < Clamp::Command
 
-      def execute
-        $logger.debug "Adding group #{name}"
-        Group.add(name)
+    subcommand SubcommandScene.new, "Scene name." do
+
+      subcommand "on", "Switch scene on" do
+        def execute
+          $logger.debug "Turning on scene #{$light}"
+          $light.turn_on
+        end
       end
-    end
 
-    subcommand "light", "Add a light to a group." do
-
-      parameter "LIGHTNAME", "name or id of light"
-      parameter "GROUPNAME", "name of id of group"
-
-      def execute
-        $logger.debug "Looking for light #{lightname}"
-        light = Light.find_by_name(lightname)
-        light = Light.find_by_id(lightname) if light.nil?
-        return if light.nil?
-
-        $logger.debug "Looking for group #{groupname}"
-        group = Group.find_by_name(groupname)
-        group = Group.find_by_id(groupname) if group.nil?
-        return if group.nil?
-
-        $logger.debug "Adding light #{lightname} to group #{groupname}"
-        group.add_light(light)
-      end
-    end
-
-    subcommand "scene", "Add a new scene to a group." do
-
-      parameter "SCENENAME", "name of scene"
-      parameter "GROUPNAME", "name of group"
-
-      def execute
-        $logger.debug "Looking for group #{groupname}"
-        group = Group.find_by_name(groupname)
-        return if group.nil?
-
-        $logger.debug "Looking for scene #{scenename}"
-        scene = Scene.find_by_name(scenename)
-        if not scene.nil?
-          scene.update()
-        else
-          Scene.create(group, scenename)
+      subcommand "off", "Switch scene off" do
+        def execute
+          $logger.debug "Turning off scene #{$light}"
+          $light.turn_off
         end
       end
     end
   end
 
-  subcommand "delete", "Delete a group or scene." do
-
-    subcommand "group", "Delete a group." do
-
-      parameter "GROUPNAME", "name of group"
-
-      def execute
-        $logger.debug "Looking for group #{groupname}"
-        group = Group.find_by_name(groupname)
-        return if group.nil?
-
-        $logger.debug "Deleting group #{groupname}"
-        group.delete
-      end
-
-    end
-
-    subcommand "scene", "Delete a scene." do
-
-      parameter "SCENENAME", "name of scene"
-
-      def execute
-        $logger.debug "Looking for scene #{scenename}"
-        scene = Scene.find_by_name(scenename)
-        return if scene.nil?
-
-        $logger.debug "Deleting scene #{scenename}"
-        scene.delete
-      end
-
+  class UpdateCommand < Clamp::Command
+    def execute
+      $logger.debug "Updating light cache"
+      Light.update_cache
+      $logger.debug "Updating group cache"
+      Group.update_cache
+      $logger.debug "Updating scene cache"
+      Scene.update_cache
     end
   end
+
+  class ListCommand < Clamp::Command
+    def execute
+      $logger.debug "Getting lights"
+      get_lights
+      $logger.debug "Getting groups"
+      get_groups
+      $logger.debug "Getting scenes"
+      get_scenes
+    end
+  end
+
+  class MainCommand < Clamp::Command
+
+    option "-d", :flag, "Enable debug output", :attribute_name => "debug" do |s|
+      $logger.level = Logger::DEBUG
+    end
+
+    subcommand "list", "List all lights and groups.", ListCommand
+    subcommand "update", "Update cache of lights, groups and scenes.", UpdateCommand
+
+    subcommand "light", "Change a specific light.", LightCommand
+    subcommand "group", "Change a specific group.", GroupCommand
+    subcommand "scene", "Change a specific scene.", SceneCommand
+
+    subcommand "add", "Add a group or a light to a group.", AddCommand
+    subcommand "delete", "Delete a group or scene.", DeleteCommand
+
+  end
 end
+
+Lolo::MainCommand.run
