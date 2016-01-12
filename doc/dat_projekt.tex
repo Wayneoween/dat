@@ -47,6 +47,7 @@
   tabsize=2
 }
 \lstset{style=mystyle,basicstyle=\ttfamily,escapeinside=||}
+\setcounter{tocdepth}{2}
 
 \begin{document}
 
@@ -352,14 +353,30 @@ $ DISPLAY=:0 deCONZ --auto-connect=1 &
 \end{lstlisting}
 
 \subsection{Web-GUI}
+\label{ss:webgui}
+
+Das deCONZ Programm stellt neben der Schnittstelle zur Hardware auch eine Webseite zur
+Verfügung, über welche die API angesprochen werden kann.
+Standardmäßig ist diese unter \url{http://<IP>:80} zu erreichen, wobei <IP> ein
+Platzhalter für die private IP-Adresse des \gls{rpi} steht. Über die Web-GUI können Lichter
+hinzugefügt, Gruppen und Szenen angelegt, verwaltet sowie gelöscht werden. Eine
+Automatisierungsmöglichkeit über die Web-GUI ist ebenfalls vorhanden.
+
 \subsection{API}
+
+Nach dem Starten der deCONZ Software wird neben einem Webserver (vgl. 
+Kapitel~\ref{ss:webgui}) auch eine REST-API zur Verfügung gestellt, die unter
+der Adresse \url{http://<IP>:80/api} erreichbar ist.\footnote{API-Doku unter \url{http://dresden-elektronik.github.io/deconz-rest-doc/}}
+
+Über diese Schnittstelle agiert \texttt{lolo} mit der deCONZ-Software, um nahezu
+dieselbe Funktionalität der Web-GUI auf der Kommandozeile bereitzustellen.
 
 \newpage
 
 \section{lolo - Lights on, Lights off}
 \label{lolo}
 
-\subsection{Beispielaufrufe}
+\subsection{Beispielszenario}
 
 In den folgenden Beispielen wird mit folgendem Datenbestand gearbeitet:
 
@@ -372,31 +389,36 @@ Gruppen \texttt{G1} und \texttt{G2}
 \noindent
 Szene \texttt{S1}
 
-\subsubsection{Ausgabe der Hilfe}
+\subsection{Ausgabe der Hilfe}
 
 \begin{lstlisting}[caption=Hilfe von \texttt{lolo},
                    basicstyle=\footnotesize\ttfamily,
                    language=C]{lolo_allgemein}
 $ lolo
 Usage:
-  lolo.rb [OPTIONS] SUBCOMMAND [ARG] ...
+    lolo.rb [OPTIONS] SUBCOMMAND [ARG] ...
 
 Parameters:
-  SUBCOMMAND               subcommand
-  [ARG] ...                subcommand arguments
+    SUBCOMMAND     subcommand
+    [ARG] ...      subcommand arguments
 
 Subcommands:
-  update                   Update the cache.
-  list                     List all lights and groups.
-  <scene>                  Switch to a specific scene.
-  <light/group> <on/off>   Switch a light or group on/off.
-  add                      Add a group or a light to a group.
-  delete                   Delete a group or scene.
+    list           List all lights and groups.
+    update         Update cache of lights, groups and scenes.
+    light          Change a specific light.
+    group          Change a specific group.
+    scene          Change a specific scene.
+    add            Add a group or a light to a group.
+    delete         Delete a group or scene.
+
 Options:
-    -h, --help             print help
+    -d             Enable debug output
+    -h, --help     print help
 \end{lstlisting}
 
-\subsubsection{Auflisten des Datenbestands}
+\newpage
+
+\subsection{Auflisten des Datenbestands}
 
 \begin{lstlisting}[caption={Abfrage aller Lichter, Gruppen und Szenen},
                    basicstyle=\footnotesize\ttfamily]{loloallgemein}
@@ -409,19 +431,21 @@ Scenes:
 	S1 	G1
 \end{lstlisting}
 
-\subsubsection{Lichtsteuerung}
+\subsection{Lichtsteuerung}
 
 \begin{lstlisting}[caption=lolo Beispielaufrufe,
                    basicstyle=\footnotesize\ttfamily,language=Bash]{lololist}
 # Licht L1 einschalten und Farbe setzen
-$ lolo L1 on
-$ lolo L1 red
-$ lolo L1 cold
-$ lolo L1 off
+$ lolo light L1 on
+$ lolo light L1 red
+$ lolo light L1 cold
+$ lolo light L1 off
 
 \end{lstlisting}
 
-\subsubsection{Gruppen und Szenen}
+\newpage
+
+\subsection{Gruppen und Szenen}
 
 \begin{lstlisting}[caption=Bedienung von Gruppen und Szenen,
                    basicstyle=\footnotesize\ttfamily]{lologruppenszenen}
@@ -436,7 +460,7 @@ $ lolo add light L2 <UUID> G1
 $ lolo update
 
 # Gruppe G1 ausschalten
-$ lolo G1 off
+$ lolo group G1 off
 
 # Gruppe G1 und Szene S1 loeschen
 $ lolo delete group G1
@@ -447,12 +471,16 @@ $ lolo delete scene S1
 $ lolo add scene S1 from G1 L1 L2
 
 |\#| Frauenbesuch aktivieren
-$ lolo S1 on
+$ lolo scene S1 on
 
 |\#| Frauenbesuch deaktivieren
-$ lolo S1 off
+$ lolo scene S1 off
 
 \end{lstlisting}
+
+\newpage
+
+\section{Ausblick}
 
 \newpage
 
