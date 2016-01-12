@@ -413,11 +413,11 @@ Scenes:
 
 \begin{lstlisting}[caption=lolo Beispielaufrufe,
                    basicstyle=\footnotesize\ttfamily,language=Bash]{lololist}
-# moo
+# Licht L1 einschalten und Farbe setzen
 $ lolo L1 on
 $ lolo L1 red
 $ lolo L1 cold
-$ lolo L1 on
+$ lolo L1 off
 
 \end{lstlisting}
 
@@ -432,9 +432,13 @@ $ lolo add group G1
 # hinzugefuegt
 $ lolo add light L2 <UUID> G1
 
-$ lolo G1 |\#|0412312
-$ lolo G2 warm
+# Cache updaten
+$ lolo update
 
+# Gruppe G1 ausschalten
+$ lolo G1 off
+
+# Gruppe G1 und Szene S1 loeschen
 $ lolo delete group G1
 $ lolo delete scene S1
 
@@ -443,7 +447,11 @@ $ lolo delete scene S1
 $ lolo add scene S1 from G1 L1 L2
 
 |\#| Frauenbesuch aktivieren
-$ lolo S1
+$ lolo S1 on
+
+|\#| Frauenbesuch deaktivieren
+$ lolo S1 off
+
 \end{lstlisting}
 
 \newpage
