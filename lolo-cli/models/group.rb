@@ -2,23 +2,20 @@
 class Group
 
   # Identification attributes
-  attr_accessor :id, :name, :lights
+  attr_accessor :id, :name, :light_ids
 
   # Constructor with a instance variable of all lights in this group
   def initialize
-    @lights = []
+    @light_ids = []
   end
 
   # Populate the instance variable +@lights+ by asking the server.
   def lights
-    $logger.debug "Getting lights from group #{id} via #{$uri}/#{$key}/groups/#{id}"
-    response = get_request($uri + "/#{$key}/groups/#{id}")
-    response = JSON.parse(response)
-    response["lights"].each do |light_id|
-      @lights << Light.find_by_id(light_id)
+    lights = []
+    light_ids.each do |light_id|
+      lights << Light.find_by_id(light_id)
     end
-
-    @lights
+    return lights
   end
 
   # Get all groups from the server and cache the information locally.
@@ -28,8 +25,15 @@ class Group
     response = get_request($uri + "/#{$key}/groups")
     response = JSON.parse(response)
     response.each do |nr, group|
+      my_light_ids = []
+      group_lights = get_request($uri + "/#{$key}/groups/#{nr}")
+      group_lights = JSON.parse(group_lights)
+      group_lights["lights"].each do |light_id|
+        my_light_ids << light_id
+      end
       g = Group.new
       g.id = nr
+      g.light_ids = my_light_ids
       g.name = group["name"]
       groups << g
     end
@@ -123,7 +127,7 @@ class Group
   # Adds a +light+ to a group
   def add_light(light)
     $logger.debug "Add light #{light.name} to group #{id}"
-    put_request($uri + "/#{$key}/groups/#{id}", {:lights => [light.id]})
+    put_request($uri + "/#{$key}/groups/#{id}", {:lights => [light.id] + light_ids})
     Group.update_cache
   end
 
