@@ -1,13 +1,15 @@
+# A class to handle all group stuff
 class Group
-  # TODO: get inspired by
-  # https://github.com/soffes/hue/blob/master/lib/hue/group.rb
-  # :)
-  attr_accessor :id, :name, :on, :lights
 
+  # Identification attributes
+  attr_accessor :id, :name, :lights
+
+  # Constructor with a instance variable of all lights in this group
   def initialize
     @lights = []
   end
 
+  # Populate the instance variable +@lights+ by asking the server.
   def lights
     $logger.debug "Getting lights from group #{id} via #{$uri}/#{$key}/groups/#{id}"
     response = get_request($uri + "/#{$key}/groups/#{id}")
@@ -19,6 +21,7 @@ class Group
     @lights
   end
 
+  # Get all groups from the server and cache the information locally.
   def self.all_from_rest
     groups = []
     $logger.debug "Getting groups via #{$uri}/#{$key}/groups"
@@ -31,12 +34,12 @@ class Group
       groups << g
     end
 
-    # Update the cache
     serialize(groups)
 
     return groups
   end
 
+  # Write information to the cache file +group_cache.yml+.
   def self.serialize(groups)
     $logger.debug "Serializing #{groups.size} groups"
     serialized = YAML::dump(groups)
@@ -45,10 +48,13 @@ class Group
     end
   end
 
+  # Alias for +all_from_rest+
   def self.update_cache
     self.all_from_rest
   end
 
+  # Load information of groups from +group_cache.yml+ if it exists. Otherwise
+  # fall back to +all_from_rest+.
   def self.all
     groups = []
 
@@ -64,13 +70,17 @@ class Group
     return groups
   end
 
+  # Creates a new group and updates the cache.
   def self.add(name)
-    $logger.debug "Add group #{name} via #{$uri}/#{$key}/groups"
+    $logger.debug "Adding group #{name} via #{$uri}/#{$key}/groups"
     post_request($uri + "/#{$key}/groups", {:name => name})
+    Group.update_cache
   end
 
+  # Find group by provided +name+. Look first in the cache file
+  # +group_cache.yml+ if the +name+ is not found, try via API. If it isn't
+  # there either, return an error.
   def self.find_by_name(name)
-    # XXX: Maybe make group an instance variable so we don't load the cache again here
     $logger.debug "Getting group #{name}"
     Group.all.each do |group|
       return group if group.name == name
@@ -79,6 +89,9 @@ class Group
     return nil
   end
 
+  # Find group by provided +id+. Look first in the cache file +group_cache.yml+
+  # if the +id+ is not found, try via API. If it isn't there either, return an
+  # error.
   def self.find_by_id(id)
     $logger.debug "Getting group #{id}"
     Group.all.each do |group|
@@ -88,6 +101,7 @@ class Group
     return nil
   end
 
+  # Sets the color of a group.
   def set_color(hue, transition)
     options = hue.clone
     options["on"] = true
@@ -96,6 +110,7 @@ class Group
     put_request($uri + "/#{$key}/groups/#{id}/action", options)
   end
 
+  # Sets either a +warm+ white or a +cold+ white.
   def set_temp(temp, transition)
     options = {}
     options["ct"] = temp
@@ -105,23 +120,27 @@ class Group
     put_request($uri + "/#{$key}/groups/#{id}/action", options)
   end
 
+  # Adds a +light+ to a group
   def add_light(light)
     $logger.debug "Add light #{light.name} to group #{id}"
     put_request($uri + "/#{$key}/groups/#{id}", {:lights => [light.id]})
     Group.update_cache
   end
 
+  # Deletes a group
   def delete
     $logger.debug "Delete group #{id}"
     delete_request($uri + "/#{$key}/groups/#{id}")
     Group.update_cache
   end
 
+  # Turns a group on.
   def turn_on
     $logger.debug "Turning group #{id} on"
     put_request($uri + "/#{$key}/groups/#{id}/action", {:on => true})
   end
 
+  # Turns a group off.
   def turn_off
     $logger.debug "Turning group #{id} off"
     put_request($uri + "/#{$key}/groups/#{id}/action", {:on => false})

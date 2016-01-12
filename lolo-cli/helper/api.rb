@@ -107,12 +107,6 @@ def get_scenes
   puts
 end
 
-def get_light_by_id(id)
-  light = Light.find(id)
-  ret = {:id => light.id, :on => light.on, :name => light.name}.to_json
-  puts ret
-end
-
 def get_request(uri)
   request(:get, uri)
 end

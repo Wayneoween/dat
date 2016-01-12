@@ -1,8 +1,10 @@
+# A class to handle all single-light stuff
 class Light
-  # TODO: get inspired by
-  # https://github.com/soffes/hue/blob/master/lib/hue/light.rb
-  # :)
-  attr_accessor :id, :manufacturer, :name, :on
+
+  # Identification attributes
+  attr_accessor :id, :name
+
+  # Get all lights from the server and cache the information locally.
   def self.all_from_rest
     lights = []
     $logger.debug "Getting lights via #{$uri}/#{$key}/lights"
@@ -11,18 +13,16 @@ class Light
     response.each do |nr, light|
       l = Light.new
       l.id = nr
-      l.manufacturer = light["manufacturer"]
       l.name = light["name"]
-      l.on = light["state"]["on"]
       lights << l
     end
 
-    # Update the cache
     serialize(lights)
 
     return lights
   end
 
+  # Write information to the cache file +light_cache.yml+.
   def self.serialize(lights)
     $logger.debug "Serializing #{lights.size} light(s)"
     serialized = YAML::dump(lights)
@@ -31,10 +31,13 @@ class Light
     end
   end
 
+  # Alias for +all_from_rest+
   def self.update_cache
     self.all_from_rest
   end
 
+  # Load information of lights from +light_cache.yml+ if it exists. Otherwise
+  # fall back to +all_from_rest+.
   def self.all
     lights = []
 
@@ -50,6 +53,9 @@ class Light
     return lights
   end
 
+  # Find light by provided +id+. Look first in the cache file +light_cache.yml+
+  # if the +id+ is not found, try via API. If it isn't there either, return an
+  # error.
   def self.find_by_id(id)
     $logger.debug "Getting light #{id}"
     Light.all.each do |light|
@@ -59,6 +65,9 @@ class Light
     return nil
   end
 
+  # Find light by provided +name+. Look first in the cache file
+  # +light_cache.yml+ if the +name+ is not found, try via API. If it isn't
+  # there either, return an error.
   def self.find_by_name(name)
     Light.all.each do |light|
       return light if light.name == name
@@ -67,6 +76,7 @@ class Light
     return nil
   end
 
+  # Sets the color of a lamp.
   def set_color(hue, transition)
     options = hue.clone
     options["on"] = true
@@ -75,6 +85,7 @@ class Light
     put_request($uri + "/#{$key}/lights/#{id}/state", options)
   end
 
+  # Sets either a +warm+ white or a +cold+ white.
   def set_temp(temp, transition)
     options = {}
     options["ct"] = temp
@@ -84,11 +95,13 @@ class Light
     put_request($uri + "/#{$key}/lights/#{id}/state", options)
   end
 
+  # Turns a light on.
   def turn_on
     $logger.debug "Turning light #{id} on"
     put_request($uri + "/#{$key}/lights/#{id}/state", {:on => true})
   end
 
+  # Turns a light off.
   def turn_off
     $logger.debug "Turning light #{id} off"
     put_request($uri + "/#{$key}/lights/#{id}/state", {:on => false})

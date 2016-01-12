@@ -1,9 +1,10 @@
+# A class to handle all scene stuff
 class Scene
-  # TODO: get inspired by
-  # https://github.com/soffes/hue/blob/master/lib/hue/scene.rb
-  # :)
+
+  # Identification attributes
   attr_accessor :id, :name, :group
 
+  # Get all scenes from the server and cache the information locally.
   def self.all_from_rest
     scenes = []
     Group.all.each do |group|
@@ -23,12 +24,12 @@ class Scene
       end
     end
 
-    # Update the cache
     serialize(scenes)
 
     return scenes
   end
 
+  # Write information to the cache file +scene_cache.yml+.
   def self.serialize(scenes)
     $logger.debug "Serializing #{scenes.size} scene(s)"
     serialized = YAML::dump(scenes)
@@ -37,10 +38,13 @@ class Scene
     end
   end
 
+  # Alias for +all_from_rest+
   def self.update_cache
     self.all_from_rest
   end
 
+  # Load information of scenes from +scene_cache.yml+ if it exists. Otherwise
+  # fall back to +all_from_rest+.
   def self.all
     scenes = []
 
@@ -56,6 +60,9 @@ class Scene
     return scenes
   end
 
+  # Find scene by provided +name+. Look first in the cache file
+  # +scene_cache.yml+ if the +name+ is not found, try via API. If it isn't
+  # there either, return an error.
   def self.find_by_name(name)
     Scene.all.each do |scene|
       return scene if scene.name == name
@@ -64,6 +71,9 @@ class Scene
     return nil
   end
 
+  # Find scene by provided +id+. Look first in the cache file +scene_cache.yml+
+  # if the +id+ is not found, try via API. If it isn't there either, return an
+  # error.
   def self.find_by_id(id)
     Scene.all.each do |scene|
       return scene if scene.id == id
@@ -72,27 +82,32 @@ class Scene
     return nil
   end
 
+  # Turns a scene on.
   def turn_on
     $logger.debug "Turning scene #{id} on"
     put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", "")
   end
 
+  # Turns a scene off.
   def turn_off
     $logger.debug "Turning scene #{id} off"
     Group.find_by_id(group.id).turn_off
   end
 
+  # Update the color information of the scene on the server.
   def update
     $logger.debug "Saving changes in scene #{id} in #{group.name}"
     put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:name => name})
   end
 
-  def self.create(group, name)
+  # Creates a new scene and updates the cache.
+  def self.add(group, name)
     $logger.debug "Adding scene #{name} to group #{group.name}"
     post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
     Scene.update_cache
   end
 
+  # Deletes a scene and updates the cache.
   def delete
     delete_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}")
     Scene.update_cache
