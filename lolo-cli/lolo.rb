@@ -61,9 +61,19 @@ Clamp do
   end
 
   subcommand SubcommandScene.new, "Switch to a specific scene." do
-    def execute
-      $logger.debug "Turning on scene #{$light}"
-      $light.turn_on
+
+    subcommand "on", "Switch scene on" do
+      def execute
+        $logger.debug "Turning on scene #{$light}"
+        $light.turn_on
+      end
+    end
+
+    subcommand "off", "Switch scene off" do
+      def execute
+        $logger.debug "Turning off scene #{$light}"
+        $light.turn_off
+      end
     end
   end
 
