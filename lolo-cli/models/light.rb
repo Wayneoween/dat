@@ -36,8 +36,8 @@ class Light
     self.all_from_rest
   end
 
-  # Load information of lights from +light_cache.yml+ if it exists.
-  # Otherwise fall back to +all_from_rest+.
+  # Load information of lights from +light_cache.yml+ if it exists. Otherwise
+  # fall back to +all_from_rest+.
   def self.all
     lights = []
 
