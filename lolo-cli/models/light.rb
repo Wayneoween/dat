@@ -73,14 +73,19 @@ class Light
     return nil
   end
 
-  def set_color(hue)
+  def set_color(hue, transition)
+    options = hue.clone
+    options["transitiontime"] = transition
     $logger.debug "Setting color of light #{id}"
-    put_request($uri + "/#{$key}/lights/#{id}/state", hue)
+    put_request($uri + "/#{$key}/lights/#{id}/state", options)
   end
 
-  def set_temp(temp)
+  def set_temp(temp, transition)
+    options = {}
+    options["ct"] = temp
+    options["transitiontime"] = transition
     $logger.debug "Setting temperature of light #{id}"
-    put_request($uri + "/#{$key}/lights/#{id}/state", {:ct => temp})
+    put_request($uri + "/#{$key}/lights/#{id}/state", options)
   end
 
   def turn_on

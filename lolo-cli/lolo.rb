@@ -83,6 +83,8 @@ Clamp do
   #      a group?
   subcommand SubcommandLightGroup.new, "Switch a light or group on/off." do
 
+    option "-t", "N", "Set transition time", :attribute_name => "transition", :default => 9
+
     subcommand "on", "Switch on." do
       def execute
         $logger.debug "Turning on light #{$light}"
@@ -100,42 +102,42 @@ Clamp do
     subcommand "red", "Set light color to red." do
       def execute
         $logger.debug "Turning light #{$light} to red"
-        $light.set_color(HUE_MAP[:red])
+        $light.set_color(HUE_MAP[:red], transition)
       end
     end
 
     subcommand "blue", "Set light color to blue." do
       def execute
         $logger.debug "Turning light #{$light} to blue"
-        $light.set_color(HUE_MAP[:blue])
+        $light.set_color(HUE_MAP[:blue], transition)
       end
     end
 
     subcommand "green", "Set light color to green." do
       def execute
         $logger.debug "Turning light #{$light} to green"
-        $light.set_color(HUE_MAP[:green])
+        $light.set_color(HUE_MAP[:green], transition)
       end
     end
 
     subcommand "white", "Set light color to white." do
       def execute
         $logger.debug "Turning light #{$light} to white"
-        $light.set_color(HUE_MAP[:white])
+        $light.set_color(HUE_MAP[:white], transition)
       end
     end
 
     subcommand "warm", "Set light temperature to warm." do
       def execute
         $logger.debug "Turning light #{$light} to white warm"
-        $light.set_temp(TEMP_MAP[:warm])
+        $light.set_temp(TEMP_MAP[:warm], transition)
       end
     end
 
     subcommand "cold", "Set light temperature to cold." do
       def execute
         $logger.debug "Turning light #{$light} to white cold"
-        $light.set_temp(TEMP_MAP[:cold])
+        $light.set_temp(TEMP_MAP[:cold], transition)
       end
     end
   end
