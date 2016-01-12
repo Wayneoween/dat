@@ -75,6 +75,7 @@ class Light
 
   def set_color(hue, transition)
     options = hue.clone
+    options["on"] = true
     options["transitiontime"] = transition
     $logger.debug "Setting color of light #{id}"
     put_request($uri + "/#{$key}/lights/#{id}/state", options)
@@ -83,6 +84,7 @@ class Light
   def set_temp(temp, transition)
     options = {}
     options["ct"] = temp
+    options["on"] = true
     options["transitiontime"] = transition
     $logger.debug "Setting temperature of light #{id}"
     put_request($uri + "/#{$key}/lights/#{id}/state", options)

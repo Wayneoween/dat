@@ -90,6 +90,7 @@ class Group
 
   def set_color(hue, transition)
     options = hue.clone
+    options["on"] = true
     options["transitiontime"] = transition
     $logger.debug "Setting color of group #{id}"
     put_request($uri + "/#{$key}/groups/#{id}/action", options)
@@ -98,6 +99,7 @@ class Group
   def set_temp(temp, transition)
     options = {}
     options["ct"] = temp
+    options["on"] = true
     options["transitiontime"] = transition
     $logger.debug "Setting temperature of group #{id}"
     put_request($uri + "/#{$key}/groups/#{id}/action", options)
