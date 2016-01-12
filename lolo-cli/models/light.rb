@@ -1,8 +1,7 @@
+# A class to handle all single-light stuff
 class Light
-  # TODO: get inspired by
-  # https://github.com/soffes/hue/blob/master/lib/hue/light.rb
-  # :)
-  attr_accessor :id, :manufacturer, :name, :on
+
+  attr_accessor :id, :name
   def self.all_from_rest
     lights = []
     $logger.debug "Getting lights via #{$uri}/#{$key}/lights"
@@ -11,9 +10,7 @@ class Light
     response.each do |nr, light|
       l = Light.new
       l.id = nr
-      l.manufacturer = light["manufacturer"]
       l.name = light["name"]
-      l.on = light["state"]["on"]
       lights << l
     end
 
