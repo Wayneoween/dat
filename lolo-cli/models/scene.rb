@@ -8,7 +8,7 @@ class Scene
     scenes = []
     Group.all.each do |group|
       $logger.debug "Getting scenes in groups via #{$uri}/#{$key}/groups/#{group.id}/scenes"
-      response = RestClient.get $uri + "/#{$key}/groups/" + group.id + "/scenes"
+      response = get_request($uri + "/#{$key}/groups/" + group.id + "/scenes")
       next if response.empty?
 
       response = JSON.parse(response)
@@ -74,20 +74,20 @@ class Scene
 
   def turn_on
     $logger.debug "Turning scene #{id} on"
-    RestClient.put $uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", ""
+    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/recall", "")
   end
 
   def update
     $logger.debug "Saving changes in scene #{id} in #{group.name}"
-    RestClient.put $uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:lights => [light.id]}.to_json
+    put_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}/store", {:lights => [light.id]})
   end
 
   def self.create(group, name)
     $logger.debug "Adding scene #{name} to group #{group.name}"
-    RestClient.post $uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name}.to_json
+    post_request($uri + "/#{$key}/groups/#{group.id}/scenes", {:name => name})
   end
 
   def delete
-    RestClient.delete $uri + "/#{$key}/groups/#{group.id}/scenes/#{id}"
+    delete_request($uri + "/#{$key}/groups/#{group.id}/scenes/#{id}")
   end
 end

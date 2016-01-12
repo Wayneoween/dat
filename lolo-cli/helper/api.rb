@@ -109,3 +109,48 @@ def get_light_by_id(id)
   ret = {:id => light.id, :on => light.on, :name => light.name}.to_json
   puts ret
 end
+
+def get_request(uri)
+  request(:get, uri)
+end
+
+def put_request(uri, options)
+  request(:put, uri, options)
+end
+
+def post_request(uri, options)
+  request(:post, uri, options)
+end
+
+def delete_request(uri)
+  request(:delete, uri)
+end
+
+def request(method, uri, options={})
+  first_try = true
+  response = nil
+  begin
+    case method
+    when :get
+      response = RestClient.get uri
+    when :put
+      response = RestClient.put uri, options.to_json
+    when :post
+      response = RestClient.post uri, options.to_json
+    when :delete
+      response = RestClient.delete uri
+    end
+    return response
+  rescue
+    if first_try
+      $logger.debug "Exception while getting #{uri}. Try again after update cache."
+      first_try = false
+      Light.update_cache
+      Group.update_cache
+      Scene.update_cache
+      retry
+    end
+    $logger.debug "Exception while getting #{uri}. Second try after update cache failed too."
+  end
+  return response
+end
