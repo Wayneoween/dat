@@ -51,18 +51,12 @@ class Light
   end
 
   def self.find_by_id(id)
-    $logger.debug "Getting light #{id} via #{$uri}/#{$key}/lights/#{id}"
-    response = get_request($uri + "/#{$key}/lights/#{id}")
-    return nil unless response
+    $logger.debug "Getting light #{id}"
+    Light.all.each do |light|
+      return light if light.id == id
+    end
 
-    response = JSON.parse(response)
-    l = Light.new
-    l.id = id
-    l.manufacturer = response["manufacturer"]
-    l.name = response["name"]
-    l.on = response["state"]["on"]
-
-    return l
+    return nil
   end
 
   def self.find_by_name(name)
