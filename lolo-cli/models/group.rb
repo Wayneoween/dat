@@ -1,4 +1,4 @@
-# A class to handle all single-light stuff
+# A class to handle all group stuff
 class Group
 
   # Identification attributes
@@ -72,7 +72,7 @@ class Group
 
   # Creates a new group and updates the cache.
   def self.add(name)
-    $logger.debug "Add group #{name} via #{$uri}/#{$key}/groups"
+    $logger.debug "Adding group #{name} via #{$uri}/#{$key}/groups"
     post_request($uri + "/#{$key}/groups", {:name => name})
     Group.update_cache
   end
