@@ -144,16 +144,18 @@ Clamp do
 
     subcommand "light", "Add a light to a group." do
 
-      parameter "LIGHTNAME", "name of light"
-      parameter "GROUPNAME", "name of group"
+      parameter "LIGHTNAME", "name or id of light"
+      parameter "GROUPNAME", "name of id of group"
 
       def execute
         $logger.debug "Looking for light #{lightname}"
         light = Light.find_by_name(lightname)
+        light = Light.find_by_id(lightname) if light.nil?
         return if light.nil?
 
         $logger.debug "Looking for group #{groupname}"
         group = Group.find_by_name(groupname)
+        group = Group.find_by_id(groupname) if group.nil?
         return if group.nil?
 
         $logger.debug "Adding light #{lightname} to group #{groupname}"
