@@ -467,14 +467,13 @@ $ lolo group G1 off
 $ lolo delete group G1
 $ lolo delete scene S1
 
-# Neue Szene aus aktueller Einstellung von G1,
-# L3 und L4, die nicht in G1 sind
-$ lolo add scene S1 from G1 L1 L2
+# Neue Szene aus aktueller Einstellung von G1
+$ lolo add scene S1 G1
 
-|\#| Frauenbesuch aktivieren
+# Szene S1 aktivieren
 $ lolo scene S1 on
 
-|\#| Frauenbesuch deaktivieren
+# Szene S1 deaktivieren
 $ lolo scene S1 off
 
 \end{lstlisting}
