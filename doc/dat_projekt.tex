@@ -377,6 +377,12 @@ dieselbe Funktionalität der Web-GUI auf der Kommandozeile bereitzustellen.
 \section{lolo - Lights on, Lights off}
 \label{lolo}
 
+Lolo ist das in diesem Projekt entwickelte CLI. Das CLI soll es möglich machen, Lichter programmatisch über die Kommandozeile oder periodisch über Cronjobs zu steuern. Dafür gibt es, wie auch bei anderen Herstellern drei elementare Komponenten: Lichter, Gruppen, Szenen. Lichter sind die Kernkomponenten der Steuerung. Sie sind einzelne ansteuerbare Glühbirnen. Gruppen sind eine Sammlung an Lichtern. Gruppen können genauso wie Lichter angesteuert werden. Das bedeutet, dass Eigenschaften wie die Farbe oder Helligkeit auch an Gruppen angewendet werden können. Eine Änderung einer Eigenschaft der Gruppe wird automatisch an alle enthaltenen Lichtern angewendet. Eine Szene gehört zu einer Gruppe. Sie ist ein Abbild des aktuellen Zustands der Gruppe. Sie enthält die Eigenschaften aller Lichter der Gruppe und kann diese reaktivieren.
+
+Lolo ist in Ruby, einer objektorientierten Programmiersprache, welche den Programmcode zur Laufzeit interpretiert, geschrieben. Ruby ist auf allen gängigen Software- und Hardware-Plattformen entweder direkt vorhanden oder verfügbar. Eine Änderung am Source-Code benötigt keinen Kompilationsvorgang. Dadurch sind Änderungen an Lolo leicht durchführbar und testbar.
+
+Für die Programmiersprache Ruby sind einige hilfreiche Bibliotheken vorhanden. Darunter gibt es Clamp, ein Kommandozeilen-Framework mit dem ein Grundkonstrukt für ein CLI möglich ist. Clamp fängt die Kommandozeilen-Parameter ab und erlaubt es, unkompliziert mit ihnen umzugehen. Weiterhin verwenden wir Ruby Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
+
 \subsection{Beispielszenario}
 
 In den folgenden Beispielen wird mit folgendem Datenbestand gearbeitet:
