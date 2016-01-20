@@ -383,6 +383,10 @@ Lolo ist in Ruby, einer objektorientierten Programmiersprache, welche den Progra
 
 Für die Programmiersprache Ruby sind einige hilfreiche Bibliotheken vorhanden. Darunter gibt es Clamp, ein Kommandozeilen-Framework mit dem ein Grundkonstrukt für ein CLI möglich ist. Clamp fängt die Kommandozeilen-Parameter ab und erlaubt es, unkompliziert mit ihnen umzugehen. Weiterhin verwenden wir Ruby Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
 
+\subsection{Login}
+
+Die Ressourcen der deCONZ REST-API lassen sich nur mit einem API-Schlüssel bedienen. Dieser soll sicherstellen dass nur befugte Personen Zugriff auf die Endpunkte der API bekommen. Um einen API-Schlüssel zu bekommen muss ein HTTP \textbf{POST} auf den Endpunkt \textbf{/api} ausgeführt werden. Dafür muss entweder über das webbasierte Interface des deCONZ der Zugang kurzzeitig entsperrt werden. Alternativ kann eine der API bekannte Kombination aus Username und Passwort in der HTTP Anfrage enthalten sein. Falls erfolgreich liefert der Endpunkt eine JSON Datenstruktur als Antwort, in welcher der API-Schlüssel enthalten ist. Dieser kann nun für Anfragen an andere Endpunkte verwendet werden.
+
 \subsection{Beispielszenario}
 
 In den folgenden Beispielen wird mit folgendem Datenbestand gearbeitet:
