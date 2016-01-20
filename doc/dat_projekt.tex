@@ -421,7 +421,7 @@ Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
 Die Ressourcen der deCONZ REST-API lassen sich nur mit einem API-Schlüssel
 bedienen. Dieser soll sicherstellen dass nur befugte Personen Zugriff auf die
 Endpunkte der API bekommen. Um einen API-Schlüssel zu bekommen muss ein HTTP
-\textbf{POST} auf den Endpunkt \textbf{/api} ausgeführt werden. Dafür muss
+\textbf{POST} auf den Endpunkt \texttt{/api} ausgeführt werden. Dafür muss
 entweder über das webbasierte Interface des deCONZ der Zugang kurzzeitig
 entsperrt werden. Alternativ kann eine der API bekannte Kombination aus
 Username und Passwort in der HTTP Anfrage enthalten sein. Falls erfolgreich
@@ -434,13 +434,13 @@ verwendet werden.
 \label{api-lichter}
 
 Hat man den API-Schlüssel wie in \ref{api-login} beschrieben, kann ein
-\textbf{GET} Request auf den Endpunkt \textbf{/api/<key>/lights} ausgeführt
+\textbf{GET} Request auf den Endpunkt \texttt{/api/<key>/lights} ausgeführt
 werden. Als Antwort wird eine JSON Datenstruktur geliefert. Diese enthält
 die ID und den Namen aller Lichter.
 
 Um ein Attribut einer Lampe mit der ID \textbf{id} zu setzen, wird ein
 \textbf{PUT} Request auf den Endpunkt
-\textbf{/api/<key>/lights/<id>/state} ausgeführt. Es werden u.a. Parameter
+\texttt{/api/<key>/lights/<id>/state} ausgeführt. Es werden u.a. Parameter
 wie \textbf{on}, \textbf{hue} oder \textbf{bri} akzeptiert, um die Lampe
 ein-/auszuschalten, die Farbe oder die Helligkeit der Lampe zu setzten.
 
@@ -450,10 +450,10 @@ ein-/auszuschalten, die Farbe oder die Helligkeit der Lampe zu setzten.
 
 Ähnlich wie in \ref{api-lichter} alle Lichter über ein \textbf{GET}
 Request zu bekommen, wird in der Antwort vom Request auf
-\textbf{/api/<key>/groups} alle Gruppen mit deren ID und Namen geliefert.
+\texttt{/api/<key>/groups} alle Gruppen mit deren ID und Namen geliefert.
 Das Setzen von Attributen der Gruppe, wie Farbe, Helligkeit oder
 Farbtemperatur geschieht über ein \textbf{PUT} Request auf den Endpunkt
-\textbf{/api/<key>/groups/<group\_id>/action}. Die Parameter sind gleich,
+\texttt{/api/<key>/groups/<group\_id>/action}. Die Parameter sind gleich,
 wie die der Lichter aus \ref{api-lichter}.
 
 
@@ -462,12 +462,12 @@ wie die der Lichter aus \ref{api-lichter}.
 
 Alle Szenen mit deren ID und Namen werden wie in \ref{api-lichter} und
 \ref{api-gruppen}, mit einem \textbf{GET} Request geliefert. Dazu wird
-dieser auf den Endpunkt \newline \textbf{/api/<key>/groups/<group\_id>/scenes}
+dieser auf den Endpunkt \newline \texttt{/api/<key>/groups/<group\_id>/scenes}
 ausgeführt.
 
 Anders als bei Lichtern und Gruppen können bei Szenen keine Attribute
 gesetzt werden. Eine Szene wird über ein \textbf{POST} Request auf
-\newline \textbf{/api/<key>/groups/<group\_id>/scenes} mit dem Szenennamen
+\newline \texttt{/api/<key>/groups/<group\_id>/scenes} mit dem Szenennamen
 als Parameter erstellt. Dabei werden alle aktuellen Attribute der Lampen,
 die sich in der Gruppe mit der ID \textbf{group\_id} befinden, in dieser
 Szene gespeichert.
