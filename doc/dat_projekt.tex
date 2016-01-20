@@ -297,12 +297,10 @@ ein Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
 Version Wheezy heruntergeladen werden. Das Image ist komprimiert und muss nach
 dem Entpacken auf die SD-Karte gespielt werden. Das kann mit folgenden
 Kommandos ausgeführt werden:
-
 \begin{lstlisting}[caption=Raspbian manuell installieren]{RaspbianInstall}
 # unzip 2015-05-05-raspbian-wheezy.zip
 # dd if=2015-05-05-raspbian-wheezy.img of=/dev/disk
 \end{lstlisting}
-
 Der \gls{rpi} bekommt automatisch von einem im Netzwerk verbundenen DHCP-Server
 eine IP-Adresse. Diese kann nun entweder über die grafische Oberfläche
 abgefragt oder aus dem DHCP-Server ausgelesen werden. Mit Hilfe dieser
@@ -390,10 +388,10 @@ bereitzustellen.
 
 \newpage
 
-\section{lolo - Lights on, Lights off}
+\section{\texttt{lolo} - Lights on, Lights off}
 \label{lolo}
 
-Lolo ist das in diesem Projekt entwickelte CLI. Das CLI soll es möglich machen,
+\texttt{lolo} ist das in diesem Projekt entwickelte CLI. Das CLI soll es möglich machen,
 Lichter programmatisch über die Kommandozeile oder periodisch über Cronjobs zu
 steuern. Dafür gibt es, wie auch bei anderen Herstellern drei elementare
 Komponenten: Lichter, Gruppen, Szenen. Lichter sind die Kernkomponenten der
@@ -405,11 +403,11 @@ automatisch an alle enthaltenen Lichtern angewendet. Eine Szene gehört zu einer
 Gruppe. Sie ist ein Abbild des aktuellen Zustands der Gruppe. Sie enthält die
 Eigenschaften aller Lichter der Gruppe und kann diese reaktivieren.
 
-Lolo ist in Ruby, einer objektorientierten Programmiersprache, welche den
+\texttt{lolo} ist in Ruby, einer objektorientierten Programmiersprache, welche den
 Programmcode zur Laufzeit interpretiert, geschrieben. Ruby ist auf allen
 gängigen Software- und Hardware-Plattformen entweder direkt vorhanden oder
 verfügbar. Eine Änderung am Source-Code benötigt keinen Kompilationsvorgang.
-Dadurch sind Änderungen an Lolo leicht durchführbar und testbar.
+Dadurch sind Änderungen an \texttt{lolo} leicht durchführbar und testbar.
 
 Für die Programmiersprache Ruby sind einige hilfreiche Bibliotheken vorhanden.
 Darunter gibt es Clamp, ein Kommandozeilen-Framework mit dem ein Grundkonstrukt
