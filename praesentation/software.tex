@@ -16,6 +16,7 @@
       \Large
       \item Desktop Applikation
       \item Web Applikation
+      \item REST API
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -30,8 +31,19 @@
 
 \begin{frame}{Software - deCONZ - Web Applikation}
   \Large
-  Steuerung von Gruppen, Szenen über Rest-API
+  Steuerung der Beleuchtung über den Browser
   \begin{center}
     \includegraphics[width=0.8\textwidth]{images/deconz_web}
   \end{center}
+\end{frame}
+
+\begin{frame}{Software - deCONZ - REST-API}
+  \Large
+  GET-Requests
+  \center{
+    \begin{tabular}{ l l }
+      Lichter & \texttt{<url>/<key>/\alert{lights}}\\
+      Gruppen & \texttt{<url>/<key>/\alert{groups}}\\
+      Szenen & \texttt{<group>/<id>/\alert{scenes}}\\
+    \end{tabular}}
 \end{frame}

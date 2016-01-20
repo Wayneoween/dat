@@ -16,13 +16,10 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Hardware - Raspberry Pi 2 - Specs}
+\begin{frame}{Hardware - Raspberry Pi 2 - Spezifikationen}
   \Large
   \center{
   \begin{tabular}{ l r }
-%    L/B/H & \texttt{9,3 x 6,4 x 2,0 cm}\\
-%    Gewicht & \texttt{45 g}\\
-%    \\
     CPU & \texttt{ARM Cortex-A7}\\
     CPU-Kerne & \texttt{4}\\
     CPU-Takt & \texttt{900 MHz}\\
@@ -65,4 +62,27 @@
     \item Gute Erfahrungen
     \item Gute Qualität
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Hardware - Hue - Organisation}
+  \Large
+  \centering
+  \begin{tikzpicture}
+    % Lichter
+    \draw [fill=red, draw=none] (-1.5,0) circle (0.3cm) node (hue1) {};
+    \draw [fill=green, draw=none] (0,0) circle (0.3cm) node (hue2) {};
+    \draw [fill=blue, draw=none] (1.5,0) circle (0.3cm) node (hue3) {};
+    \draw [fill=yellow, draw=none] (4,0) circle (0.3cm) node (hue4) {};
+    % Label für Lichter
+    \node (hue1label) [above=0.3 of hue1]{Hue1};
+    \node (hue2label) [above=0.3 of hue2]{Hue2};
+    \node (hue3label) [above=0.3 of hue3]{Hue3};
+    \node (hue4label) [above=0.3 of hue4]{Hue4};
+    % Gruppen und Szenen
+    \draw [draw=black, ultra thick] (0,0) ellipse (3.0cm and 1.8cm) node (group) {};
+    \draw [draw=teal, ultra thick] (0.75,0) ellipse (1.5cm and 0.5cm) node (scene) {};
+    % Label für Gruppen und Szenen
+    \node (grouplabel) [above=1.5 of group]{Gruppe};
+    \node (scenelabel) [below=0.3 of scene]{Szene};
+  \end{tikzpicture}
 \end{frame}
