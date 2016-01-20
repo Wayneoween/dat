@@ -98,13 +98,39 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{CLI - lolo}
+\begin{frame}{lolo}
   \Large
+  \begin{quote}
+    Wir nennen das einfach \alert{lolo},\\
+    das steht dann für ``\textbf Lights \textbf On, \textbf Lights \textbf Off''
+    und fertig.
+    \begin{flushright}
+      \small
+      -- \texttt{lolo}-Entwicklerteam
+    \end{flushright}
+  \end{quote}
+\end{frame}
+
+\begin{frame}{lolo - Entwicklung}
+  \Large
+  \center{\includegraphics[width=0.3\linewidth]{images/ruby}}
+  Ruby
   \begin{itemize}
-    \item Command-Line-Interface
-    \item Ruby
-    \item clamp
-    \item rest-client
-    \item nutzt deCONZ Rest-API
+    \item Objektorientiert
+    \item Interpretiert
+    \item Viele Module verfügbar
   \end{itemize}
+\end{frame}
+
+\begin{frame}{lolo - Entwicklung - Module}
+  \Large
+  Wir nutzen hauptsächlich folgende RubyGems:
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{clamp} & Parsen von CLI-Optionen\\
+      \texttt{json} & Parsen von JSON-Objekten\\
+      \texttt{yaml} & Caching von JSON-Objekten\\
+      \texttt{rest-client} & Highlevel REST-Abstraktion\\
+    \end{tabular}
+  }
 \end{frame}
