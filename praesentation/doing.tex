@@ -12,6 +12,84 @@
   \end{center}
 \end{frame}
 
+\begin{frame}{deCONZ - REST-API - GET 1/2}
+  \Large
+  GET-Requests: Informationsbeschaffung
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{<url>/<apikey>} & \\
+      Lichter & \texttt /\alert{\texttt{lights}}\\
+      Gruppen & \texttt /\alert{\texttt{groups}}\\
+      Szenen & \hspace{1em}$\looparrowdownright$\hspace{1em}
+        \texttt{/<id>/\alert{\texttt{scenes}}}\\
+    \end{tabular}
+  }
+  \flushleft
+  für \alert{alle} Lichter, Gruppen und Szenen.
+\end{frame}
+
+\begin{frame}{deCONZ - REST-API - GET 2/2}
+  \Large
+  GET-Requests: Informationsbeschaffung
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{<url>/<apikey>} & \\
+      Lichter & \texttt /\alert{\texttt{lights/<id>}}\\
+      Gruppen & \texttt /\alert{\texttt{groups/<id>}}\\
+      Szenen & \hspace{1em}$\looparrowdownright$\hspace{1em}
+        \texttt /\alert{\texttt{scenes/<id>}}\\
+    \end{tabular}
+  }
+  \flushleft
+  für \alert{einzelne} Lichter, Gruppen und Szenen
+\end{frame}
+
+\begin{frame}{deCONZ - REST-API - PUT}
+  \Large
+  PUT-Requests: Datenaktualisierung
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{<url>/<apikey>} & \\
+      Lichter & \texttt /\alert{\texttt{lights/<id>/state}}\\
+      Gruppen & \texttt /\alert{\texttt{groups/<id>}}\\
+      Szenen & \hspace{1em}$\looparrowdownright$\hspace{1em}
+        \texttt /\alert{\texttt{scenes/<id>}}\\
+    \end{tabular}
+  }
+  \flushleft
+  für \alert{einzelne} Lichter, Gruppen und Szenen
+\end{frame}
+
+\begin{frame}{deCONZ - REST-API - POST}
+  \Large
+  POST-Requests: Erstellung
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{<url>/<apikey>} & \\
+      Gruppen & \texttt /\alert{\texttt{groups}}\\
+      Szenen & \hspace{1em}$\looparrowdownright$\hspace{1em}
+        \texttt{/<id>/\alert{\texttt{scenes}}}\\
+    \end{tabular}
+  }
+  \flushleft
+  von Gruppen und Szenen
+\end{frame}
+
+\begin{frame}{deCONZ - REST-API - DELETE}
+  \Large
+  DELETE-Requests: Löschung
+  \center{
+    \begin{tabular}{ l l }
+      \texttt{<url>/<apikey>} & \\
+      Gruppen & \texttt /\alert{\texttt{groups}}\\
+      Szenen & \hspace{1em}$\looparrowdownright$\hspace{1em}
+        \texttt{/<id>/\alert{\texttt{scenes}}}\\
+    \end{tabular}
+  }
+  \flushleft
+  von Gruppen und Szenen
+\end{frame}
+
 \begin{frame}{CLI - lolo}
   \Large
   \begin{itemize}
