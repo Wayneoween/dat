@@ -416,6 +416,7 @@ erlaubt es, unkompliziert mit ihnen umzugehen. Weiterhin verwenden wir Ruby
 Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
 
 \subsection{Login}
+\label{api-login}
 
 Die Ressourcen der deCONZ REST-API lassen sich nur mit einem API-Schlüssel
 bedienen. Dieser soll sicherstellen dass nur befugte Personen Zugriff auf die
@@ -427,6 +428,50 @@ Username und Passwort in der HTTP Anfrage enthalten sein. Falls erfolgreich
 liefert der Endpunkt eine JSON Datenstruktur als Antwort, in welcher der
 API-Schlüssel enthalten ist. Dieser kann nun für Anfragen an andere Endpunkte
 verwendet werden.
+
+
+\subsection{Lichter}
+\label{api-lichter}
+
+Hat man den API-Schlüssel wie in \ref{api-login} beschrieben, kann ein
+\textbf{GET} Request auf den Endpunkt \textbf{/api/<key>/lights} ausgeführt
+werden. Als Antwort wird eine JSON Datenstruktur geliefert. Diese enthält
+die ID und den Namen aller Lichter.
+
+Um ein Attribut einer Lampe mit der ID \textbf{id} zu setzen, wird ein
+\textbf{PUT} Request auf den Endpunkt
+\textbf{/api/<key>/lights/<id>/state} ausgeführt. Es werden u.a. Parameter
+wie \textbf{on}, \textbf{hue} oder \textbf{bri} akzeptiert, um die Lampe
+ein-/auszuschalten, die Farbe oder die Helligkeit der Lampe zu setzten.
+
+
+\subsection{Gruppen}
+\label{api-gruppen}
+
+Ähnlich wie in \ref{api-lichter} alle Lichter über ein \textbf{GET}
+Request zu bekommen, wird in der Antwort vom Request auf
+\textbf{/api/<key>/groups} alle Gruppen mit deren ID und Namen geliefert.
+Das Setzen von Attributen der Gruppe, wie Farbe, Helligkeit oder
+Farbtemperatur geschieht über ein \textbf{PUT} Request auf den Endpunkt
+\textbf{/api/<key>/groups/<group\_id>/action}. Die Parameter sind gleich,
+wie die der Lichter aus \ref{api-lichter}.
+
+
+\subsection{Szenen}
+\label{api-szenen}
+
+Alle Szenen mit deren ID und Namen werden wie in \ref{api-lichter} und
+\ref{api-gruppen}, mit einem \textbf{GET} Request geliefert. Dazu wird
+dieser auf den Endpunkt \newline \textbf{/api/<key>/groups/<group\_id>/scenes}
+ausgeführt.
+
+Anders als bei Lichtern und Gruppen können bei Szenen keine Attribute
+gesetzt werden. Eine Szene wird über ein \textbf{POST} Request auf
+\newline \textbf{/api/<key>/groups/<group\_id>/scenes} mit dem Szenennamen
+als Parameter erstellt. Dabei werden alle aktuellen Attribute der Lampen,
+die sich in der Gruppe mit der ID \textbf{group\_id} befinden, in dieser
+Szene gespeichert.
+
 
 \subsection{Beispielszenario}
 
