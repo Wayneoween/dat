@@ -68,46 +68,52 @@
 \section{Einführung}
 \label{einfuehrung}
 
-Im Zuge der Internet-of-Things-Kampagne\footnote{\url{http://www.nextgenerationmedia.de}}
+Im Zuge der
+Internet-of-Things-Kampagne\footnote{\url{http://www.nextgenerationmedia.de}}
 werden immer mehr ``dumme'' bzw. einfache Geräte miteinander vernetzt und die
-resultierenden Daten intelligent miteinander verknüpft. Dazu gehören auch Lichter und
-Glühbirnen. Zur Vernetzung und Steuerung der Lichter existieren bereits mehrere
-aktuelle Technologien. Mit Hilfe einer der standardisierten Technologien möchten wir
-einen Controller implementieren, der diese Lichter kontrollieren kann.
+resultierenden Daten intelligent miteinander verknüpft. Dazu gehören auch
+Lichter und Glühbirnen. Zur Vernetzung und Steuerung der Lichter existieren
+bereits mehrere aktuelle Technologien. Mit Hilfe einer der standardisierten
+Technologien möchten wir einen Controller implementieren, der diese Lichter
+kontrollieren kann.
 
 \section{Lichtsteuerungs-Technologien}
 \label{technology}
 
-Üblicherweise möchten Hersteller ein eigenes Produkt-Ökosystem erstellen, aus dem ein
-Anwender nicht oder nur schwer entkommen kann. Hierfür werden von den Herstellern
-eigene, unfreie Protokolle implementiert. Beispielsweise bietet
-\textit{LimitlessLED}\footnote{\url{http://www.limitlessled.com}} Glühbirnen, welche sich
-über 2,4 GHz WLAN in das lokale Netzwerk verbinden. Für die eigentliche
-Steuerung wurde dazu eine eigene API entwickelt. Eine weitere bekannte Technologie
-zur Steuerung von Geräten ist Bluetooth. Hier ist es derzeit möglich
-mit Hilfe des \gls{gatt}, ein eigenes Protokoll zu sprechen. Dies wird bei einigen
-smarten Glühbirnen verwendet, um ein proprietäres Lichtsteuerungsprotokoll zu implementieren.
+Üblicherweise möchten Hersteller ein eigenes Produkt-Ökosystem erstellen, aus
+dem ein Anwender nicht oder nur schwer entkommen kann. Hierfür werden von den
+Herstellern eigene, unfreie Protokolle implementiert. Beispielsweise bietet
+\textit{LimitlessLED}\footnote{\url{http://www.limitlessled.com}} Glühbirnen,
+welche sich über 2,4 GHz WLAN in das lokale Netzwerk verbinden. Für die
+eigentliche Steuerung wurde dazu eine eigene API entwickelt. Eine weitere
+bekannte Technologie zur Steuerung von Geräten ist Bluetooth. Hier ist es
+derzeit möglich mit Hilfe des \gls{gatt}, ein eigenes Protokoll zu sprechen.
+Dies wird bei einigen smarten Glühbirnen verwendet, um ein proprietäres
+Lichtsteuerungsprotokoll zu implementieren.
 
-Die Bluetooth Konkurrenten \textit{Z-Wave}\footnote{\url{http://www.z-wavealliance.org}} sowie
-\textit{\gls{gls-zb}} implementieren wieder jeweils eigene Lichtprotokolle. Diese
-sind jedoch für jeden Client des Funkstandards nutzbar, sodass die Hersteller kein
-eigenes Protokoll implementieren mussten. Der Funkstandard \gls{gls-zb} wird
-von den namhaften Herstellern \textit{Philips} und \textit{Osram} verwendet.
+Die Bluetooth Konkurrenten
+\textit{Z-Wave}\footnote{\url{http://www.z-wavealliance.org}} sowie
+\textit{\gls{gls-zb}} implementieren wieder jeweils eigene Lichtprotokolle.
+Diese sind jedoch für jeden Client des Funkstandards nutzbar, sodass die
+Hersteller kein eigenes Protokoll implementieren mussten. Der Funkstandard
+\gls{gls-zb} wird von den namhaften Herstellern \textit{Philips} und
+\textit{Osram} verwendet.
 
 Für das Schwerpunktprojekt würden wir uns auf \gls{gls-zb} kompatible Geräte
-konzentrieren. Vor allem die Produkte der
-\textit{Philips hue}\footnote{\url{http://www.philips.de/e/hue/hue.html}} Reihe.
+konzentrieren. Vor allem die Produkte der \textit{Philips
+hue}\footnote{\url{http://www.philips.de/e/hue/hue.html}} Reihe.
 
 \section{Komponenten}
 \label{components}
 
 Die eigentliche Logik zur Steuerung der Lichter kann auf einem
-\emph{\glslink{gls-rpi}{\gls{rpi}}} implementiert werden. Um den Funkstandard \gls{gls-zb}
-sprechen zu können wird ein kompatibles Funkmodul benötigt. Hierfür kann das \textit{RaspBee}-Modul
-verwendet werden.
-Dieses gibt es in zwei Varianten, \textit{Basic} und \textit{Premium}. Während man mit der
-Basic-Variante nur mit 5 Knoten sprechen darf, ist dies bei der Premium-Variante
-unbegrenzt. Die Lichter würden aus einem \textit{Philips Hue} Starterkit bestehen.
+\emph{\glslink{gls-rpi}{\gls{rpi}}} implementiert werden. Um den Funkstandard
+\gls{gls-zb} sprechen zu können wird ein kompatibles Funkmodul benötigt.
+Hierfür kann das \textit{RaspBee}-Modul verwendet werden. Dieses gibt es in
+zwei Varianten, \textit{Basic} und \textit{Premium}. Während man mit der
+Basic-Variante nur mit 5 Knoten sprechen darf, ist dies bei der
+Premium-Variante unbegrenzt. Die Lichter würden aus einem \textit{Philips Hue}
+Starterkit bestehen.
 
 \section{Hardware}
 \label{hardware}
@@ -141,16 +147,16 @@ unbegrenzt. Die Lichter würden aus einem \textit{Philips Hue} Starterkit besteh
 \subsection{Hinweis}
 
 Unter Umständen sind Bestandteile der Liste schon im Vorrat der Hochschule oder
-der Projektteilnehmer. Je nach Beteiligung der Fachhochschule würden wir für einen
-Teil der Kosten aufkommen.
+der Projektteilnehmer. Je nach Beteiligung der Fachhochschule würden wir für
+einen Teil der Kosten aufkommen.
 
 \newpage
 
 \section{Grobarchitektur}
 \label{architecture}
 
-In Abbildung \ref{fig:architecture} wird der grobe, vorraussichtliche Ablauf der
-Kommunikation aller involvierter Komponenten beschrieben.
+In Abbildung \ref{fig:architecture} wird der grobe, vorraussichtliche Ablauf
+der Kommunikation aller involvierter Komponenten beschrieben.
 
 \begin{figure}[h!]
 	\centering
@@ -167,20 +173,22 @@ bestehen, die im Folgenden genauer beschrieben werden.
 
 \subsection{Hue LED Licht}
 
-Die zu steuernden Lampen werden in eine herkömmliche Fassung geschraubt worüber sie
-wie normale Leuchtmittel mit Strom versorgt werden. Die Hue LEDs besitzen dazu aber einen
-\gls{gls-zb}-Chip, mit dem sie Teil eines \gls{gls-zb}-Netzwerks werden können. In diesem Netzwerk
-fungieren sie als \emph{End Device}, das bedeutet, sie nehmen nicht am Routing innerhalb des
-Netzwerks teil, benötigen dafür aber auch nur einen kleinen Teil der Funktionen des
-\gls{gls-zb}-Standards. Über das \gls{gls-zb}
-\emph{Light Link}-Protokoll\footnote{\url{http://www.zigbee.org/zigbee-for-developers/applicationstandards/zigbee-light-link/}}
-können die Lampen angesprochen werden und bestimmte Einstellungen wie Helligkeit und Farbe
-eingestellt werden.
+Die zu steuernden Lampen werden in eine herkömmliche Fassung geschraubt worüber
+sie wie normale Leuchtmittel mit Strom versorgt werden. Die Hue LEDs besitzen
+dazu aber einen \gls{gls-zb}-Chip, mit dem sie Teil eines
+\gls{gls-zb}-Netzwerks werden können. In diesem Netzwerk fungieren sie als
+\emph{End Device}, das bedeutet, sie nehmen nicht am Routing innerhalb des
+Netzwerks teil, benötigen dafür aber auch nur einen kleinen Teil der Funktionen
+des \gls{gls-zb}-Standards. Über das \gls{gls-zb} \emph{Light
+Link}-Protokoll\footnote{\url{http://www.zigbee.org/zigbee-for-developers/applicationstandards/zigbee-light-link/}}
+können die Lampen angesprochen werden und bestimmte Einstellungen wie
+Helligkeit und Farbe eingestellt werden.
 
 \subsection{\gls{gls-zb} Controller}
 
-Der \gls{gls-zb} Controller RaspBee ist die eigentliche Funkeinheit. Sie stellt eine rohe
-Programmierschnittstelle bereit, um auf das \gls{gls-zb}-Netzwerk zugreifen zu können.
+Der \gls{gls-zb} Controller RaspBee ist die eigentliche Funkeinheit. Sie stellt
+eine rohe Programmierschnittstelle bereit, um auf das \gls{gls-zb}-Netzwerk
+zugreifen zu können.
 
 \begin{figure}[h!]
 	\centering
@@ -191,8 +199,8 @@ Programmierschnittstelle bereit, um auf das \gls{gls-zb}-Netzwerk zugreifen zu k
 \noindent
 Der Controller besteht aus zwei Komponenten. Zum einen dem RaspBee, einer
 aufsteckbaren Erweiterungsplatine mit Funkmodul für den \gls{rpi}, und zum
-anderen dem \gls{rpi} selber. Der \gls{rpi} besitzt eine Reihe an \acrshort{gpio}-Pins am
-Rand des Boards.
+anderen dem \gls{rpi} selber. Der \gls{rpi} besitzt eine Reihe an
+\acrshort{gpio}-Pins am Rand des Boards.
 
 \begin{figure}[h!]
 	\centering
@@ -201,37 +209,39 @@ Rand des Boards.
 \end{figure}
 
 \noindent
-Das RaspBee ist an diese \acrshort{gpio}-Pins angepasst und wird dadurch mit Strom versorgt.
-Außerdem werden die \acrshort{uart}-Pins zur seriellen Kommunikation mit einem Treiber, der
-auf dem \gls{rpi} betrieben wird, verwendet.
+Das RaspBee ist an diese \acrshort{gpio}-Pins angepasst und wird dadurch mit
+Strom versorgt. Außerdem werden die \acrshort{uart}-Pins zur seriellen
+Kommunikation mit einem Treiber, der auf dem \gls{rpi} betrieben wird,
+verwendet.
 
 \subsection{Lichtsteuerung}
 
-Die Lichtsteuerung soll als hardwarenahes Backend dienen. Diese Software, die auf
-dem \gls{rpi} betrieben wird, kommuniziert über die serielle
-Schnittstelle mit dem \gls{gls-zb} Controller. Um auf die Nodes des Netzwerks
-zugreifen zu können bietet das Backend eine Programmierschnittstelle an.
+Die Lichtsteuerung soll als hardwarenahes Backend dienen. Diese Software, die
+auf dem \gls{rpi} betrieben wird, kommuniziert über die serielle Schnittstelle
+mit dem \gls{gls-zb} Controller. Um auf die Nodes des Netzwerks zugreifen zu
+können bietet das Backend eine Programmierschnittstelle an.
 
 \subsection{API}
 
-Die API ist eine weitere Software auf dem \gls{rpi}. Sie verwendet
-die Schnittstelle der Lichtsteuerung und bietet eine REST-basierte
-Webschnittstelle an. Diese Schnittstelle bietet einen vereinfachten Zugriff
-auf das Funknetz, mit Fokus auf Steuerung und Verwaltung der Lampen. Durch die
-Trennung der einzelnen Programme bleiben Treiber, API und GUI austauschbar.
+Die API ist eine weitere Software auf dem \gls{rpi}. Sie verwendet die
+Schnittstelle der Lichtsteuerung und bietet eine REST-basierte Webschnittstelle
+an. Diese Schnittstelle bietet einen vereinfachten Zugriff auf das Funknetz,
+mit Fokus auf Steuerung und Verwaltung der Lampen. Durch die Trennung der
+einzelnen Programme bleiben Treiber, API und GUI austauschbar.
 
 \subsection{Webserver}
 
-Der Webserver dient primär zum Zugriff auf die Weboberfläche, welche die REST-API
-über den Browser zugänglich macht um bequem die Lichter verwalten und steuern
-zu können. Weiter wird hier die API etwaigen CLI-Programmen zur Verfügung
-gestellt.
+Der Webserver dient primär zum Zugriff auf die Weboberfläche, welche die
+REST-API über den Browser zugänglich macht um bequem die Lichter verwalten und
+steuern zu können. Weiter wird hier die API etwaigen CLI-Programmen zur
+Verfügung gestellt.
 
 \subsection{GUI}
 
-Die GUI, im HTML5 Standard, ist die Schnittstelle zum Benutzer und wird im Browser dargestellt.
-Über diese kann der Benutzer die Nodes steuern, wie z.B. Helligkeit und Farbe einstellen.
-Zum bequemen Verwenden der API aus dem Browser wird JavaScript auf dem Client verwendet.
+Die GUI, im HTML5 Standard, ist die Schnittstelle zum Benutzer und wird im
+Browser dargestellt. Über diese kann der Benutzer die Nodes steuern, wie z.B.
+Helligkeit und Farbe einstellen. Zum bequemen Verwenden der API aus dem Browser
+wird JavaScript auf dem Client verwendet.
 
 \subsection{CLI}
 
@@ -247,44 +257,46 @@ Programmiersprache in der das CLI-Programm umgesetzt werden soll zweitrangig.
 \label{doing}
 
 Umgesetzt und von uns implementiert werden soll die API sowie die CLI. Eine
-rudimentäre Umsetzung der Web-GUI ist denkbar, um die prinzipielle Möglichkeit zu
-verdeutlichen.
-Die Treibersoftware um das RaspBee-Modul anzusteuern ist leider nicht
-Open Source. Diese Software bietet eine Programmierschnittstelle, um die eine API
-herum entwickelt werden kann.
+rudimentäre Umsetzung der Web-GUI ist denkbar, um die prinzipielle Möglichkeit
+zu verdeutlichen. Die Treibersoftware um das RaspBee-Modul anzusteuern ist
+leider nicht Open Source. Diese Software bietet eine Programmierschnittstelle,
+um die eine API herum entwickelt werden kann.
 
 \subsection{Einschränkungen}
 
 Nach anfänglicher Exploration der mit der RaspBee-Modul zugehörigen Software
 von \emph{Dresden Elektronik} wurde festgestellt, dass viel der von uns zu
-implementierenden Funktionalität bereits in der bereitgestellten \emph{\acrshort{deconz}}-
-Software vorhanden war. Die Anfrage an den Support von Dresden Elektronik
-nach Zugang zur Dokumentation der \acrshort{uart}-Schnittstelle und dem Funkmodul
-RaspBee wurde verweigert.
+implementierenden Funktionalität bereits in der bereitgestellten
+\emph{\acrshort{deconz}}- Software vorhanden war. Die Anfrage an den Support
+von Dresden Elektronik nach Zugang zur Dokumentation der
+\acrshort{uart}-Schnittstelle und dem Funkmodul RaspBee wurde verweigert.
 
 Weiter war das Vorhaben aus Punkt \ref{architecture} inhaltlich zu groß gefasst
-als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden hätte können.
-Aus diesen Gründen beschränkt sich das Projekt auf die Entwicklung eines CLI.
+als dass es in der gegebenen Zeit vollumfänglich durchgeführt werden hätte
+können. Aus diesen Gründen beschränkt sich das Projekt auf die Entwicklung
+eines CLI.
 
 \section{Installation}
 
 \subsection{Betriebssystem}
 
-Das im \gls{rpi} Bundle aus Punkt \ref{hardware} auf der Micro-SD-Karte vorinstallierte
-System heißt \acrshort{noobs} (\acrlong{noobs}).
-Dieses System dient als Platform um das eigentliche System zu installieren. Es stellt
-eine grafische Oberfläche auf der HDMI-Schnittstelle bereit auf der das über das
+Das im \gls{rpi} Bundle aus Punkt \ref{hardware} auf der Micro-SD-Karte
+vorinstallierte System heißt \acrshort{noobs} (\acrlong{noobs}). Dieses System
+dient als Platform um das eigentliche System zu installieren. Es stellt eine
+grafische Oberfläche auf der HDMI-Schnittstelle bereit auf der das über das
 Internet zu installierende Betriebssystem ausgewählt werden kann.
 
-Da die \acrshort{deconz}-Software nur in Binärform vorliegt muss ein daran angepasstes
-Betriebssystem installiert werden. \emph{Raspbian}\footnote{\url{https://www.raspbian.org/}},
-eine für das \gls{rpi} angepasste \emph{Debian}\footnote{\url{https://www.debian.org/}} Version,
-ist in der Version Wheezy zur \acrshort{deconz}-Software kompatibel. Weiterhin ist Raspbian eines der
-verbreitetsten Betriebssysteme für den \gls{rpi}.
-Wahlweise kann Raspbian auch manuell installiert werden. Dafür muss ein
-Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
-Version Wheezy heruntergeladen werden. Das Image ist komprimiert und muss nach dem Entpacken auf
-die SD-Karte gespielt werden. Das kann mit folgenden Kommandos ausgeführt werden:
+Da die \acrshort{deconz}-Software nur in Binärform vorliegt muss ein daran
+angepasstes Betriebssystem installiert werden.
+\emph{Raspbian}\footnote{\url{https://www.raspbian.org/}}, eine für das
+\gls{rpi} angepasste \emph{Debian}\footnote{\url{https://www.debian.org/}}
+Version, ist in der Version Wheezy zur \acrshort{deconz}-Software kompatibel.
+Weiterhin ist Raspbian eines der verbreitetsten Betriebssysteme für den
+\gls{rpi}. Wahlweise kann Raspbian auch manuell installiert werden. Dafür muss
+ein Image\footnote{\url{https://www.raspberrypi.org/downloads/raspbian/}} der
+Version Wheezy heruntergeladen werden. Das Image ist komprimiert und muss nach
+dem Entpacken auf die SD-Karte gespielt werden. Das kann mit folgenden
+Kommandos ausgeführt werden:
 
 \begin{lstlisting}[caption=Raspbian manuell installieren]{RaspbianInstall}
 # unzip 2015-05-05-raspbian-wheezy.zip
@@ -301,8 +313,9 @@ einzuloggen.
 
 Die aktuelle
 \acrshort{deconz}-Version\footnote{\url{http://www.dresden-elektronik.de/rpi/deconz/deconz-2.02.05.deb}}
-liegt als Debian Paket auf der Website des Herstellers bereit. Nach dem Download
-kann die Software mit dpkg installieren. Danach ist die Software betriebsbereit.
+liegt als Debian Paket auf der Website des Herstellers bereit. Nach dem
+Download kann die Software mit dpkg installieren. Danach ist die Software
+betriebsbereit.
 
 \begin{lstlisting}[caption=deCONZ installieren]{deCONZInstall}
 # dpkg -i deconz-2.02.05.deb
@@ -310,15 +323,15 @@ kann die Software mit dpkg installieren. Danach ist die Software betriebsbereit.
 
 \subsection{Vorbereitung für die Nutzung der CLI auf \gls{rpi}}
 
-Um möglichst wenige externe Abhängigkeiten zu haben, wird auf die über \gls{apt}
-verfügbare, alte \gls{gls-rb}-Version 1.9.3 zurückgegriffen. Diese ist in \gls{apt}
-fehlerhafterweise mit der Versionsnummer 1.9.1 gekennzeichnet. Letztlich sollten
-aber beide Versionen gleich gut funktionieren.
-Um wichtige Funktionalität nicht selbst neu entwickeln zu müssen wird für die
-REST-Anfragen das Ruby-Modul
-\emph{rest-client}\footnote{\url{https://rubygems.org/gems/rest-client}}, in der
-Ruby-Welt als \emph{Gem} bezeichnet, dafür verwendet. Für einfaches Handling der
-Kommandozeilenparameter nutzen wir
+Um möglichst wenige externe Abhängigkeiten zu haben, wird auf die über
+\gls{apt} verfügbare, alte \gls{gls-rb}-Version 1.9.3 zurückgegriffen. Diese
+ist in \gls{apt} fehlerhafterweise mit der Versionsnummer 1.9.1 gekennzeichnet.
+Letztlich sollten aber beide Versionen gleich gut funktionieren. Um wichtige
+Funktionalität nicht selbst neu entwickeln zu müssen wird für die REST-Anfragen
+das Ruby-Modul
+\emph{rest-client}\footnote{\url{https://rubygems.org/gems/rest-client}}, in
+der Ruby-Welt als \emph{Gem} bezeichnet, dafür verwendet. Für einfaches
+Handling der Kommandozeilenparameter nutzen wir
 \emph{clamp}\footnote{\url{https://rubygems.org/gems/clamp}}.
 
 \begin{lstlisting}[caption=Ruby und Ruby-Modulmanager installieren]{RaspbianInstall}
@@ -329,24 +342,24 @@ Kommandozeilenparameter nutzen wir
 \section{deCONZ Bedienung}
 \label{deconz}
 
-Bei der Verwendung von \acrshort{deconz} werden zwei Bedienoberflächen bereitgestellt.
-Eine davon wird als Desktop-Applikation angezeigt. Dort kann man sich auf einer hardwarenahen
-Ebene verfügbare \gls{gls-zb}-Nodes anzeigen lassen.
-Weiter wird eine Weboberfläche angeboten, über die die eigentliche Lampen-Steuerung
-erfolgt. Hiermit können Gruppen --- Verbünde aus mehreren Lampen --- und Szenen
---- eigene, gespeicherte Konfigurationen für Lichter und Gruppen --- definiert und
-angewählt werden. Im Hintergrund wird eine bereitgestellte REST-API verwendet, über die
-auch unser zu programmierendes CLI auf die Hardware und Daten zugreifen soll.
+Bei der Verwendung von \acrshort{deconz} werden zwei Bedienoberflächen
+bereitgestellt. Eine davon wird als Desktop-Applikation angezeigt. Dort kann
+man sich auf einer hardwarenahen Ebene verfügbare \gls{gls-zb}-Nodes anzeigen
+lassen. Weiter wird eine Weboberfläche angeboten, über die die eigentliche
+Lampen-Steuerung erfolgt. Hiermit können Gruppen --- Verbünde aus mehreren
+Lampen --- und Szenen --- eigene, gespeicherte Konfigurationen für Lichter und
+Gruppen --- definiert und angewählt werden. Im Hintergrund wird eine
+bereitgestellte REST-API verwendet, über die auch unser zu programmierendes CLI
+auf die Hardware und Daten zugreifen soll.
 
 \subsection{\acrshort{deconz} starten}
 
-Um deCONZ zu starten muss zwangsweise ein X-Server aktiv sein. Allerdings wird diese
-Oberfläche hauptsächlich zur Fehlersuche verwendet und wird von uns nicht direkt benötigt.
-Aus diesem Grund starten wir den X-Server nur im Hintergrund und starten die GUI-Applikation
-dort.
-\acrshort{deconz} lauscht mit der, zusammen mit der GUI gestarteten, Weboberfläche auf Port 80.
-Optional kann ein anderer Port
-angegeben werden.
+Um deCONZ zu starten muss zwangsweise ein X-Server aktiv sein. Allerdings wird
+diese Oberfläche hauptsächlich zur Fehlersuche verwendet und wird von uns nicht
+direkt benötigt. Aus diesem Grund starten wir den X-Server nur im Hintergrund
+und starten die GUI-Applikation dort. \acrshort{deconz} lauscht mit der,
+zusammen mit der GUI gestarteten, Weboberfläche auf Port 80. Optional kann ein
+anderer Port angegeben werden.
 
 \begin{lstlisting}[caption=deCONZ starten]{deCONZStart}
 $ startx &
@@ -356,36 +369,66 @@ $ DISPLAY=:0 deCONZ --auto-connect=1 &
 \subsection{Web-GUI}
 \label{ss:webgui}
 
-Das deCONZ Programm stellt neben der Schnittstelle zur Hardware auch eine Webseite zur
-Verfügung, über welche die API angesprochen werden kann.
+Das deCONZ Programm stellt neben der Schnittstelle zur Hardware auch eine
+Webseite zur Verfügung, über welche die API angesprochen werden kann.
 Standardmäßig ist diese unter \url{http://<IP>:80} zu erreichen, wobei <IP> ein
-Platzhalter für die private IP-Adresse des \gls{rpi} steht. Über die Web-GUI können Lichter
-hinzugefügt, Gruppen und Szenen angelegt, verwaltet sowie gelöscht werden. Eine
-Automatisierungsmöglichkeit über die Web-GUI ist ebenfalls vorhanden.
+Platzhalter für die private IP-Adresse des \gls{rpi} steht. Über die Web-GUI
+können Lichter hinzugefügt, Gruppen und Szenen angelegt, verwaltet sowie
+gelöscht werden. Eine Automatisierungsmöglichkeit über die Web-GUI ist
+ebenfalls vorhanden.
 
 \subsection{API}
 
-Nach dem Starten der deCONZ Software wird neben einem Webserver (vgl. 
+Nach dem Starten der deCONZ Software wird neben einem Webserver (vgl.
 Kapitel~\ref{ss:webgui}) auch eine REST-API zur Verfügung gestellt, die unter
-der Adresse \url{http://<IP>:80/api} erreichbar ist.\footnote{API-Doku unter \url{http://dresden-elektronik.github.io/deconz-rest-doc/}}
+der Adresse \url{http://<IP>:80/api} erreichbar ist.\footnote{API-Doku unter
+\url{http://dresden-elektronik.github.io/deconz-rest-doc/}}
 
-Über diese Schnittstelle agiert \texttt{lolo} mit der deCONZ-Software, um nahezu
-dieselbe Funktionalität der Web-GUI auf der Kommandozeile bereitzustellen.
+Über diese Schnittstelle agiert \texttt{lolo} mit der deCONZ-Software, um
+nahezu dieselbe Funktionalität der Web-GUI auf der Kommandozeile
+bereitzustellen.
 
 \newpage
 
 \section{lolo - Lights on, Lights off}
 \label{lolo}
 
-Lolo ist das in diesem Projekt entwickelte CLI. Das CLI soll es möglich machen, Lichter programmatisch über die Kommandozeile oder periodisch über Cronjobs zu steuern. Dafür gibt es, wie auch bei anderen Herstellern drei elementare Komponenten: Lichter, Gruppen, Szenen. Lichter sind die Kernkomponenten der Steuerung. Sie sind einzelne ansteuerbare Glühbirnen. Gruppen sind eine Sammlung an Lichtern. Gruppen können genauso wie Lichter angesteuert werden. Das bedeutet, dass Eigenschaften wie die Farbe oder Helligkeit auch an Gruppen angewendet werden können. Eine Änderung einer Eigenschaft der Gruppe wird automatisch an alle enthaltenen Lichtern angewendet. Eine Szene gehört zu einer Gruppe. Sie ist ein Abbild des aktuellen Zustands der Gruppe. Sie enthält die Eigenschaften aller Lichter der Gruppe und kann diese reaktivieren.
+Lolo ist das in diesem Projekt entwickelte CLI. Das CLI soll es möglich machen,
+Lichter programmatisch über die Kommandozeile oder periodisch über Cronjobs zu
+steuern. Dafür gibt es, wie auch bei anderen Herstellern drei elementare
+Komponenten: Lichter, Gruppen, Szenen. Lichter sind die Kernkomponenten der
+Steuerung. Sie sind einzelne ansteuerbare Glühbirnen. Gruppen sind eine
+Sammlung an Lichtern. Gruppen können genauso wie Lichter angesteuert werden.
+Das bedeutet, dass Eigenschaften wie die Farbe oder Helligkeit auch an Gruppen
+angewendet werden können. Eine Änderung einer Eigenschaft der Gruppe wird
+automatisch an alle enthaltenen Lichtern angewendet. Eine Szene gehört zu einer
+Gruppe. Sie ist ein Abbild des aktuellen Zustands der Gruppe. Sie enthält die
+Eigenschaften aller Lichter der Gruppe und kann diese reaktivieren.
 
-Lolo ist in Ruby, einer objektorientierten Programmiersprache, welche den Programmcode zur Laufzeit interpretiert, geschrieben. Ruby ist auf allen gängigen Software- und Hardware-Plattformen entweder direkt vorhanden oder verfügbar. Eine Änderung am Source-Code benötigt keinen Kompilationsvorgang. Dadurch sind Änderungen an Lolo leicht durchführbar und testbar.
+Lolo ist in Ruby, einer objektorientierten Programmiersprache, welche den
+Programmcode zur Laufzeit interpretiert, geschrieben. Ruby ist auf allen
+gängigen Software- und Hardware-Plattformen entweder direkt vorhanden oder
+verfügbar. Eine Änderung am Source-Code benötigt keinen Kompilationsvorgang.
+Dadurch sind Änderungen an Lolo leicht durchführbar und testbar.
 
-Für die Programmiersprache Ruby sind einige hilfreiche Bibliotheken vorhanden. Darunter gibt es Clamp, ein Kommandozeilen-Framework mit dem ein Grundkonstrukt für ein CLI möglich ist. Clamp fängt die Kommandozeilen-Parameter ab und erlaubt es, unkompliziert mit ihnen umzugehen. Weiterhin verwenden wir Ruby Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
+Für die Programmiersprache Ruby sind einige hilfreiche Bibliotheken vorhanden.
+Darunter gibt es Clamp, ein Kommandozeilen-Framework mit dem ein Grundkonstrukt
+für ein CLI möglich ist. Clamp fängt die Kommandozeilen-Parameter ab und
+erlaubt es, unkompliziert mit ihnen umzugehen. Weiterhin verwenden wir Ruby
+Bibliotheken um mit der REST-API von deCONZ kommunizieren zu können.
 
 \subsection{Login}
 
-Die Ressourcen der deCONZ REST-API lassen sich nur mit einem API-Schlüssel bedienen. Dieser soll sicherstellen dass nur befugte Personen Zugriff auf die Endpunkte der API bekommen. Um einen API-Schlüssel zu bekommen muss ein HTTP \textbf{POST} auf den Endpunkt \textbf{/api} ausgeführt werden. Dafür muss entweder über das webbasierte Interface des deCONZ der Zugang kurzzeitig entsperrt werden. Alternativ kann eine der API bekannte Kombination aus Username und Passwort in der HTTP Anfrage enthalten sein. Falls erfolgreich liefert der Endpunkt eine JSON Datenstruktur als Antwort, in welcher der API-Schlüssel enthalten ist. Dieser kann nun für Anfragen an andere Endpunkte verwendet werden.
+Die Ressourcen der deCONZ REST-API lassen sich nur mit einem API-Schlüssel
+bedienen. Dieser soll sicherstellen dass nur befugte Personen Zugriff auf die
+Endpunkte der API bekommen. Um einen API-Schlüssel zu bekommen muss ein HTTP
+\textbf{POST} auf den Endpunkt \textbf{/api} ausgeführt werden. Dafür muss
+entweder über das webbasierte Interface des deCONZ der Zugang kurzzeitig
+entsperrt werden. Alternativ kann eine der API bekannte Kombination aus
+Username und Passwort in der HTTP Anfrage enthalten sein. Falls erfolgreich
+liefert der Endpunkt eine JSON Datenstruktur als Antwort, in welcher der
+API-Schlüssel enthalten ist. Dieser kann nun für Anfragen an andere Endpunkte
+verwendet werden.
 
 \subsection{Beispielszenario}
 
