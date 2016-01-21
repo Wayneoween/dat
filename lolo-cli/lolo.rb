@@ -130,7 +130,7 @@ module Lolo
 
   class LightGroupCommand < Clamp::Command
     option "-t", "N", "Set transition time in seconds", :attribute_name => "transition", :default => 9 do |s|
-      Integer(s) * 10
+      (Float(s)*10).to_i
     end
 
     subcommand "on", "Switch on." do
