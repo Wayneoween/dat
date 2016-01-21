@@ -145,6 +145,18 @@ module Lolo
       end
     end
 
+    subcommand "hex", "Set color defined by user input." do
+      parameter "COLOR", "color", :attribute_name => :color do |s|
+        String(s)
+      end
+
+      def execute
+        puts color
+        hue = hex_to_hsv(color)
+        $light.set_color(hue, transition)
+      end
+    end
+
     subcommand "red", "Set light color to red." do
       def execute
         $logger.debug "Turning light #{$light} to red"
