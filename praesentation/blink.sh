@@ -16,7 +16,7 @@ function set_color {
 	done
 
 	../lolo-cli/lolo.rb light $light -t $transition $color
-	sh -c "sleep $transition && echo 'lolo $light'" &
+	sh -c "sleep $transition && echo 'lolo $light'" >/dev/null &
 }
 
 function random_color {
