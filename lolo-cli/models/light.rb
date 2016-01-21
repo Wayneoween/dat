@@ -95,6 +95,16 @@ class Light
     put_request($uri + "/#{$key}/lights/#{id}/state", options)
   end
 
+  # Sets the brightness of a lamp.
+  def set_brightness(bri, transition)
+    options = {}
+    options["bri"] = bri
+    options["on"] = true
+    options["transitiontime"] = transition
+    $logger.debug "Setting brightness of light #{id}"
+    put_request($uri + "/#{$key}/lights/#{id}/state", options)
+  end
+
   # Turns a light on.
   def turn_on
     $logger.debug "Turning light #{id} on"

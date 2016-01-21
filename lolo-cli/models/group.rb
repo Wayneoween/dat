@@ -124,6 +124,16 @@ class Group
     put_request($uri + "/#{$key}/groups/#{id}/action", options)
   end
 
+  # Sets the brightness of a group.
+  def set_brightness(bri, transition)
+    options = {}
+    options["bri"] = bri
+    options["on"] = true
+    options["transitiontime"] = transition
+    $logger.debug "Setting brightness of light #{id}"
+    put_request($uri + "/#{$key}/groups/#{id}/action", options)
+  end
+
   # Adds a +light+ to a group
   def add_light(light)
     $logger.debug "Add light #{light.name} to group #{id}"

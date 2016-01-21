@@ -186,6 +186,17 @@ module Lolo
         $light.set_temp(TEMP_MAP[:cold], transition)
       end
     end
+
+    subcommand "bri", "Set brightness." do
+      parameter "BRIGHTNESS", "brightness", :attribute_name => :brightness do |s|
+        Integer(s)
+      end
+
+      def execute
+        $logger.debug "Turning light #{$light} to brightness #{brightness}"
+        $light.set_brightness(brightness, transition)
+      end
+    end
   end
 
   class LightCommand < Clamp::Command
