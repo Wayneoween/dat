@@ -88,6 +88,7 @@ class Light
   # Sets either a +warm+ white or a +cold+ white.
   def set_temp(temp, transition)
     options = {}
+    options["bri"] = 255
     options["ct"] = temp
     options["on"] = true
     options["transitiontime"] = transition
