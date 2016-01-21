@@ -108,7 +108,7 @@ cd ../lolo-cli
 
 # Transition
 ./lolo.rb group All -t 0 blue
-./lolo.rb group All -t 100 red
+./lolo.rb group All -t 10 red
 
 # Brightness
 ./lolo.rb group All bri 0
