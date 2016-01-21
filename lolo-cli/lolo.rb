@@ -151,7 +151,6 @@ module Lolo
       end
 
       def execute
-        puts color
         hue = hex_to_hsv(color)
         $light.set_color(hue, transition)
       end
