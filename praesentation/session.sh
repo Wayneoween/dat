@@ -1,3 +1,4 @@
+#doitlive speed: 3
 #
 # PROLOG
 #
@@ -115,6 +116,8 @@ cd ../lolo-cli
 ./lolo.rb group All bri 255
 ./lolo.rb group All -t 0 bri 0
 ./lolo.rb group All -t 0 bri 255
+./lolo.rb group All -t 10 bri 0
+./lolo.rb group All -t 10 bri 255
 
 # Licht aus, naechster Akt.
 ./lolo.rb group All off
