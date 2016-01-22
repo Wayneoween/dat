@@ -2,21 +2,24 @@
 set -x
 export LANG=C
 
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
+
+function ctrl_c() {
+	echo "** Trapped CTRL-C"
+	for child in $children; do
+		kill $child
+	done
+	exit
+}
+
 function set_color {
 	local light=$1
 	local color=$2
 	local transition=$3
 
-	# UNUSED, can be switched with the other while below
-	while false; do
-		s=`ps auxww | grep "lolo $light" | grep -v grep`
-		if [ "$s" == "" ]; then
-			break
-		fi
-	done
-
 	../lolo-cli/lolo.rb light $light -t $transition $color
-	sh -c "sleep $transition && echo 'lolo $light'" >/dev/null &
+	sleep $transition
 }
 
 function random_color {
@@ -25,28 +28,35 @@ function random_color {
 	echo $color
 }
 
-function random_light {
-	local lights=(L1 L2 L3)
-
-	# Wait for a light to free up before returning.
-	while true; do
-		local light=${lights[$RANDOM % ${#lights[@]} ]}
-		s=`ps auxww | grep "lolo $light" | grep -v grep`
-		if [ "$s" == "" ]; then
-			break
-		fi
-	done
-
-	echo $light
-}
-
 function random_transition {
 	local transition=`awk -v "seed=$[(RANDOM & 32767) + 32768 * (RANDOM & 32767)]" \
 				 'BEGIN { srand(seed); printf("%.1f\n", rand() * 2.0) }'`
 	echo $transition
 }
 
+function light_loop {
+	local light=$1
+
+	# introduce initial delay between lights
+	sleep $(random_transition)
+
+	while true; do
+		#set_color $light "$(random_color)" "$(random_transition)"
+		set_color $light "$(random_color)" "2.0"
+	done
+}
+
+# Spawn children for each light.  Each child randomly changes
+# the color of its designated light.  Record child pid so we can
+# kill it later.
+children=""
+lights="L1 L2 L3"
+for light in $lights; do
+	light_loop $light &
+	children="$children $!"
+done
+
+# Master sleeper.
 while true; do
-	#set_color "$(random_light)" "$(random_color)" "$(random_transition)"
-	set_color "$(random_light)" "$(random_color)" "1.0"
+	sleep 60;
 done
