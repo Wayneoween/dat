@@ -1,5 +1,5 @@
 #!/bin/sh
-set -ex
+set -x
 
 # delete all (as known in this script), turn off lights
 pushd ../lolo-cli/
