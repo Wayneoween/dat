@@ -1,2 +1,1 @@
-#### Sinatra REST-API
-[Tutorial](http://www.xplatform.rocks/2014/04/28/create-a-lightweight-rest-service-using-sinatra/)
+`lolo.rb` is a project we did while attending the "DV‐Anwendungen in der Technik" course at University of Applied Sciences Rosenheim.
